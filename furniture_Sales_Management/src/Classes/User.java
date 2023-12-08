@@ -49,7 +49,12 @@ abstract class User {
     public String getdob(){
         return this.dob;
     }
-    abstract String[] getPerson();
+    
+    /**
+     * Saves 
+     * @param args the command line arguments
+     */
+    abstract void edit_Profile(String new_data, int attribute);
     abstract String writeToFile();
     
 }
