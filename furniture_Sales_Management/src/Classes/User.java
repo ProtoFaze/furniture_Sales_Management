@@ -11,17 +11,19 @@ import java.time.format.DateTimeFormatter;
  */
 abstract class User {
     //Declare variables
-    protected String id,fullName, emailAddress,dob,role;
+    protected String id, fullName, emailAddress, username, password, dob, role;
     protected char gender;
     
     
     //constructors
-    User(String id, String fullName, String emailAddress, char gender,String dob){
+    User(String id, String username, String fullName, String emailAddress, char gender, String dob, String password){
         this.id = id;
+        this.username = username;
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.gender = gender;
         this.dob = dob;
+        this.password = password;
         this.role = "";
     }
     //SETTERS

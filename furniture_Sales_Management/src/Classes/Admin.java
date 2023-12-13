@@ -12,8 +12,8 @@ package Classes;
 public class Admin extends User {
 //    public static List<Admin> AdminList = new ArrayList<>();
 //    public static void getAll(JsonArray userData){}
-    public Admin(String id, String fullName, String emailAddress, char gender, String dob) {
-        super(id, fullName, emailAddress, gender, dob);
+    public Admin(String id, String username, String fullName, String emailAddress, char gender, String dob, String password) {
+        super(id, username, fullName, emailAddress, gender, dob, password);
         this.role = "admin";
     }
 

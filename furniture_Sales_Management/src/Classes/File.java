@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter; 
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -44,9 +46,32 @@ public class File {
             return null;
         }
     }
+    /**
+     * extract admin records from user file
+     * @return an array list of admins
+     */
+    public static List<Admin> readAdmins(){
+        //initialize helper function, name and list
+        String fileName = "user";
+        Gson gson = new Gson();
+        List<Admin> admins = new ArrayList<>();
 
-
-
+        // store json in memory 
+        JsonObject UserJson = read(fileName);
+        JsonArray roomArray = UserJson.getAsJsonArray(fileName);
+        
+        // store admins into list then return when done
+        for (JsonElement element: roomArray){
+            JsonObject adminJson = element.getAsJsonObject();
+            if ("admin".equals(adminJson.get("role").getAsString())){
+                System.out.println(adminJson);
+                Admin admin = gson.fromJson(adminJson, Admin.class);
+                admins.add(admin);
+            }else{
+            }
+        }
+        return admins;
+    }
     /**
      *
      * V0.1 rewrites the entire file to edit//add info, usable for 1 element containing array only
