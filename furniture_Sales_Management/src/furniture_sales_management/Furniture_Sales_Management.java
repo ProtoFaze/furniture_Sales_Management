@@ -7,7 +7,6 @@ package furniture_sales_management;
 import Classes.Admin;
 import Classes.File;
 import java.util.List;
-import java.security.*;
 //import com.toedter.calendar.JDateChooser;
 
 public class Furniture_Sales_Management {
@@ -21,7 +20,7 @@ public class Furniture_Sales_Management {
            admins = File.readAdmins();
            System.out.println(admins.size());
            for (Admin admin : admins){
-               System.out.print(admin.getmail());
+               System.out.print(admin.getMail());
            }
 //        JDateChooser start = new JDateChooser();
 //        System.out.print(start.getDate());

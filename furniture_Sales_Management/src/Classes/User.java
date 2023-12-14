@@ -51,14 +51,19 @@ abstract class User {
     
     
     //GETTERS
+    public String getUser(){
+        return this.username;
+    }
+    
     public String getName(){
         return this.fullName;
     }
-    public String getmail(){
+    public String getMail(){
         return this.emailAddress;
     }
-    public char getGender(){
-        return this.gender;
+    public String getGender(){
+        String gender = String.valueOf(this.gender);
+        return gender;
     }
     public String getdob(){
         return this.dob;

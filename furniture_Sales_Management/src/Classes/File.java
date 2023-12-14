@@ -72,6 +72,29 @@ public class File {
         }
         return admins;
     }
+    
+    public static List<Officer> readOfficers(){
+        //initialize helper function, name and list
+        String fileName = "user";
+        Gson gson = new Gson();
+        List<Officer> officers = new ArrayList<>();
+
+        // store json in memory 
+        JsonObject UserJson = read(fileName);
+        JsonArray roomArray = UserJson.getAsJsonArray(fileName);
+        
+        // store admins into list then return when done
+        for (JsonElement element: roomArray){
+            JsonObject officerJson = element.getAsJsonObject();
+            if ("officer".equals(officerJson.get("role").getAsString())){
+                System.out.println(officerJson);
+                Officer officer = gson.fromJson(officerJson, Officer.class);
+                officers.add(officer);
+            }else{
+            }
+        }
+        return officers;
+    }
     /**
      *
      * V0.1 rewrites the entire file to edit//add info, usable for 1 element containing array only
