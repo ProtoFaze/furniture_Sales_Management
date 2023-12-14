@@ -70,6 +70,13 @@ abstract class User {
      * @param attribute the attribute to be edited
      */
     abstract void edit_Profile(String new_data, int attribute);
+    /**
+     * used for each role's main function, 
+     * salesperson create sales order, 
+     * officer approve sales order//create invoice
+     * Admin ........
+     * @return status of role-specific main function's wrote operation
+     */
     abstract String writeToFile();
     
 }
