@@ -8,11 +8,7 @@ import Classes.Admin;
 import Classes.File;
 import java.util.List;
 import java.security.*;
-//import com.toedter.calendar.JDateChooser;
-/**
- *
- * @author damonng
- */
+
 public class Furniture_Sales_Management {
     static List<Admin> admins ;
     
