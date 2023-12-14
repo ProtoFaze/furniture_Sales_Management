@@ -4,17 +4,31 @@
  */
 package furniture_sales_management;
 
+import Classes.Admin;
+import Classes.File;
+import java.util.List;
+import java.security.*;
+//import com.toedter.calendar.JDateChooser;
 /**
  *
  * @author damonng
  */
 public class Furniture_Sales_Management {
-
+    static List<Admin> admins ;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+//        LoginPage login = new LoginPage(File.read("room"));
+           admins = File.readAdmins();
+           System.out.println(admins.size());
+           for (Admin admin : admins){
+               System.out.print(admin.getmail());
+           }
+//        JDateChooser start = new JDateChooser();
+//        System.out.print(start.getDate());
+        
     }
     
 }
