@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author damonng
  */
-abstract class User {
+public abstract class User {
     //Declare variables
     protected String id, fullName, emailAddress, username, password, dob, role;
     protected char gender;
