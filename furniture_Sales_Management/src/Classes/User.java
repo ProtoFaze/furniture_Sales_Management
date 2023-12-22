@@ -3,70 +3,43 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Classes;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 /**
  *
  * @author damonng
  */
-public abstract class User {
+public abstract class User extends Person {
     //Declare variables
-    protected String id, fullName, emailAddress, username, password, dob, role;
-    protected char gender;
-    
+    protected String userName, passWord, role;
     
     //constructors
-    User(String id, String username, String fullName, String emailAddress, char gender, String dob, String password){
-        this.id = id;
-        this.username = username;
-        this.fullName = fullName;
-        this.emailAddress = emailAddress;
-        this.gender = gender;
-        this.dob = dob;
-        this.password = password;
+    public User(String id, String userName, String fullName, String emailAddress, char gender, String dob, String passWord) {
+        super(id, fullName, emailAddress, dob, gender);
+        this.userName = userName;
+        this.passWord = passWord;
         this.role = "";
     }
+    
     //SETTERS
-    public void setName(String fullName){
-        this.fullName = fullName;
+    public void setUserName(String userName){
+        this.userName = userName;
     }
-    public void setMail(String emailAddress){
-        this.emailAddress = emailAddress;
+    public void setPass(String password){
+        this.passWord = password;
     }
-    public void setGender(char gender){
-        char original = this.gender;
-        this.gender = (Character.toUpperCase(gender) != 'M' && Character.toUpperCase(gender) != 'F') 
-            ? original 
-            : Character.toUpperCase(gender) ;
-    }
-    public void setDOB(String dob){
-        this.dob = dob;
-    }
-    public void setDOB(LocalDate dob){
-        String dateRegex = "dd/MM/yyyy";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateRegex);
-        String dateString = dob.format(formatter);
-        this.dob = dateString;
+    public void setRole(String role) {
+        this.role = role;
     }
     
     
     //GETTERS
-    public String getUser(){
-        return this.username;
+    public String getUserName(){
+        return this.userName;
     }
-    
-    public String getName(){
-        return this.fullName;
+    public String getPass(){
+        return this.passWord;
     }
-    public String getMail(){
-        return this.emailAddress;
-    }
-    public String getGender(){
-        String gender = String.valueOf(this.gender);
-        return gender;
-    }
-    public String getdob(){
-        return this.dob;
+    public String getRole() {
+        return role;
     }
     
     /**

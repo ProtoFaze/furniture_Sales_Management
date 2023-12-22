@@ -1,52 +1,7 @@
 {"user":[
-  {
-    "id": 1,
-    "username": "ptfz",
-    "password": "Abcd312@",
-    "fullName": "Damon",
-    "emailAddress": "damonng@mail.com",
-    "gender": "M",
-    "dob": "2/6/1995",
-    "role": "admin"
-  },
-  {
-    "id": 2,
-    "username": "fabian",
-    "password": "W3wewewe%",
-    "fullName": "Fabiano roberta",
-    "emailAddress": "frbtha@mail.my",
-    "gender": "M",
-    "dob": "4/2/1995",
-    "role": "officer"
-  },
-  {
-    "id": 3,
-    "username": "Gordon",
-    "password": "Abcd1@34",
-    "fullName": "Gordon Ramsay",
-    "emailAddress": "Gramsay@mail.my",
-    "gender": "M",
-    "dob": "29/05/2022",
-    "role": "officer"
-  },
-  {
-    "id": 4,
-    "username": "Romeo",
-    "password": "6%43NbVas",
-    "fullName": "Romeo Rodrigues",
-    "emailAddress": "RDrigg@mail.my",
-    "gender": "M",
-    "dob": "01/05/2004",
-    "role": "sales person"
-  },
-  {
-    "id": 5,
-    "username": "staff123",
-    "password": "aBcd1@34",
-    "fullName": "John Doe",
-    "emailAddress": "jDoe@mail.my",
-    "gender": "M",
-    "dob": "19/05/2012",
-    "role": "admin"
-  }
+{"userName":"ptfz","passWord":"Abcd312@","role":"admin","id":"1","fullName":"Damon","emailAddress":"damonng@mail.com","dob":"2/6/1995","gender":"M"},
+{"userName":"fabian","passWord":"W3wewewe%","role":"officer","id":"2","fullName":"Fabiano roberta","emailAddress":"frbtha@mail.my","dob":"4/2/1995","gender":"M"},
+{"userName":"Gordon","passWord":"Abcd1@34","role":"officer","id":"3","fullName":"Gordon Ramsay","emailAddress":"Gramsay@mail.my","dob":"29/05/2022","gender":"M"},
+{"userName":"Romeo","passWord":"6%43NbVas","role":"sales person","id":"4","fullName":"Romeo Rodrigues","emailAddress":"RDrigg@mail.my","dob":"01/05/2004","gender":"M"},
+{"userName":"staff123","passWord":"aBcd1@34","role":"admin","id":"5","fullName":"John Doe","emailAddress":"jDoe@mail.my","dob":"19/05/2012","gender":"M"}
 ]}
