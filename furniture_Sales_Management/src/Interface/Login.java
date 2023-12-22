@@ -325,9 +325,9 @@ public class Login extends javax.swing.JFrame {
                     File.write("lastUser", lastUser);
                     System.out.print("Updated latest login credentials");
                 }
-//                mainPage redirect = new mainPage(staff);
-//                redirect.setVisible(true);
-//                this.setVisible(false);
+                Mainpage window = new Mainpage(currentUser);
+                window.setVisible(true);
+                this.setVisible(false);
             }
         }else{
             //assign error text
