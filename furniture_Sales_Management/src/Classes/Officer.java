@@ -6,12 +6,12 @@ package Classes;
 
 /**
  *
- * @author wenli
+ * @author wenliang
  */
 public class Officer extends User{
-    public Officer(String id, String username, String fullName, String emailAddress, char gender, String dob, String password) {
-        super(id, username, fullName, emailAddress, gender, dob, password);
-        this.role = "admin";
+    public Officer(String id, String userName, String fullName, String emailAddress, char gender, String dob, String passWord) {
+        super(id, userName, fullName, emailAddress, gender, dob, passWord);
+        this.role = "officer";
     }
     
     public String writeToFile(){

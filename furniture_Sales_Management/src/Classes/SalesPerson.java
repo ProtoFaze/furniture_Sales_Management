@@ -9,16 +9,10 @@ package Classes;
  *
  * @author damonng
  */
-public class Admin extends User {
-//    public static List<Admin> AdminList = new ArrayList<>();
-//    public static void getAll(JsonArray userData){}
-    public Admin(String id, String userName, String fullName, String emailAddress, char gender, String dob, String passWord) {
+public class SalesPerson extends User {
+    public SalesPerson(String id, String userName, String fullName, String emailAddress, char gender, String dob, String passWord) {
         super(id, userName, fullName, emailAddress, gender, dob, passWord);
-        this.role = "admin";
-    }
-
-    public void getAllWorkers(){
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.role = "sales person";
     }
     
     @Override

@@ -4,18 +4,16 @@ package Interface;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-import java.awt.Color;
+import javax.swing.JOptionPane;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import java.awt.Color;
 import java.util.List;
 import Classes.File;
 import Classes.User;
-import javax.swing.JOptionPane;
 import Classes.Admin;
 import Classes.Officer;
+import Classes.SalesPerson;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 /**
  *
@@ -24,27 +22,51 @@ import com.google.gson.JsonObject;
 public class Login extends javax.swing.JFrame {
     private int chance = 3;    
     List<Admin> admins;
-    User currentUser;
-    JsonObject lastUser;
+    List<User> users;
+    private User currentUser;
+    private JsonObject lastUser;
+    private final Gson helper;
     /**
      * Creates new form login
      * @param admins ArrayList of admin object
+     * @param users
      */
-    public Login(List<Admin> admins) {
+    public Login(List<Admin> admins, List<User> users) {
         initComponents();
         
         //for registration
         this.admins  = admins;
         
+        this.users = users;
+        helper = new Gson();
+        
+
         this.lastUser = File.read("lastUser");
         System.out.print(lastUser);
         lastUser = lastUser.get("lastUser").getAsJsonObject();
         if(lastUser != null){
-            txtUsername.setText(lastUser.get("username").getAsString());
-            txtPassword.setText(lastUser.get("password").getAsString());
+            txtUsername.setText(lastUser.get("userName").getAsString());
+            txtPassword.setText(lastUser.get("passWord").getAsString());
         }
     }
 
+    private void login(String username, String password){
+        users.forEach(user -> {
+            if (username.equals(user.getUserName()) && password.equals(user.getPass())) {
+                //save a JSON copy
+                JsonObject userJSON;
+                userJSON = helper.fromJson(helper.toJson(user), JsonObject.class);
+
+                String role = user.getRole();
+                switch (role) {
+                    // convert to appropriate role
+                    case "admin"        -> currentUser = helper.fromJson(userJSON,Admin.class);
+                    case "officer"      -> currentUser = helper.fromJson(userJSON,Officer.class);
+                    case "sales person" -> currentUser = helper.fromJson(userJSON,SalesPerson.class);
+                }
+            }
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -93,11 +115,6 @@ public class Login extends javax.swing.JFrame {
                 txtUsernameFocusLost(evt);
             }
         });
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
-            }
-        });
         txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtUsernameKeyPressed(evt);
@@ -137,11 +154,6 @@ public class Login extends javax.swing.JFrame {
 
         txtPassword.setFont(new java.awt.Font("Rockwell", 0, 12)); // NOI18N
         txtPassword.setPreferredSize(new java.awt.Dimension(64, 26));
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPasswordKeyPressed(evt);
@@ -273,14 +285,6 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         int n = JOptionPane.showConfirmDialog(null,"Are you sure you want to quit login.","Confirm Exit",JOptionPane.YES_NO_OPTION);
@@ -302,46 +306,28 @@ public class Login extends javax.swing.JFrame {
 //        validPass = verify.validatePass(pass);
         if(validUName == null && validPass == null){
             //login
-            JsonArray users = File.read("user").getAsJsonArray("user");
-            Gson helper = new Gson();
-            for (JsonElement record: users){
-                JsonObject user = record.getAsJsonObject();
-                if (usr.equals(user.get("username").getAsString()) && 
-                    pass.equals(user.get("password").getAsString())){
-                    //detect role
-                    String role = user.get("role").getAsString();
-                    switch (role){
-                        case "admin" -> currentUser = helper.fromJson(user,Admin.class);
-                        case "officer" -> currentUser = helper.fromJson(user,Officer.class);
-//                        case "sales person" -> currentUser = Gson.fromJson(user,SalesPerson.class);
-                    }
-                    break;
-                }
-            }
+            login(usr, pass);
             //Record not found 
             if(currentUser == null){
                 chance-=1;
                 if (chance==0){
-                    JOptionPane.showMessageDialog(rootPane, "You have run out of login chances, closing system", "System Lockout", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(rootPane, "login chances exhausted, quitting system", "System Lockout", JOptionPane.ERROR_MESSAGE);
                     System.exit(0);
                 }else{
-                    JOptionPane.showMessageDialog(rootPane, "You have "+chance+" chances left", "Recucing login chances", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(rootPane, "You have "+chance+" chances remaining", "Reducing login chances", JOptionPane.ERROR_MESSAGE);
                 }
             //Record found
             }else{
-                if( usr.equals(lastUser.get("username").getAsString())&&
-                    pass.equals(lastUser.get("password").getAsString())){
-                    lastUser.addProperty("password", pass);
-                    lastUser.addProperty("username", usr);
-//                    JsonArray array = new JsonArray();
-//                    array.add(lastUser);
+                if( usr.equals(lastUser.get("userName").getAsString())&&
+                    pass.equals(lastUser.get("passWord").getAsString())){
+                    lastUser.addProperty("passWord", pass);
+                    lastUser.addProperty("userName", usr);
                     File.write("lastUser", lastUser);
-                    System.out.print("info has been written");
+                    System.out.print("Updated latest login credentials");
                 }
 //                mainPage redirect = new mainPage(staff);
 //                redirect.setVisible(true);
 //                this.setVisible(false);
-
             }
         }else{
             //assign error text
@@ -375,11 +361,15 @@ public class Login extends javax.swing.JFrame {
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         String AdminPass = JOptionPane.showInputDialog(rootPane, "Please provide Admin Passcode");
         if(AdminPass != null){
-            if (AdminPass.equals("55432210")){
-                JOptionPane.showMessageDialog(rootPane, "Redirecting to staff registration");
-//                Registration page = new Registration();
-//                page.setVisible(true);
-//                this.setVisible(false);
+            for (Admin admin: admins){
+                if (AdminPass.equals(admin.getPass())){
+                    JOptionPane.showMessageDialog(rootPane, "Redirecting to staff registration");
+    //                Registration page = new Registration();
+    //                page.setVisible(true);
+    //                this.setVisible(false);
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "wrong passcode");
+                }
             }
         }
 
