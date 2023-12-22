@@ -190,22 +190,3 @@ public class File {
             return ex.toString();
         }
     }
-    /**
-     * For files containing only 1 record, like save or config files
-     * V0.1 rewrites the entire file to edit//add info, usable for 1 element containing array only
-     * @param fileName name of the file to be edited
-     * @param content (JSON object) the entire file contents saved within main after it has been updated
-     * @return status of edit operation
-     */
-    public static String write(String fileName, JsonObject content){
-        String file = SRCPATH+fileName+EXT;
-        try(PrintWriter outputFile = new PrintWriter(new FileWriter(file, false))){
-            outputFile.println("{\""+fileName+"\":");
-            outputFile.println(content);
-            outputFile.println("}");
-            return "Success";
-        }catch (IOException ex){
-            return ex.toString();
-        }
-    }
-}
