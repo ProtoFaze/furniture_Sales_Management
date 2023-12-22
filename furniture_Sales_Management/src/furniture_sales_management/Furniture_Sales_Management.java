@@ -4,7 +4,6 @@
  */
 package furniture_sales_management;
 
-import Classes.Admin;
 import Classes.File;
 import Classes.Officer;
 import Classes.SalesPerson;
@@ -12,6 +11,7 @@ import Classes.User;
 import Interface.Login;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 /**
  * Outermost layer of the program, allows access to user information

@@ -149,6 +149,7 @@ public class File {
      * For files containing multiple records, like users, sales<br>
      * rewrites the entire file to edit//add info, usable for 1 element containing array only<br>
      * If using java.util.List, File.write(fileName, gson.toJsonTree(list).getAsJsonArray())
+
      * @param fileName name of the file to be edited
      * @param contents (JSON object) the entire file contents saved within main after it has been updated
      * @return status of edit operation
@@ -157,6 +158,7 @@ public class File {
         String file = SRCPATH+fileName+EXT;
         try(PrintWriter outputFile = new PrintWriter(new FileWriter(file, false))){
             int size = contents.size();
+            outputFile.println("{\""+fileName+"\":[");
             for (int i = 0; i < size; i++) {
                 JsonObject record = contents.get(i).getAsJsonObject();
                 outputFile.print(record);
@@ -173,6 +175,24 @@ public class File {
     /**
      * For files containing only 1 record, like save or config files<br>
      * rewrites the entire file to edit//add info, usable for 1 JSONObject only<br>
+     * @param fileName name of the file to be edited
+     * @param content (JSON object) the entire file contents saved within main after it has been updated
+     * @return status of edit operation
+     */
+    public static String write(String fileName, JsonObject content){
+        String file = SRCPATH+fileName+EXT;
+        try(PrintWriter outputFile = new PrintWriter(new FileWriter(file, false))){
+            outputFile.println("{\""+fileName+"\":");
+            outputFile.println(content);
+            outputFile.println("}");
+            return "Success";
+        }catch (IOException ex){
+            return ex.toString();
+        }
+    }
+    /**
+     * For files containing only 1 record, like save or config files
+     * V0.1 rewrites the entire file to edit//add info, usable for 1 element containing array only
      * @param fileName name of the file to be edited
      * @param content (JSON object) the entire file contents saved within main after it has been updated
      * @return status of edit operation

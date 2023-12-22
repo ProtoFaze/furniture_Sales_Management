@@ -40,6 +40,7 @@ public class Login extends javax.swing.JFrame {
         this.users = users;
         helper = new Gson();
         
+
         this.lastUser = File.read("lastUser");
         System.out.print(lastUser);
         lastUser = lastUser.get("lastUser").getAsJsonObject();
