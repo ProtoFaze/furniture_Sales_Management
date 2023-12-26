@@ -87,24 +87,25 @@ public class Login extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
         jScrollPane1 = new javax.swing.JScrollPane();
         errPass = new javax.swing.JTextArea();
-        btnBack = new javax.swing.JButton();
-        btnLogin = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         btnRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
 
-        pageTitle.setFont(new java.awt.Font("Rockwell", 0, 24)); // NOI18N
+        pageTitle.setFont(new java.awt.Font("Cascadia Code", 0, 24)); // NOI18N
         pageTitle.setText("Login");
         pageTitle.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         username.setBackground(null);
+        username.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
 
-        lblUsername.setFont(new java.awt.Font("Rockwell", 0, 12)); // NOI18N
+        lblUsername.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
         lblUsername.setText("Username:");
 
-        txtUsername.setFont(new java.awt.Font("Rockwell", 0, 12)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(204, 204, 204));
         txtUsername.setText("Enter username");
         txtUsername.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -149,10 +150,12 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        lblPassword.setFont(new java.awt.Font("Rockwell", 0, 12)); // NOI18N
+        password.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+
+        lblPassword.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
         lblPassword.setText("Password:");
 
-        txtPassword.setFont(new java.awt.Font("Rockwell", 0, 12)); // NOI18N
+        txtPassword.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
         txtPassword.setPreferredSize(new java.awt.Dimension(64, 26));
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -166,6 +169,7 @@ public class Login extends javax.swing.JFrame {
         errPass.setEditable(false);
         errPass.setBackground(new java.awt.Color(238, 238, 238));
         errPass.setColumns(20);
+        errPass.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
         errPass.setForeground(new java.awt.Color(255, 102, 51));
         errPass.setLineWrap(true);
         errPass.setRows(5);
@@ -173,52 +177,7 @@ public class Login extends javax.swing.JFrame {
         errPass.setBorder(null);
         jScrollPane1.setViewportView(errPass);
 
-        javax.swing.GroupLayout passwordLayout = new javax.swing.GroupLayout(password);
-        password.setLayout(passwordLayout);
-        passwordLayout.setHorizontalGroup(
-            passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passwordLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblPassword)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
-                .addGroup(passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        passwordLayout.setVerticalGroup(
-            passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(passwordLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblPassword)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(passwordLayout.createSequentialGroup()
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))
-        );
-
-        btnBack.setFont(new java.awt.Font("Rockwell", 0, 12)); // NOI18N
-        btnBack.setText("Back");
-        btnBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnBack.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
-
-        btnLogin.setFont(new java.awt.Font("Rockwell", 0, 12)); // NOI18N
-        btnLogin.setText("Login");
-        btnLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLogin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-
-        btnReset.setFont(new java.awt.Font("Rockwell", 0, 12)); // NOI18N
+        btnReset.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
         btnReset.setText("Clear");
         btnReset.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnReset.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -228,6 +187,27 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        btnLogin.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
+        btnLogin.setText("Login");
+        btnLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLogin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+
+        btnBack.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
+        btnBack.setText("Back");
+        btnBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBack.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        btnRegister.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
         btnRegister.setText("Register");
         btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,51 +215,78 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout passwordLayout = new javax.swing.GroupLayout(password);
+        password.setLayout(passwordLayout);
+        passwordLayout.setHorizontalGroup(
+            passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(passwordLayout.createSequentialGroup()
+                .addGroup(passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(passwordLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passwordLayout.createSequentialGroup()
+                                .addComponent(lblPassword)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(passwordLayout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addGap(67, 67, 67)
+                        .addComponent(btnReset)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addComponent(btnRegister)
+                        .addGap(67, 67, 67)
+                        .addComponent(btnLogin)))
+                .addContainerGap())
+        );
+        passwordLayout.setVerticalGroup(
+            passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(passwordLayout.createSequentialGroup()
+                .addGroup(passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(passwordLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblPassword))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack)
+                    .addComponent(btnLogin)
+                    .addComponent(btnRegister)))
+            .addComponent(btnReset)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(divider)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(password, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnBack)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                        .addComponent(btnReset)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                        .addComponent(btnRegister)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                        .addComponent(btnLogin)))
-                .addContainerGap(49, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pageTitle)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, 0)))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(pageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(divider, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(41, 41, 41)
+                .addComponent(divider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLogin, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnReset, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addComponent(btnRegister))
-                .addContainerGap())
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
