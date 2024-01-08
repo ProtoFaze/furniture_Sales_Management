@@ -52,7 +52,7 @@ public abstract class User extends Person {
      * used for each role's main function, 
      * salesperson create sales order, 
      * officer approve sales order//create invoice
-     * Admin ........
+     * Admin edits staff records
      * @return status of role-specific main function's wrote operation
      */
     abstract String writeToFile();

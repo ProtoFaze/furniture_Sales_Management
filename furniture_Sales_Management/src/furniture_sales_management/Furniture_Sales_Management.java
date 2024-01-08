@@ -66,4 +66,8 @@ public class Furniture_Sales_Management {
         .map(user -> new SalesPerson(user.getId(), user.getUserName(), user.getFullName(), user.getMail(), user.getGender(), user.getDob(), user.getPass()))
         .collect(Collectors.toList());
     }
+    
+    public static List<User> getUsers(){
+        return users;
+    }
 }
