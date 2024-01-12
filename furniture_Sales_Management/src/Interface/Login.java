@@ -335,7 +335,7 @@ public class Login extends javax.swing.JFrame {
                     lastUser.addProperty("passWord", pass);
                     lastUser.addProperty("userName", usr);
                     File.write("lastUser", lastUser);
-                    System.out.print("Updated latest login credentials");
+                    System.out.println("Updated latest login credentials");
                 }
                 Mainpage window = new Mainpage(currentUser);
                 window.setVisible(true);

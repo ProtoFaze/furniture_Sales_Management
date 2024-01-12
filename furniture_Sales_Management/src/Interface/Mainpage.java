@@ -5,25 +5,54 @@
 package Interface;
 
 import Classes.User;
+import java.awt.Color;
+import java.awt.Graphics2D;
 
 /**
  *
  * @author damonng
  */
 public class Mainpage extends javax.swing.JFrame {
+    /**
+    * Primarily to get role for rendering the page and subpages<br>
+    * id would be useful for filtering records specific to current user
+    */
     User user;
+    private Color colorPrimary, colorSecondary;
+    
     /**
      * Creates new form Mainpage
      * @param user
      */
     public Mainpage(User user) {
-        initComponents();
+
         this.user = user;
+        String roleLblText;
+        //setColor scheme
         switch (this.user.getRole()){
-            case "admin" -> rolelbl.setText("admin detected");
-            case "officer" -> rolelbl.setText("officer detected");
-            case "sales person" -> rolelbl.setText("sales person detected");
+            case "admin" -> {
+                roleLblText="admin detected";
+                colorPrimary = new Color(112, 112, 255);
+                colorSecondary = new Color(230, 230, 230);
+            }
+            case "officer" -> {
+                roleLblText="officer detected";
+                colorPrimary = new Color(0, 100, 50);
+                colorSecondary = new Color(100, 200, 150);
+            }
+            case "sales person" -> {
+                roleLblText="sales person detected";
+                colorPrimary = new Color(255, 153, 51);
+                colorSecondary = new Color(230, 230, 230);
+            }
+            default -> {
+                roleLblText="unidentified user detected";
+                colorPrimary = new Color(244, 244, 244);
+                colorSecondary = new Color(230, 230, 230);
+            }
         }
+        initComponents();
+        rolelbl.setText(roleLblText);
         welcometxt.setText("Welcome " + this.user.getFullName());
     }
 
@@ -36,41 +65,118 @@ public class Mainpage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        bgPanel =  new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                int width = getWidth();
+                int height = getHeight();
+                java.awt.GradientPaint gp = new java.awt.GradientPaint(0, 0, colorPrimary, 0, height, colorSecondary);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, width, height);
+            }
+        };
         rolelbl = new javax.swing.JLabel();
         welcometxt = new javax.swing.JLabel();
+        jobMainbtn = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        staffList1 = new Interface.StaffList();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        rolelbl.setText("jLabel1");
+        rolelbl.setText("none detected");
 
         welcometxt.setText("Welcome, ");
+
+        jobMainbtn.setText("button1");
+        jobMainbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobMainbtnActionPerformed(evt);
+            }
+        });
+
+        jTabbedPane1.setBackground(new java.awt.Color(186, 255, 175));
+
+        javax.swing.GroupLayout staffList1Layout = new javax.swing.GroupLayout(staffList1);
+        staffList1.setLayout(staffList1Layout);
+        staffList1Layout.setHorizontalGroup(
+            staffList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 515, Short.MAX_VALUE)
+        );
+        staffList1Layout.setVerticalGroup(
+            staffList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 266, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("tab1", staffList1);
+
+        javax.swing.GroupLayout bgPanelLayout = new javax.swing.GroupLayout(bgPanel);
+        bgPanel.setLayout(bgPanelLayout);
+        bgPanelLayout.setHorizontalGroup(
+            bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bgPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jobMainbtn)
+                .addGap(45, 45, 45)
+                .addComponent(jTabbedPane1))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(203, 203, 203))
+            .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(bgPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(welcometxt)
+                    .addContainerGap(572, Short.MAX_VALUE)))
+        );
+        bgPanelLayout.setVerticalGroup(
+            bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bgPanelLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jobMainbtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(bgPanelLayout.createSequentialGroup()
+                .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
+            .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(bgPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(welcometxt)
+                    .addContainerGap(338, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(252, 252, 252)
-                        .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(welcometxt)))
-                .addContainerGap(280, Short.MAX_VALUE))
+            .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(welcometxt)
-                .addGap(66, 66, 66)
-                .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(209, Short.MAX_VALUE))
+            .addComponent(bgPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jobMainbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jobMainbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,7 +214,12 @@ public class Mainpage extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bgPanel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton jobMainbtn;
     private javax.swing.JLabel rolelbl;
+    private Interface.StaffList staffList1;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
 }

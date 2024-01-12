@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Classes;
-//import java.util.ArrayList;
-//import java.util.List;
+
 /**
  *
  * @author damonng
@@ -23,6 +22,7 @@ public class Admin extends User {
     
     @Override
     public String writeToFile(){
+        
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
