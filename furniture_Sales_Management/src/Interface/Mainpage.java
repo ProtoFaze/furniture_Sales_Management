@@ -160,6 +160,8 @@ public class Mainpage extends javax.swing.JFrame {
                     .addContainerGap(338, Short.MAX_VALUE)))
         );
 
+        welcometxt.setText("Welcome, ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
