@@ -13,17 +13,8 @@ import Interface.Login;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-/**
- * Outermost layer of the program, allows access to user information
- * 
- * @author damonng
- */
 public class Furniture_Sales_Management {
     private static List<User> users;
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         users = File.readUsers();
         
