@@ -116,6 +116,11 @@ public class Login extends javax.swing.JFrame {
                 txtUsernameFocusLost(evt);
             }
         });
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsernameActionPerformed(evt);
+            }
+        });
         txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtUsernameKeyPressed(evt);
@@ -330,7 +335,7 @@ public class Login extends javax.swing.JFrame {
                     lastUser.addProperty("passWord", pass);
                     lastUser.addProperty("userName", usr);
                     File.write("lastUser", lastUser);
-                    System.out.print("Updated latest login credentials");
+                    System.out.println("Updated latest login credentials");
                 }
                 Mainpage window = new Mainpage(currentUser);
                 window.setVisible(true);
@@ -397,6 +402,10 @@ public class Login extends javax.swing.JFrame {
             btnLogin.doClick();
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
+
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
     /**
      * @param args the command line arguments
