@@ -7,6 +7,7 @@ package Interface;
 import Classes.Admin;
 import Classes.User;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,6 +35,7 @@ public class ProfilePage extends javax.swing.JFrame {
         GenderTxt.setText(user.getGenderAsString());
         UserTxt.setText(user.getUserName());
         PassTxt.setText(user.getPass());
+        System.out.println(user);
     }
 
     /**
@@ -146,9 +148,9 @@ public class ProfilePage extends javax.swing.JFrame {
                     .addComponent(UserTxt)
                     .addComponent(PassTxt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(EditBtn))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BackBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                    .addComponent(EditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
@@ -199,12 +201,21 @@ public class ProfilePage extends javax.swing.JFrame {
 
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
         // TODO add your handling code here:
-        if (!edit){
-            Edit(true);
-            edit = true;
+        String status;
+        if (edit) {
+            status = "save";
         } else {
-            Edit(false);
-            edit = false;
+            status = "edit";
+        }
+        int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to " + status + "?","Confirm " + status, JOptionPane.YES_NO_OPTION);
+        if(n == JOptionPane.YES_OPTION){
+            if (!edit){
+                Edit(true);
+                edit = true;
+            } else {
+                Edit(false);
+                edit = false;
+            }
         }
     }//GEN-LAST:event_EditBtnActionPerformed
     
