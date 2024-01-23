@@ -158,7 +158,7 @@ public class Login extends javax.swing.JFrame {
     
     private void RegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterBtnActionPerformed
         // TODO add your handling code here:
-        Register page = new Register();
+        Register page = new Register(admins, users);
         page.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_RegisterBtnActionPerformed
