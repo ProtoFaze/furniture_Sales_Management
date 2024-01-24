@@ -7,6 +7,7 @@ package Interface;
 import Classes.Admin;
 import Classes.User;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,19 +18,24 @@ public class ProfilePage extends javax.swing.JFrame {
     /**
      * Creates new form ProfilePage
      */
-    String FullName;
     User user;
     private static List<User> users;
     private static List<Admin> admins;
+    boolean edit;
     
-    public ProfilePage(String FullName, User user, List<Admin> admins, List<User> users) {
-        this.FullName = FullName;
+    public ProfilePage(User user, List<Admin> admins, List<User> users) {
         this.user = user;
         this.admins = admins;
         this.users = users;
         
         initComponents();
-        NameTxt.setText(FullName);
+        NameTxt.setText(user.getFullName());
+        IdTxt.setText(user.getId());
+        EmailTxt.setText(user.getMail());
+        GenderTxt.setText(user.getGenderAsString());
+        UserTxt.setText(user.getUserName());
+        PassTxt.setText(user.getPass());
+        System.out.println(user);
     }
 
     /**
@@ -50,9 +56,12 @@ public class ProfilePage extends javax.swing.JFrame {
         BackBtn = new javax.swing.JButton();
         PassLbl = new javax.swing.JLabel();
         IdTxt = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        GenderTxt = new javax.swing.JLabel();
         NameTxt = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        EmailTxt = new javax.swing.JTextField();
+        UserTxt = new javax.swing.JTextField();
+        PassTxt = new javax.swing.JPasswordField();
+        EditBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,25 +95,40 @@ public class ProfilePage extends javax.swing.JFrame {
         PassLbl.setText("Password:");
 
         IdTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        IdTxt.setText("jLabel2");
+        IdTxt.setText("ID_NUMBER");
 
-        jLabel1.setText("jLabel1");
+        GenderTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        GenderTxt.setText("GENDER_M/F");
 
         NameTxt.setEditable(false);
         NameTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        NameTxt.setText("jTextField1");
+        NameTxt.setFocusable(false);
 
-        jTextField2.setText("jTextField2");
+        EmailTxt.setEditable(false);
+        EmailTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EmailTxt.setFocusable(false);
+
+        UserTxt.setEditable(false);
+        UserTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        UserTxt.setFocusable(false);
+
+        PassTxt.setEditable(false);
+        PassTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        PassTxt.setFocusable(false);
+
+        EditBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EditBtn.setText("Edit");
+        EditBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(108, 108, 108)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(UserLbl)
@@ -114,14 +138,20 @@ public class ProfilePage extends javax.swing.JFrame {
                     .addComponent(PassLbl)
                     .addComponent(EmailLbl))
                 .addGap(94, 94, 94)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(IdTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ProfileLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(NameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(194, Short.MAX_VALUE))
+                    .addComponent(NameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(EmailTxt)
+                    .addComponent(GenderTxt)
+                    .addComponent(UserTxt)
+                    .addComponent(PassTxt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BackBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                    .addComponent(EditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,16 +169,22 @@ public class ProfilePage extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(EmailLbl)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(EmailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(GenderLbl)
-                    .addComponent(jLabel1))
+                    .addComponent(GenderTxt))
                 .addGap(18, 18, 18)
-                .addComponent(UserLbl)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(UserLbl)
+                    .addComponent(UserTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(PassLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PassLbl)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(PassTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(EditBtn)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BackBtn)
                 .addGap(16, 16, 16))
         );
@@ -163,6 +199,41 @@ public class ProfilePage extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
 
+    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
+        // TODO add your handling code here:
+        String status;
+        if (edit) {
+            status = "save";
+        } else {
+            status = "edit";
+        }
+        int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to " + status + "?","Confirm " + status, JOptionPane.YES_NO_OPTION);
+        if(n == JOptionPane.YES_OPTION){
+            if (!edit){
+                Edit(true);
+                edit = true;
+            } else {
+                Edit(false);
+                edit = false;
+            }
+        }
+    }//GEN-LAST:event_EditBtnActionPerformed
+    
+    private void Edit(boolean flag){
+        NameTxt.setEditable(flag);
+        NameTxt.setFocusable(flag);
+        EmailTxt.setEditable(flag);
+        EmailTxt.setFocusable(flag);
+        UserTxt.setEditable(flag);
+        UserTxt.setFocusable(flag);
+        PassTxt.setEditable(flag);
+        PassTxt.setFocusable(flag);
+        if (flag) {
+            EditBtn.setText("Save");
+        } else {
+            EditBtn.setText("Edit");
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -200,16 +271,19 @@ public class ProfilePage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBtn;
+    private javax.swing.JButton EditBtn;
     private javax.swing.JLabel EmailLbl;
+    private javax.swing.JTextField EmailTxt;
     private javax.swing.JLabel GenderLbl;
+    private javax.swing.JLabel GenderTxt;
     private javax.swing.JLabel IdLbl;
     private javax.swing.JLabel IdTxt;
     private javax.swing.JLabel NameLbl;
     private javax.swing.JTextField NameTxt;
     private javax.swing.JLabel PassLbl;
+    private javax.swing.JPasswordField PassTxt;
     private javax.swing.JLabel ProfileLbl;
     private javax.swing.JLabel UserLbl;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField UserTxt;
     // End of variables declaration//GEN-END:variables
 }

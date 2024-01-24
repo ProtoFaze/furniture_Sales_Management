@@ -21,7 +21,6 @@ public class MainPage extends javax.swing.JFrame {
     * id would be useful for filtering records specific to current user
     */
     User user;
-    String FullName;
     private Color colorPrimary, colorSecondary;
     private static List<User> users;
     private static List<Admin> admins;
@@ -60,10 +59,9 @@ public class MainPage extends javax.swing.JFrame {
                 colorSecondary = new Color(230, 230, 230);
             }
         }
-        FullName = this.user.getFullName();
         initComponents();
         rolelbl.setText(roleLblText);
-        welcometxt.setText("Welcome " + FullName);
+        welcometxt.setText("Welcome " + user.getFullName());
     }
 
     /**
@@ -236,7 +234,7 @@ public class MainPage extends javax.swing.JFrame {
 
     private void ProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProfileBtnActionPerformed
         // TODO add your handling code here:
-        ProfilePage page = new ProfilePage(FullName, user, admins, users);
+        ProfilePage page = new ProfilePage(user, admins, users);
         page.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_ProfileBtnActionPerformed
