@@ -34,7 +34,6 @@ public class Login extends javax.swing.JFrame {
     public Login(List<Admin> admins, List<User> users) {
         initComponents();
         this.admins = admins;
-        
         this.users = users;
         helper = new Gson();
         
@@ -158,7 +157,7 @@ public class Login extends javax.swing.JFrame {
     
     private void RegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterBtnActionPerformed
         // TODO add your handling code here:
-        Register page = new Register();
+        Register page = new Register(admins, users);
         page.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_RegisterBtnActionPerformed
@@ -199,7 +198,7 @@ public class Login extends javax.swing.JFrame {
             }
         } else {
             //assign error text
-            JOptionPane.showMessageDialog(null, "Invalid", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, validUName+validPass, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_LoginBtnActionPerformed
 

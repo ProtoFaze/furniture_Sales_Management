@@ -234,6 +234,17 @@ public class ProfilePage extends javax.swing.JFrame {
             EditBtn.setText("Edit");
         }
     }
+    
+    private void saveChanges(){
+        for (User record:users){
+            if(user.getId().equals(record.getId())){
+                record.setFullName(NameTxt.getText());
+                record.setMail(EmailTxt.getText());
+                record.setUserName(UserTxt.getText());
+                record.setPass(String.valueOf(PassTxt.getPassword()));
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
