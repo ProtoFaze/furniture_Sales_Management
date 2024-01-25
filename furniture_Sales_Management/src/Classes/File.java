@@ -5,6 +5,7 @@
 package Classes;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -189,5 +190,20 @@ public class File {
         }catch (IOException ex){
             return ex.toString();
         }
+    }
+
+    /**
+     * write file for Lists of any kind <br>
+     * converts it into Json then uses write function for Json
+     * @param <T> allows for any type of data
+     * @param fileName name of the file to be edited
+     * @param content
+     * @return
+     */
+    public static <T> String write(String fileName, List<T> content){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonString = gson.toJson(content);
+        JsonArray json = gson.fromJson(jsonString, JsonArray.class);
+        return write(fileName, json);
     }
 }

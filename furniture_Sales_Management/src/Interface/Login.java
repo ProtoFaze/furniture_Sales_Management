@@ -34,7 +34,6 @@ public class Login extends javax.swing.JFrame {
     public Login(List<Admin> admins, List<User> users) {
         initComponents();
         this.admins = admins;
-        
         this.users = users;
         helper = new Gson();
         
@@ -199,7 +198,7 @@ public class Login extends javax.swing.JFrame {
             }
         } else {
             //assign error text
-            JOptionPane.showMessageDialog(null, "Invalid", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, validUName+validPass, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_LoginBtnActionPerformed
 
