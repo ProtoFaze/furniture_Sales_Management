@@ -9,11 +9,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter; 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,12 +51,37 @@ public class File {
             return null;
         }
     }
+
     public static JsonArray readArray(String fileName){
         try{
             JsonObject object  = read(fileName);
             return object.get(fileName).getAsJsonArray();
         } catch(IllegalStateException ex) {
             System.out.println("Failed to read File"+ex.toString());
+            return null;
+        }
+    }
+    /**
+     * reads the entire JSON text file 
+     * @param <T>
+     * @param fileName
+     * @param elementType
+     * @return a List with a specified type
+     */
+    public static <T> List<T> read(String fileName, Class<T> elementType) {
+        try{
+            Gson converter = new Gson();
+            //fetch inner JSON array
+            JsonArray array = readArray(fileName);
+            // Deserialize JSON array into a list of objects
+            if (array != null) {
+                return converter.fromJson(array, TypeToken.getParameterized(List.class, elementType).getType());
+            }else{
+                System.out.println("Failed to read File, empty list detected");
+                return null;
+            }
+        } catch (JsonSyntaxException e) {
+            System.out.println("Failed to read File"+e.toString());
             return null;
         }
     }
