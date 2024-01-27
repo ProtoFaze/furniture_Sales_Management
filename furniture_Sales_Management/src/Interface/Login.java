@@ -12,7 +12,6 @@ import Classes.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
 /**
@@ -228,51 +227,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
     }
-    
-    public static List<Admin> getAdmins(){
-        return users.stream()
-        .filter(user -> user.getRole().equals("admin"))
-        .map(user -> new Admin(
-                user.getId(), 
-                user.getUserName(), 
-                user.getFullName(), 
-                user.getMail(), 
-                user.getGender(), 
-                user.getDob(), 
-                user.getPass()
-        ))
-        .collect(Collectors.toList());
-    }
-    
-    public static List<Officer> getOfficer(){
-        return users.stream()
-        .filter(user -> user.getRole().equals("officer"))
-        .map(user -> new Officer(
-                user.getId(), 
-                user.getUserName(), 
-                user.getFullName(), 
-                user.getMail(), 
-                user.getGender(), 
-                user.getDob(), 
-                user.getPass()
-        ))
-        .collect(Collectors.toList());
-    }
-    
-    public static List<SalesPerson> getSalesPerson(){
-        return users.stream()
-        .filter(user -> user.getRole().equals("sales person"))
-        .map(user -> new SalesPerson(
-                user.getId(), 
-                user.getUserName(), 
-                user.getFullName(), 
-                user.getMail(), 
-                user.getGender(), 
-                user.getDob(), 
-                user.getPass()
-        ))
-        .collect(Collectors.toList());
-    }
+
     /**
      * @param args the command line arguments
      */
@@ -305,7 +260,7 @@ public class Login extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 users = File.readUsers();
-                new Login(getAdmins(), users).setVisible(true);
+                new Login(admins, users).setVisible(true);
             }
         });
     }
