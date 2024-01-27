@@ -16,7 +16,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter; 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,63 +113,6 @@ public class File {
             }
         }
         return users;
-    }
-    /**
-     * @deprecated please use getAdmins in main.<br>
-     * 
-     * extract admin records from user file
-     * @return an array list of admins
-     */
-    @Deprecated
-    public static List<Admin> readAdmins(){
-        //initialize HELPER function, name and list
-        Gson gson = new Gson();
-        String fileName = "user";
-        List<Admin> admins = new ArrayList<>();
-
-        // store json in memory 
-        JsonObject userJson = read(fileName);
-        JsonArray UserArray = userJson.getAsJsonArray(fileName);
-        
-        // store admins into list then return when done
-        for (JsonElement element: UserArray){
-            JsonObject adminJson = element.getAsJsonObject();
-            if ("admin".equals(adminJson.get("role").getAsString())){
-                System.out.println(adminJson);
-                Admin admin = gson.fromJson(adminJson, Admin.class);
-                admins.add(admin);
-            }else{
-            }
-        }
-        return admins;
-    }
-    /**
-     * @deprecated please use getOfficers in main.<br>
-     * extract officer records from user file
-     * @return an array list of officers
-     */
-    @Deprecated
-    public static List<Officer> readOfficers(){
-        //initialize HELPER function, name and list
-        Gson gson = new Gson();
-        String fileName = "user";
-        List<Officer> officers = new ArrayList<>();
-
-        // store json in memory 
-        JsonObject userJson = read(fileName);
-        JsonArray userArray = userJson.getAsJsonArray(fileName);
-        
-        // store admins into list then return when done
-        for (JsonElement element: userArray){
-            JsonObject officerJson = element.getAsJsonObject();
-            if ("officer".equals(officerJson.get("role").getAsString())){
-                System.out.println(officerJson);
-                Officer officer = gson.fromJson(officerJson, Officer.class);
-                officers.add(officer);
-            }else{
-            }
-        }
-        return officers;
     }
     
 
