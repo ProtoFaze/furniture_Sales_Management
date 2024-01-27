@@ -1,5 +1,7 @@
 package Classes;
 
+import java.util.List;
+
 /**
  *
  * @author damonng
@@ -8,6 +10,7 @@ public class Furniture {
     private String id,name,category,sellableOnline,link,shortDescription,designer;
     private double price;
     private int depth,height,width;
+    public static List<Furniture> list;
 
     public Furniture(String id, String name, String category, double price, String sellableOnline, String link, String shortDescription, String designer, int depth, int height, int width) {
         this.id = id;
@@ -110,6 +113,7 @@ public class Furniture {
     public void setWidth(int width) {
         this.width = width;
     }
-    
-    
+    public static void populateList(){
+       list = File.read("furniture", Furniture.class);
+    }
 }

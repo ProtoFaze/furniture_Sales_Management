@@ -5,34 +5,41 @@
 package Classes;
 //import java.util.ArrayList;
 //import java.util.List;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  *
  * @author damonng
  */
 public class SalesPerson extends User {
+    public static List<SalesPerson> salesPeople;
+    
+    static void subsetUser(){
+        if (User.list == null || User.list.isEmpty()) {
+            User.populateList();
+        }
+        salesPeople = User.list.stream()
+            .filter(user -> user.getRole().equals("sales person"))
+            .map(user -> new SalesPerson(user.getId(), user.getUserName(), user.getFullName(), user.getMail(), user.getGender(), user.getDob(), user.getPass()))
+            .collect(Collectors.toList());
+    }
+
+    //for read file
     public SalesPerson(String id, String userName, String fullName, String emailAddress, char gender, String dob, String passWord) {
         super(id, userName, fullName, emailAddress, gender, dob, passWord);
         this.role = "sales person";
     }
+    //for registration
+    public SalesPerson(String userName, String fullName, String emailAddress, char gender, String dob, String passWord) {
+        super(userName, fullName, emailAddress, gender, dob, passWord);
+        this.role = "sales person";
+    }
+
     
     @Override
     public String writeToFile(){
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void edit_Profile(String new_data, int attribute) {
-//        boolean verified = false;
-//        //verification
-//        if (verified == true){
-//            //apply changes
-//            switch (attribute){
-//                case 0 -> this.setName(new_data);
-//                case 1 -> this.setMail(new_data);
-//                case 2 -> this.setGender(new_data.charAt(0));
-//                case 3 -> this.setDOB(new_data);
-//            }
-//        }
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
