@@ -5,7 +5,6 @@
 package furniture_sales_management;
 
 import Classes.Admin;
-import Classes.File;
 import Classes.Officer;
 import Classes.SalesPerson;
 import Classes.User;
@@ -15,11 +14,15 @@ import java.util.stream.Collectors;
 
 public class Furniture_Sales_Management {
     private static List<User> users;
+    private static List<Admin> admins;
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
-        users = File.readUsers();
-        
-        Login login = new Login(getAdmins(), users);
-        login.setVisible(true);
+        users=User.list;
+        admins = Admin.admins;
+        Login page = new Login(admins,users);
+        page.setVisible(true);
     }
     /**
      * generates a copy of admin records stored in main<br>
