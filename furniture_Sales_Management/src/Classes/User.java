@@ -62,14 +62,25 @@ public abstract class User extends Person {
     public String getRole() {
         return role;
     }
-    
-    public static void populateList(){
-        list = File.readUsers();
+    /*
+    *Updates user file, list and subLists in subfunctions
+    */
+    public static void populateList() {
+        List<User> fetchData = File.readUsers(); // read user file, doesn't detect if it's new or old
+        if (list!=null && !list.equals(fetchData) && !list.containsAll(fetchData)) {
+            // user file is outdated
+            File.write("user", list);
+        }else{
+            list = fetchData;
+        }
+
+        // update list
         Admin.subsetUsers();
         Officer.subsetUser();
         SalesPerson.subsetUser();
-//        notify(list);
+        // notify(list);
     }
+
 //    private static void notify(List<User> newUserList) {
 //        for (ListUpdateListener listener : listeners) {
 //            listener.onListUpdated(newUserList);

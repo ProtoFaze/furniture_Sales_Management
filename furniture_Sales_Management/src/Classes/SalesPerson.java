@@ -22,7 +22,7 @@ public class SalesPerson extends User {
         }
         salesPeople = User.list.stream()
             .filter(user -> user.getRole().equals("sales person"))
-            .map(user -> new SalesPerson(user.getId(), user.getUserName(), user.getFullName(), user.getMail(), user.getGender(), user.getDob(), user.getPass()))
+            .map(user -> (SalesPerson) user)
             .collect(Collectors.toList());
     }
 

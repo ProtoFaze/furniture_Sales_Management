@@ -20,7 +20,7 @@ public class Officer extends User{
         }
         officers = User.list.stream()
             .filter(user -> user.getRole().equals("officer"))
-            .map(user -> new Officer(user.getId(), user.getUserName(), user.getFullName(), user.getMail(), user.getGender(), user.getDob(), user.getPass()))
+            .map(user -> (Officer) user)
             .collect(Collectors.toList());
     }
     
