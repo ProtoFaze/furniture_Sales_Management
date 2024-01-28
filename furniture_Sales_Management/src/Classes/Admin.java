@@ -20,7 +20,7 @@ public class Admin extends User{
         }
         admins = User.list.stream()
             .filter(user -> user.getRole().equals("admin"))
-            .map(user -> new Admin(user.getId(), user.getUserName(), user.getFullName(), user.getMail(), user.getGender(), user.getDob(), user.getPass()))
+            .map(user -> (Admin) user)
             .collect(Collectors.toList());
     }
     
