@@ -106,7 +106,7 @@ public class File {
                     users.add(user);
                 }
                 case "sales person" ->{
-                    user = gson.fromJson(object, Officer.class);
+                    user = gson.fromJson(object, SalesPerson.class);
                     users.add(user);
                 }
 
