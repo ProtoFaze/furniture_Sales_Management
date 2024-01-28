@@ -23,10 +23,10 @@ public class ProfilePage extends javax.swing.JFrame {
     private static List<Admin> admins;
     boolean edit;
     
-    public ProfilePage(User user, List<Admin> admins, List<User> users) {
+    public ProfilePage(User user) {
         this.user = user;
-        this.admins = admins;
-        this.users = users;
+        this.admins = Admin.admins;
+        this.users = User.list;
         
         initComponents();
         NameTxt.setText(user.getFullName());
@@ -194,7 +194,7 @@ public class ProfilePage extends javax.swing.JFrame {
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-        MainPage page = new MainPage(user, admins, users);
+        MainPage page = new MainPage(user);
         page.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed

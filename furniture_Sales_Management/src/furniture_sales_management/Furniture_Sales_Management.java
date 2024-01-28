@@ -21,10 +21,10 @@ public class Furniture_Sales_Management {
     public static void main(String[] args) {
         users=User.list;
         admins = Admin.admins;
-        Login page = new Login(admins,users);
+        Login page = new Login();
         page.setVisible(true);
     }
-    /**
+    /** @deprecated please use Admin.admins in Admin.<br>
      * generates a copy of admin records stored in main<br>
      * for read purposes only<br>
      * editing this copy does not affect the one in main
@@ -36,7 +36,7 @@ public class Furniture_Sales_Management {
         .map(user -> new Admin(user.getId(), user.getUserName(), user.getFullName(), user.getMail(), user.getGender(), user.getDob(), user.getPass()))
         .collect(Collectors.toList());
     }
-    /**
+    /** @deprecated please use Officer.officers in Officer.<br>
      * generates a copy of admin records stored in main<br>
      * for read purposes only<br>
      * editing this copy does not affect the one in main
@@ -48,7 +48,7 @@ public class Furniture_Sales_Management {
         .map(user -> new Officer(user.getId(), user.getUserName(), user.getFullName(), user.getMail(), user.getGender(), user.getDob(), user.getPass()))
         .collect(Collectors.toList());
     }
-    /**
+    /** @deprecated please use SalesPerson.salesPeople in SalesPerson.<br>
      * generates a copy of admin records stored in main<br>
      * for read purposes only<br>
      * editing this copy does not affect the one in main
