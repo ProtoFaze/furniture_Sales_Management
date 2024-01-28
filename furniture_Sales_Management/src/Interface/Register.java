@@ -25,9 +25,9 @@ public class Register extends javax.swing.JFrame {
     private static List<User> users;
     private static List<Admin> admins;
     
-    public Register(List<Admin> admins, List<User> users) {
-        this.users = users;
-        this.admins = admins;
+    public Register() {
+        this.users = User.list;
+        this.admins = Admin.admins;
         initComponents();
     }
 
@@ -532,13 +532,13 @@ public class Register extends javax.swing.JFrame {
                 }
             }
             users.add(applicant);
-            String res=File.write("user", users);;
+            String res=File.write("user", users);
             if("Success".equals(res)){
                 JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
             }else{          
                 JOptionPane.showMessageDialog(null, "Could not write into file due to "+res,"Error",JOptionPane.ERROR_MESSAGE);
             }
-            MainPage page  = new MainPage(applicant, admins,users);
+            MainPage page  = new MainPage(applicant);
             page.setVisible(true);
             this.setVisible(false);
         }else{
@@ -614,7 +614,7 @@ public class Register extends javax.swing.JFrame {
 
     private void btnRedirectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedirectActionPerformed
         // TODO add your handling code here:
-        Login button = new Login(admins, users);
+        Login button = new Login();
         button.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRedirectActionPerformed

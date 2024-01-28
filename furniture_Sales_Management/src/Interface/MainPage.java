@@ -29,12 +29,12 @@ public class MainPage extends javax.swing.JFrame {
      * Creates new form MainPage
      * @param user
      */
-    public MainPage(User user, List<Admin> admins, List<User> users) {
+    public MainPage(User user) {
 
         this.user = user;
         String roleLblText;
-        this.admins = admins;
-        this.users = users;
+        this.admins = Admin.admins;
+        this.users = User.list;
         
         //setColor scheme
         switch (this.user.getRole()){
@@ -226,7 +226,7 @@ public class MainPage extends javax.swing.JFrame {
         int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?","Confirm Exit", JOptionPane.YES_NO_OPTION);
         if(n == JOptionPane.YES_OPTION){
             JOptionPane.showMessageDialog(null, "Logging out.","Exiting", JOptionPane.INFORMATION_MESSAGE);
-            Login page = new Login(admins, users);
+            Login page = new Login();
             page.setVisible(true);
             this.setVisible(false);
         }
@@ -234,7 +234,7 @@ public class MainPage extends javax.swing.JFrame {
 
     private void ProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProfileBtnActionPerformed
         // TODO add your handling code here:
-        ProfilePage page = new ProfilePage(user, admins, users);
+        ProfilePage page = new ProfilePage(user);
         page.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_ProfileBtnActionPerformed

@@ -25,15 +25,15 @@ public class Login extends javax.swing.JFrame {
      */
     private int chance = 3;   
     private static List<User> users;
-    private static List<Admin> admins;
+    public static List<Admin> admins;
     private User currentUser;
     private JsonObject lastUser;
     private final Gson helper;
     
-    public Login(List<Admin> admins, List<User> users) {
+    public Login() {
         initComponents();
-        this.admins = admins;
-        this.users = users;
+        this.admins = Admin.admins;
+        this.users = User.list;
         helper = new Gson();
         
 
@@ -155,14 +155,12 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void RegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterBtnActionPerformed
-        // TODO add your handling code here:
-        Register page = new Register(admins, users);
+        Register page = new Register();
         page.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_RegisterBtnActionPerformed
 
     private void LoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBtnActionPerformed
-        // TODO add your handling code here:
         String usr,pass,
         validUName = null, validPass = null;
         //assign values
@@ -191,7 +189,7 @@ public class Login extends javax.swing.JFrame {
                    File.write("lastUser", lastUser);
                    System.out.print("Updated latest login credentials");
                 }
-                MainPage window = new MainPage(currentUser, admins, users);
+                MainPage window = new MainPage(currentUser);
                 window.setVisible(true);
                 this.setVisible(false);
             }
@@ -202,7 +200,6 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_LoginBtnActionPerformed
 
     private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
-        // TODO add your handling code here:
         int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit login.","Confirm Exit", JOptionPane.YES_NO_OPTION);
         if(n == JOptionPane.YES_OPTION){
             JOptionPane.showMessageDialog(null, "Thank you for using the system.","Exiting registration", JOptionPane.INFORMATION_MESSAGE);
@@ -259,8 +256,7 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                users = File.readUsers();
-                new Login(admins, users).setVisible(true);
+                new Login().setVisible(true);
             }
         });
     }
