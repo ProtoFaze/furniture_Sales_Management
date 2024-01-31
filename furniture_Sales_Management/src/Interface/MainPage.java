@@ -93,6 +93,7 @@ public class MainPage extends javax.swing.JFrame {
         staffList1 = new Interface.StaffList();
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
+        staffList2 = new Interface.StaffList();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -127,11 +128,11 @@ public class MainPage extends javax.swing.JFrame {
         staffList1.setLayout(staffList1Layout);
         staffList1Layout.setHorizontalGroup(
             staffList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
+            .addGap(0, 545, Short.MAX_VALUE)
         );
         staffList1Layout.setVerticalGroup(
             staffList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 268, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("tab1", staffList1);
@@ -165,7 +166,11 @@ public class MainPage extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addComponent(LogoutBtn)))
                 .addGap(31, 31, 31)
-                .addComponent(jTabbedPane1))
+                .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
+                    .addGroup(bgPanelLayout.createSequentialGroup()
+                        .addComponent(staffList2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,7 +200,8 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(ProfileBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(staffList2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(bgPanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -283,6 +289,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jobMainbtn;
     private javax.swing.JLabel rolelbl;
     private Interface.StaffList staffList1;
+    private Interface.StaffList staffList2;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
 }
