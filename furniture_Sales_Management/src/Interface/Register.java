@@ -80,15 +80,15 @@ public class Register extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Rockwell", 0, 10)); // NOI18N
 
-        pageTitle.setFont(new java.awt.Font("SF Pro", 0, 24)); // NOI18N
+        pageTitle.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         pageTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pageTitle.setText("Staff Registration");
         pageTitle.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        lblPassword.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        lblPassword.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblPassword.setText("Password:");
 
-        txtPassword.setFont(new java.awt.Font("Rockwell", 0, 12)); // NOI18N
+        txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtPassword.setPreferredSize(new java.awt.Dimension(64, 26));
 
         javax.swing.GroupLayout passwordLayout = new javax.swing.GroupLayout(password);
@@ -109,15 +109,15 @@ public class Register extends javax.swing.JFrame {
                 .addComponent(lblPassword))
         );
 
-        lblGender.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        lblGender.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblGender.setText("Gender:");
 
         grpGender.add(radMale);
-        radMale.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        radMale.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radMale.setText("Male");
 
         grpGender.add(radFemale);
-        radFemale.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        radFemale.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radFemale.setText("Female");
 
         javax.swing.GroupLayout genderLayout = new javax.swing.GroupLayout(gender);
@@ -144,10 +144,10 @@ public class Register extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        lblEmail.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        lblEmail.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblEmail.setText("Email:");
 
-        txtEmail.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        txtEmail.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(204, 204, 204));
         txtEmail.setText("example@mail.my");
         txtEmail.setMinimumSize(new java.awt.Dimension(64, 26));
@@ -181,11 +181,11 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        lblName.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        lblName.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblName.setLabelFor(txtUsername);
         lblName.setText("Name:");
 
-        txtName.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        txtName.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtName.setForeground(new java.awt.Color(204, 204, 204));
         txtName.setText("Your name");
         txtName.setMinimumSize(new java.awt.Dimension(64, 26));
@@ -218,7 +218,7 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        lblDOB.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        lblDOB.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblDOB.setText("DOB:");
 
         javax.swing.GroupLayout dateLayout = new javax.swing.GroupLayout(date);
@@ -241,11 +241,11 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        lblUsername.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        lblUsername.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblUsername.setLabelFor(txtUsername);
         lblUsername.setText("Username:");
 
-        txtUsername.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(204, 204, 204));
         txtUsername.setText("Enter username");
         txtUsername.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -277,19 +277,19 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        lblEmail1.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        lblEmail1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblEmail1.setText("Role :");
 
         grpRole.add(radAdmin);
-        radAdmin.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        radAdmin.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radAdmin.setText("Admin");
 
         grpRole.add(radSalesPerson);
-        radSalesPerson.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        radSalesPerson.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radSalesPerson.setText("Sales Person");
 
         grpRole.add(radOfficer);
-        radOfficer.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        radOfficer.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radOfficer.setText("Officer");
 
         javax.swing.GroupLayout RoleLayout = new javax.swing.GroupLayout(Role);
@@ -316,10 +316,10 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(radAdmin)
                     .addComponent(radSalesPerson)
                     .addComponent(radOfficer))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnRegister.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        btnRegister.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnRegister.setText("Register");
         btnRegister.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnRegister.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -329,7 +329,7 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        btnRedirect.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        btnRedirect.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnRedirect.setText("Login");
         btnRedirect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,7 +337,7 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        btnReset.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        btnReset.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnReset.setText("Reset");
         btnReset.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnReset.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -347,7 +347,7 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        btnBack.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        btnBack.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnBack.setText("Exit");
         btnBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnBack.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -378,10 +378,10 @@ public class Register extends javax.swing.JFrame {
             .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
-        lblPasswordRetype.setFont(new java.awt.Font("SF Pro", 0, 12)); // NOI18N
+        lblPasswordRetype.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblPasswordRetype.setText("Retype Password:");
 
-        txtPasswordRetype.setFont(new java.awt.Font("Rockwell", 0, 12)); // NOI18N
+        txtPasswordRetype.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtPasswordRetype.setPreferredSize(new java.awt.Dimension(64, 26));
 
         javax.swing.GroupLayout retypePasswordLayout = new javax.swing.GroupLayout(retypePassword);
@@ -390,7 +390,7 @@ public class Register extends javax.swing.JFrame {
             retypePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, retypePasswordLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPasswordRetype, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblPasswordRetype)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtPasswordRetype, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
