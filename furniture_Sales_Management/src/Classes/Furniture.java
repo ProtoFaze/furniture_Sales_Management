@@ -12,6 +12,9 @@ public class Furniture {
     private int depth,height,width;
     public static List<Furniture> list;
 
+    static{
+        populateList();
+    }
     public Furniture(String id, String name, String category, double price, String sellableOnline, String link, String shortDescription, String designer, int depth, int height, int width) {
         this.id = id;
         this.name = name;

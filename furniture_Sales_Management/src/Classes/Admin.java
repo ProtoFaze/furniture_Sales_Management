@@ -13,7 +13,9 @@ import java.util.stream.Collectors;
  */
 public class Admin extends User{
     public static List<Admin> admins;
-    
+    static{
+        subsetUsers();
+    }
     static void subsetUsers(){
         if (User.list == null || User.list.isEmpty()) {
             User.populateList();

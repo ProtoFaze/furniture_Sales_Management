@@ -76,8 +76,8 @@ public abstract class User extends Person {
 
         // update list
         Admin.subsetUsers();
-        Officer.subsetUser();
-        SalesPerson.subsetUser();
+        Officer.subsetUsers();
+        SalesPerson.subsetUsers();
         // notify(list);
     }
 
