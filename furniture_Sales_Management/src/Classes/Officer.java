@@ -14,7 +14,11 @@ import java.util.stream.Collectors;
 public class Officer extends User{
     public static List<Officer> officers;
     
-    static void subsetUser(){
+    static{
+        subsetUsers();
+    }
+    
+    static void subsetUsers(){
         if (User.list == null || User.list.isEmpty()) {
             User.populateList();
         }
