@@ -15,8 +15,13 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.RowFilter.Entry;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -25,6 +30,7 @@ import javax.swing.table.TableCellRenderer;
 public class StaffList extends javax.swing.JPanel {
     MainPage parent;
     User selectedWorker;
+    private ProfilePage subPage;
     private DefaultTableModel helper;
     private JButton btnInspect;
     private static List<Officer> officers;
@@ -60,28 +66,55 @@ public class StaffList extends javax.swing.JPanel {
                 .filter(worker -> worker.getId().equals(id))
                 .findFirst()
                 .ifPresent(worker -> selectedWorker = worker);
+                subPage = new ProfilePage(this);
+                subPage.setVisible(true);
             });
         }
     }
 
-
     public void populateTable(){
-        this.helper = (DefaultTableModel) tblworkers.getModel();
-        helper.setRowCount(0);
-        System.out.println(helper.getRowCount());
-        Object row[] = new Object[5]; 
-        for (User worker : workers) {
-            //add to new temp table if room is available
-            row[0] = worker.getId();
-            row[1] = worker.getFullName();
-            row[2] = worker.getMail();
-            helper.addRow(row);
-
-            
-        }
-        System.out.println(helper.getRowCount());
-
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                helper = (DefaultTableModel) tblworkers.getModel();
+                helper.setRowCount(0);
+                Object row[] = new Object[5]; 
+                for (User worker : workers) {
+                    //add to new temp table if room is available
+                    row[0] = worker.getId();
+                    row[1] = worker.getFullName();
+                    row[2] = worker.getMail();
+                    row[3] = worker.getDob();
+                    helper.addRow(row);
+                }
+            }
+        });
     }
+    public void populateTable(String filter){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                // Create a TableRowSorter and set it to the JTable
+                TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblworkers.getModel());
+                tblworkers.setRowSorter(sorter);
+
+                // Create a RowFilter based on the filter condition
+                RowFilter<Object, Object> rowFilter = new RowFilter<Object, Object>() {
+                    public boolean include(Entry<?, ?> entry) {
+                        // Get the ID column (column 0), and return "false" if the ID does not meet the filter condition
+                        String id = entry.getStringValue(0);
+                        switch(filter){
+                            case"only officers"->     {return officers.stream().anyMatch(officer -> officer.getId().equals(id));}
+                            case"only sales people"-> {return salesPeople.stream().anyMatch(salesPerson -> salesPerson.getId().equals(id));}
+                            default->           {return true;}
+                        }
+                    }
+                };
+                sorter.setRowFilter(rowFilter);
+            }
+        });
+    }
+    
     class ButtonRenderer extends JButton implements TableCellRenderer{
         public ButtonRenderer(){
             setOpaque(true);
@@ -89,7 +122,7 @@ public class StaffList extends javax.swing.JPanel {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null)? "btnInspect" : value.toString());
+            setText((value == null)? "Inspect" : value.toString());
             return this;
         }
 
@@ -125,39 +158,47 @@ public class StaffList extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblworkers = new javax.swing.JTable();
         title = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        filter = new javax.swing.JComboBox<>();
 
         tblworkers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Email", "Title 4", "Action"
+                "ID", "Name", "Email", "Birth Date", "Action"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tblworkers.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblworkers);
         if (tblworkers.getColumnModel().getColumnCount() > 0) {
             tblworkers.getColumnModel().getColumn(0).setResizable(false);
+            tblworkers.getColumnModel().getColumn(0).setPreferredWidth(10);
             tblworkers.getColumnModel().getColumn(2).setResizable(false);
             tblworkers.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         title.setText("Staff List");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        filter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Only officers", "Only sales people" }));
+        filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                filterActionPerformed(evt);
             }
         });
 
@@ -168,34 +209,32 @@ public class StaffList extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(title)
-                    .addComponent(jButton1))
+                    .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        populateTable();
-        System.out.println("reloaded");
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    private void filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterActionPerformed
+        populateTable(filter.getSelectedItem().toString().toLowerCase());
+    }//GEN-LAST:event_filterActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> filter;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblworkers;
     private javax.swing.JLabel title;

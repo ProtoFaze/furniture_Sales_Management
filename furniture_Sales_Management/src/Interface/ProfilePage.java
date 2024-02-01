@@ -217,7 +217,7 @@ public class ProfilePage extends javax.swing.JFrame {
             parent.setVisible(true);
         }else{
             workerSource.selectedWorker = user;
-            workerSource.populateTable("");
+            workerSource.populateTable();
             workerSource.setVisible(true);
         }
         this.setVisible(false);
