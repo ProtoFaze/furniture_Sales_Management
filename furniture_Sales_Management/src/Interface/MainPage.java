@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Interface;
 
 import Classes.Admin;
@@ -21,6 +17,7 @@ public class MainPage extends javax.swing.JFrame {
     * id would be useful for filtering records specific to current user
     */
     User user;
+    ProfilePage profilePage;
     private Color colorPrimary, colorSecondary;
     private static List<User> users;
     private static List<Admin> admins;
@@ -35,8 +32,9 @@ public class MainPage extends javax.swing.JFrame {
         String roleLblText;
         this.admins = Admin.admins;
         this.users = User.list;
-        
-        //setColor scheme
+        profilePage = new ProfilePage(this);
+
+        //PREINIT-setColor scheme
         switch (this.user.getRole()){
             case "admin" -> {
                 roleLblText="admin detected";
@@ -61,9 +59,14 @@ public class MainPage extends javax.swing.JFrame {
         }
         initComponents();
         rolelbl.setText(roleLblText);
-        welcometxt.setText("Welcome " + user.getFullName());
+        loadData();
     }
 
+    void loadData(){
+        welcometxt.setText("Welcome " + user.getFullName());
+//        staffList1 = new StaffList(this);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,8 +92,8 @@ public class MainPage extends javax.swing.JFrame {
         rolelbl = new javax.swing.JLabel();
         welcometxt = new javax.swing.JLabel();
         jobMainbtn = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        staffList1 = new Interface.StaffList();
+        Tabs = new javax.swing.JTabbedPane();
+        staffList1 = new Interface.StaffList(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
 
@@ -121,20 +124,9 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
 
-        jTabbedPane1.setBackground(new java.awt.Color(186, 255, 175));
-
-        javax.swing.GroupLayout staffList1Layout = new javax.swing.GroupLayout(staffList1);
-        staffList1.setLayout(staffList1Layout);
-        staffList1Layout.setHorizontalGroup(
-            staffList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
-        );
-        staffList1Layout.setVerticalGroup(
-            staffList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 268, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab1", staffList1);
+        Tabs.setBackground(new java.awt.Color(186, 255, 175));
+        Tabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        Tabs.addTab("tab1", staffList1);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -165,7 +157,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addComponent(LogoutBtn)))
                 .addGap(31, 31, 31)
-                .addComponent(jTabbedPane1))
+                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 566, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,7 +186,7 @@ public class MainPage extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
                         .addComponent(ProfileBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(jTabbedPane1)
+                .addComponent(Tabs)
                 .addContainerGap())
             .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(bgPanelLayout.createSequentialGroup()
@@ -222,7 +214,6 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jobMainbtnActionPerformed
 
     private void LogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtnActionPerformed
-        // TODO add your handling code here:
         int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?","Confirm Exit", JOptionPane.YES_NO_OPTION);
         if(n == JOptionPane.YES_OPTION){
             JOptionPane.showMessageDialog(null, "Logging out.","Exiting", JOptionPane.INFORMATION_MESSAGE);
@@ -233,9 +224,7 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoutBtnActionPerformed
 
     private void ProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProfileBtnActionPerformed
-        // TODO add your handling code here:
-        ProfilePage page = new ProfilePage(user);
-        page.setVisible(true);
+        profilePage.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_ProfileBtnActionPerformed
 
@@ -277,9 +266,9 @@ public class MainPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogoutBtn;
     private javax.swing.JButton ProfileBtn;
+    private javax.swing.JTabbedPane Tabs;
     private javax.swing.JPanel bgPanel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jobMainbtn;
     private javax.swing.JLabel rolelbl;
     private Interface.StaffList staffList1;

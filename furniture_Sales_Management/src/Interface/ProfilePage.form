@@ -43,7 +43,7 @@
                   <Component id="UserTxt" alignment="0" max="32767" attributes="0"/>
                   <Component id="PassTxt" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="99" max="32767" attributes="0"/>
+              <EmptySpace pref="98" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="BackBtn" pref="79" max="32767" attributes="0"/>
                   <Component id="EditBtn" max="32767" attributes="0"/>
