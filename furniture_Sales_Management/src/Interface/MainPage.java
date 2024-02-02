@@ -89,8 +89,8 @@ public class MainPage extends javax.swing.JFrame {
         rolelbl = new javax.swing.JLabel();
         welcometxt = new javax.swing.JLabel();
         jobMainbtn = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        staffList1 = new Interface.StaffList();
+        Tabs = new javax.swing.JTabbedPane();
+        staffList2 = new Interface.StaffList();
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
         staffList2 = new Interface.StaffList();
@@ -122,20 +122,9 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
 
-        jTabbedPane1.setBackground(new java.awt.Color(186, 255, 175));
-
-        javax.swing.GroupLayout staffList1Layout = new javax.swing.GroupLayout(staffList1);
-        staffList1.setLayout(staffList1Layout);
-        staffList1Layout.setHorizontalGroup(
-            staffList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
-        );
-        staffList1Layout.setVerticalGroup(
-            staffList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab1", staffList1);
+        Tabs.setBackground(new java.awt.Color(186, 255, 175));
+        Tabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        Tabs.addTab("tab1", staffList2);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -166,11 +155,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addComponent(LogoutBtn)))
                 .addGap(31, 31, 31)
-                .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
-                    .addGroup(bgPanelLayout.createSequentialGroup()
-                        .addComponent(staffList2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,7 +273,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jobMainbtn;
     private javax.swing.JLabel rolelbl;
-    private Interface.StaffList staffList1;
     private Interface.StaffList staffList2;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
