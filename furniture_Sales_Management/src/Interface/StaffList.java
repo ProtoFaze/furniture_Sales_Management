@@ -104,10 +104,8 @@ public class StaffList extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        StaffLbl.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        StaffLbl.setText("Staff List");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblworkers.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        tblworkers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -142,10 +140,12 @@ public class StaffList extends javax.swing.JPanel {
             tblworkers.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        title.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         title.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         title.setText("Staff List");
 
-        filter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show All", "Officers", "Salesperson" }));
+        filter.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        filter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Only officers", "Only sales people" }));
         filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filterActionPerformed(evt);
@@ -167,12 +167,14 @@ public class StaffList extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(StaffLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(title)
+                    .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
