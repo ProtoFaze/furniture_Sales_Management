@@ -67,6 +67,9 @@ public class MainPage extends javax.swing.JFrame {
 //        staffList1 = new StaffList(this);
         
     }
+    public void changeTab(int index){
+        Tabs.setSelectedIndex(index);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,6 +97,8 @@ public class MainPage extends javax.swing.JFrame {
         jobMainbtn = new javax.swing.JButton();
         Tabs = new javax.swing.JTabbedPane();
         staffList1 = new Interface.StaffList(this);
+        generateReport1 = new Interface.GenerateDocument(this);
+        createSalesOrder11 = new Interface.CreateSalesOrder1(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
 
@@ -127,6 +132,8 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.setBackground(new java.awt.Color(186, 255, 175));
         Tabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         Tabs.addTab("tab1", staffList1);
+        Tabs.addTab("tab2", generateReport1);
+        Tabs.addTab("tab3", createSalesOrder11);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -157,7 +164,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addComponent(LogoutBtn)))
                 .addGap(31, 31, 31)
-                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 566, Short.MAX_VALUE))
+                .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,7 +217,6 @@ public class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jobMainbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtnActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jobMainbtnActionPerformed
 
     private void LogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtnActionPerformed
@@ -268,6 +274,8 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton ProfileBtn;
     private javax.swing.JTabbedPane Tabs;
     private javax.swing.JPanel bgPanel;
+    private Interface.CreateSalesOrder1 createSalesOrder11;
+    private Interface.GenerateDocument generateReport1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbtn;
     private javax.swing.JLabel rolelbl;

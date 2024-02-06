@@ -104,9 +104,9 @@ public class StaffList extends javax.swing.JPanel {
                         // Get the ID column (column 0), and return "false" if the ID does not meet the filter condition
                         String id = entry.getStringValue(0);
                         switch(filter){
-                            case"only officers"->     {return officers.stream().anyMatch(officer -> officer.getId().equals(id));}
-                            case"only sales people"-> {return salesPeople.stream().anyMatch(salesPerson -> salesPerson.getId().equals(id));}
-                            default->           {return true;}
+                            case"officers"->     {return officers.stream().anyMatch(officer -> officer.getId().equals(id));}
+                            case"sales person"-> {return salesPeople.stream().anyMatch(salesPerson -> salesPerson.getId().equals(id));}
+                            default->            {return true;}
                         }
                     }
                 };
@@ -195,7 +195,7 @@ public class StaffList extends javax.swing.JPanel {
         title.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         title.setText("Staff List");
 
-        filter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Only officers", "Only sales people" }));
+        filter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Officers", "Sales Person" }));
         filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filterActionPerformed(evt);
