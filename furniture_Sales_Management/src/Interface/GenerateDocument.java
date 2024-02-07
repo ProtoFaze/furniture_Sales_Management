@@ -8,9 +8,11 @@ import Classes.SalesOrder;
 import Classes.User;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
@@ -96,7 +98,9 @@ public class GenerateDocument extends javax.swing.JPanel {
             //assign values
             String recordId = salesOrder.getId();
             String productionState = salesOrder.getStatus();
+
             LocalDate generationDate = Login.DateToLocalDate(new Date("today"));
+
             //booking status check
             if (recordId.equals(id) && productionState.equals("done")) { //matched record and state
                 // Check if the generation date is out of the date range

@@ -16,7 +16,11 @@ import java.util.stream.Collectors;
 public class SalesPerson extends User {
     public static List<SalesPerson> salesPeople;
     
-    static void subsetUser(){
+    static{
+        subsetUsers();
+    }
+    
+    static void subsetUsers(){
         if (User.list == null || User.list.isEmpty()) {
             User.populateList();
         }

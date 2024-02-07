@@ -42,7 +42,6 @@ public class Login extends javax.swing.JFrame {
         
 
         this.lastUser = File.read("lastUser");
-        System.out.print(lastUser);
         lastUser = lastUser.get("lastUser").getAsJsonObject();
         if(lastUser != null){
             UserTxt.setText(lastUser.get("userName").getAsString());
@@ -61,12 +60,12 @@ public class Login extends javax.swing.JFrame {
 
         LoginLbl = new javax.swing.JLabel();
         UserLbl = new javax.swing.JLabel();
-        PassLbl = new javax.swing.JLabel();
         UserTxt = new javax.swing.JTextField();
+        PassLbl = new javax.swing.JLabel();
+        PassTxt = new javax.swing.JPasswordField();
         RegisterBtn = new javax.swing.JButton();
         LoginBtn = new javax.swing.JButton();
         ExitBtn = new javax.swing.JButton();
-        PassTxt = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,10 +75,12 @@ public class Login extends javax.swing.JFrame {
         UserLbl.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         UserLbl.setText("Username:");
 
+        UserTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+
         PassLbl.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         PassLbl.setText("Password:");
 
-        UserTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        PassTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
 
         RegisterBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         RegisterBtn.setText("Register");
@@ -105,8 +106,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        PassTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,7 +116,7 @@ public class Login extends javax.swing.JFrame {
                         .addGap(278, 278, 278)
                         .addComponent(LoginLbl))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
+                        .addContainerGap(123, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(UserLbl)
                             .addComponent(PassLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -186,8 +185,8 @@ public class Login extends javax.swing.JFrame {
                 }
             //Record found
             } else {
-                if(usr.equals(lastUser.get("userName").getAsString())&&
-                   pass.equals(lastUser.get("passWord").getAsString())){
+                if(!usr.equals(lastUser.get("userName").getAsString())&&
+                   !pass.equals(lastUser.get("passWord").getAsString())){
                    lastUser.addProperty("passWord", pass);
                    lastUser.addProperty("userName", usr);
                    File.write("lastUser", lastUser);
@@ -269,7 +268,6 @@ public class Login extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

@@ -26,15 +26,16 @@ import java.util.List;
  * @author damonng
  */
 public class File {
-    private static final String SRCPATH = "./src/data/", EXT = ".txt";
-//    private static final Gson HELPER = new Gson();
+    private static final String PROJECTDIRECTORY = System.getProperty("user.dir"), REPORTPATH = "./src/Report/", DATAPATH = "./src/data/", EXT = ".txt";
+    //private static final Gson HELPER = new Gson();
+    //<editor-fold defaultstate="collapsed" desc="read operations">
     /**
      * reads the entire JSON text file
      * @param fileName name of the file to read
      * @return JSONObject if successful, error message if not successful
      */
     public static JsonObject read(String fileName){
-        try(BufferedReader br = new BufferedReader(new FileReader(SRCPATH+fileName+EXT))){
+        try(BufferedReader br = new BufferedReader(new FileReader(DATAPATH+fileName+EXT))){
             //Convert to JSON String
             Gson gson = new Gson();
             StringBuilder jsonContent = new StringBuilder();
@@ -57,6 +58,12 @@ public class File {
             return object.get(fileName).getAsJsonArray();
         } catch(IllegalStateException ex) {
             System.out.println("Failed to read File"+ex.toString());
+            return null;
+        } catch(NullPointerException ex) {
+            System.out.println("""
+                               Failed to read File because the array was null
+                               possible causes wrong fileName, wrong JsonKey name
+                               """+ex.toString());
             return null;
         }
     }
@@ -114,8 +121,9 @@ public class File {
         }
         return users;
     }
+    //</editor-fold>
     
-
+    //<editor-fold defaultstate="collapsed" desc="write operations">
     /**
      * For files containing multiple records, like users, sales<br>
      * rewrites the entire file to edit//add info, usable for 1 element containing array only<br>
@@ -126,7 +134,7 @@ public class File {
      * @return status of edit operation
      */
     public static String write(String fileName, JsonArray contents){
-        String file = SRCPATH+fileName+EXT;
+        String file = DATAPATH+fileName+EXT;
         try(PrintWriter outputFile = new PrintWriter(new FileWriter(file, false))){
             int size = contents.size();
             outputFile.println("{\""+fileName+"\":[");
@@ -151,7 +159,7 @@ public class File {
      * @return status of edit operation
      */
     public static String write(String fileName, JsonObject content){
-        String file = SRCPATH+fileName+EXT;
+        String file = DATAPATH+fileName+EXT;
         try(PrintWriter outputFile = new PrintWriter(new FileWriter(file, false))){
             outputFile.println("{\""+fileName+"\":");
             outputFile.println(content);
@@ -176,4 +184,6 @@ public class File {
         JsonArray json = gson.fromJson(jsonString, JsonArray.class);
         return write(fileName, json);
     }
+        //</editor-fold>
+
 }

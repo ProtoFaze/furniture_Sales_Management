@@ -42,7 +42,6 @@ public class ProfilePage extends javax.swing.JFrame {
         PassTxt.setText(user.getPass());
         System.out.println(user);
     }
-    
     public ProfilePage(StaffList parent) {
         this.workerSource = parent;
         this.user = workerSource.selectedWorker;
@@ -178,6 +177,7 @@ public class ProfilePage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PassBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BackBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
                     .addComponent(EditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

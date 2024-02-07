@@ -81,6 +81,7 @@ public class Register extends javax.swing.JFrame {
         setFont(new java.awt.Font("Rockwell", 0, 10)); // NOI18N
 
         pageTitle.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        pageTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pageTitle.setText("Staff Registration");
         pageTitle.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
@@ -322,7 +323,14 @@ public class Register extends javax.swing.JFrame {
         buttons.setLayout(buttonsLayout);
         buttonsLayout.setHorizontalGroup(
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 474, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                .addComponent(btnBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(btnReset)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(btnRedirect)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(btnRegister))
         );
         buttonsLayout.setVerticalGroup(
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -561,7 +569,6 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
         int n = JOptionPane.showConfirmDialog(null,"Are you sure you want to quit the app.","Confirm Exit",JOptionPane.YES_NO_OPTION);
         if(n==JOptionPane.YES_OPTION){
             JOptionPane.showMessageDialog(null,"Thank you for using the system.","Exiting System",JOptionPane.INFORMATION_MESSAGE);
@@ -569,7 +576,6 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void txtUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusGained
-        // TODO add your handling code here:
         if (txtUsername.getText().equals("Enter username")){
             txtUsername.setText("");
             txtUsername.setForeground(new Color (69,69,69));
@@ -577,7 +583,6 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameFocusGained
 
     private void txtUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusLost
-        // TODO add your handling code here:
         if (txtUsername.getText().equals("")){
             txtUsername.setText("Enter username");
             txtUsername.setForeground(new Color (204,204,204));
@@ -585,7 +590,6 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameFocusLost
 
     private void txtNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusGained
-        // TODO add your handling code here:
         if (txtName.getText().equals("Your name")){
             txtName.setText("");
             txtName.setForeground(new Color (69,69,69));
@@ -593,7 +597,6 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNameFocusGained
 
     private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
-        // TODO add your handling code here:
         if (txtName.getText().equals("")){
             txtName.setText("Your name");
             txtName.setForeground(new Color (204,204,204));
@@ -601,7 +604,6 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNameFocusLost
 
     private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
-        // TODO add your handling code here:
         if (txtEmail.getText().equals("example@mail.my")){
             txtEmail.setText("");
             txtEmail.setForeground(new Color (69,69,69));
@@ -609,7 +611,6 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailFocusGained
 
     private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
-        // TODO add your handling code here:
         if (txtEmail.getText().equals("")){
             txtEmail.setText("example@mail.my");
             txtEmail.setForeground(new Color (204,204,204));
@@ -617,7 +618,6 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailFocusLost
 
     private void btnRedirectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedirectActionPerformed
-        // TODO add your handling code here:
         Login button = new Login();
         button.setVisible(true);
         this.setVisible(false);
