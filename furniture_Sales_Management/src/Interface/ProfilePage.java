@@ -82,6 +82,7 @@ public class ProfilePage extends javax.swing.JFrame {
         UserTxt = new javax.swing.JTextField();
         PassTxt = new javax.swing.JPasswordField();
         EditBtn = new javax.swing.JButton();
+        PassBtn = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,6 +145,13 @@ public class ProfilePage extends javax.swing.JFrame {
             }
         });
 
+        PassBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/show.png"))); // NOI18N
+        PassBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PassBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -166,7 +174,10 @@ public class ProfilePage extends javax.swing.JFrame {
                     .addComponent(GenderTxt)
                     .addComponent(UserTxt)
                     .addComponent(PassTxt))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PassBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BackBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
                     .addComponent(EditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -199,13 +210,18 @@ public class ProfilePage extends javax.swing.JFrame {
                     .addComponent(UserTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PassLbl)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(PassTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(EditBtn)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BackBtn)
-                .addGap(16, 16, 16))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PassLbl)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(PassTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(EditBtn)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addComponent(BackBtn)
+                        .addGap(16, 16, 16))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(PassBtn)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -242,6 +258,15 @@ public class ProfilePage extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_EditBtnActionPerformed
+
+    private void PassBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassBtnActionPerformed
+        // TODO add your handling code here:
+        if(PassBtn.isSelected()) {
+            PassTxt.setEchoChar((char)0);
+        } else {
+            PassTxt.setEchoChar('*');
+        }
+    }//GEN-LAST:event_PassBtnActionPerformed
     
     private void Edit(boolean flag){
         NameTxt.setEditable(flag);
@@ -271,6 +296,7 @@ public class ProfilePage extends javax.swing.JFrame {
             User.populateList();
         }
     }
+   
     /**
      * @param args the command line arguments
      */
@@ -317,6 +343,7 @@ public class ProfilePage extends javax.swing.JFrame {
     private javax.swing.JLabel IdTxt;
     private javax.swing.JLabel NameLbl;
     private javax.swing.JTextField NameTxt;
+    private javax.swing.JToggleButton PassBtn;
     private javax.swing.JLabel PassLbl;
     private javax.swing.JPasswordField PassTxt;
     private javax.swing.JLabel ProfileLbl;

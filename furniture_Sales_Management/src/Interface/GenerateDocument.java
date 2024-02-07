@@ -91,14 +91,16 @@ public class GenerateDocument extends javax.swing.JPanel {
     }
     public boolean isWithinRange(String id, Date inputStartDate, Date inputEndDate) {
         
-        LocalDate searchStart = Furniture_Sales_Management.DateToLocalDate(inputStartDate),
-                searchEnd = Furniture_Sales_Management.DateToLocalDate(inputEndDate);
+        LocalDate searchStart = Login.DateToLocalDate(inputStartDate),
+                searchEnd = Login.DateToLocalDate(inputEndDate);
         //loop through records
         for(SalesOrder salesOrder : SalesOrder.salesOrders){
             //assign values
             String recordId = salesOrder.getId();
             String productionState = salesOrder.getStatus();
-            LocalDate generationDate = Furniture_Sales_Management.DateToLocalDate(new Date("today"));
+
+            LocalDate generationDate = Login.DateToLocalDate(new Date("today"));
+
             //booking status check
             if (recordId.equals(id) && productionState.equals("done")) { //matched record and state
                 // Check if the generation date is out of the date range
