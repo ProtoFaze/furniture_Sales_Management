@@ -104,8 +104,8 @@ public class StaffList extends javax.swing.JPanel {
                         // Get the ID column (column 0), and return "false" if the ID does not meet the filter condition
                         String id = entry.getStringValue(0);
                         switch(filter){
-                            case"only officers"->     {return officers.stream().anyMatch(officer -> officer.getId().equals(id));}
-                            case"only sales people"-> {return salesPeople.stream().anyMatch(salesPerson -> salesPerson.getId().equals(id));}
+                            case"officers"->     {return officers.stream().anyMatch(officer -> officer.getId().equals(id));}
+                            case"sales people"-> {return salesPeople.stream().anyMatch(salesPerson -> salesPerson.getId().equals(id));}
                             default->           {return true;}
                         }
                     }
@@ -160,6 +160,7 @@ public class StaffList extends javax.swing.JPanel {
         title = new javax.swing.JLabel();
         filter = new javax.swing.JComboBox<>();
 
+        tblworkers.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         tblworkers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null}
@@ -192,10 +193,12 @@ public class StaffList extends javax.swing.JPanel {
             tblworkers.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        title.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         title.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         title.setText("Staff List");
 
-        filter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Only officers", "Only sales people" }));
+        filter.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        filter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Officers", "Sales people" }));
         filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filterActionPerformed(evt);
@@ -224,7 +227,7 @@ public class StaffList extends javax.swing.JPanel {
                     .addComponent(title)
                     .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
