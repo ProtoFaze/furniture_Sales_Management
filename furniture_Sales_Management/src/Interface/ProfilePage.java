@@ -5,6 +5,7 @@
 package Interface;
 
 import Classes.Admin;
+import Classes.File;
 import Classes.User;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -18,13 +19,33 @@ public class ProfilePage extends javax.swing.JFrame {
     /**
      * Creates new form ProfilePage
      */
+    private MainPage parent;
+    private StaffList workerSource;
     User user;
     private static List<User> users;
     private static List<Admin> admins;
     boolean edit;
+    boolean isChanged = false;
     
-    public ProfilePage(User user) {
-        this.user = user;
+    public ProfilePage(MainPage parent) {
+        this.parent = parent;
+        this.user = parent.user;
+        this.admins = Admin.admins;
+        this.users = User.list;
+        
+        initComponents();
+        NameTxt.setText(user.getFullName());
+        IdTxt.setText(user.getId());
+        EmailTxt.setText(user.getMail());
+        GenderTxt.setText(user.getGenderAsString());
+        UserTxt.setText(user.getUserName());
+        PassTxt.setText(user.getPass());
+        System.out.println(user);
+    }
+    
+    public ProfilePage(StaffList parent) {
+        this.workerSource = parent;
+        this.user = workerSource.selectedWorker;
         this.admins = Admin.admins;
         this.users = User.list;
         
@@ -139,15 +160,14 @@ public class ProfilePage extends javax.swing.JFrame {
                     .addComponent(EmailLbl))
                 .addGap(94, 94, 94)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(IdTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ProfileLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(IdTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ProfileLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(NameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                     .addComponent(EmailTxt)
                     .addComponent(GenderTxt)
                     .addComponent(UserTxt)
                     .addComponent(PassTxt))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BackBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
                     .addComponent(EditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -193,14 +213,18 @@ public class ProfilePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
-        // TODO add your handling code here:
-        MainPage page = new MainPage(user);
-        page.setVisible(true);
+        if(parent!=null){
+            parent.user = user;
+            parent.setVisible(true);
+        }else{
+            workerSource.selectedWorker = user;
+            workerSource.populateTable();
+            workerSource.setVisible(true);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
 
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-        // TODO add your handling code here:
         String status;
         if (edit) {
             status = "save";
@@ -213,6 +237,7 @@ public class ProfilePage extends javax.swing.JFrame {
                 Edit(true);
                 edit = true;
             } else {
+                saveChanges();
                 Edit(false);
                 edit = false;
             }
@@ -243,6 +268,8 @@ public class ProfilePage extends javax.swing.JFrame {
                 record.setUserName(UserTxt.getText());
                 record.setPass(String.valueOf(PassTxt.getPassword()));
             }
+            File.write("user", users);
+            User.populateList();
         }
     }
     /**
