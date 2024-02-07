@@ -1,1 +1,5 @@
-
+{
+"salesOrder":[
+{"orderId":"1","furnitureId":"80155205","quantity":"2","total":"138.00","generatedBy":"","approvedBy":"","status":"","customer":""},
+{"orderId":"2","furnitureId":"80155205","quantity":"2","total":"138.00","generatedBy":"","approvedBy":"","status":"","customer":""}
+]}

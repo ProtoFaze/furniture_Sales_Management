@@ -40,3 +40,5 @@ replay_pid*
 !/furniture_Sales_Management/lib/jcalendar-1.4/jcalendar-1.4.jar
 /furniture_Sales_Management/src/furniture_sales_management/testGUI.form
 /furniture_Sales_Management/src/furniture_sales_management/testGUI.java
+YoYoSH/target
+Report.pdf

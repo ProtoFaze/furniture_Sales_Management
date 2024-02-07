@@ -32,16 +32,16 @@ public class Furniture_Sales_Management {
         page.setVisible(true);
     }
     
-    public LocalDate convertStringToLocalDate(String dateStr) {
+    public static LocalDate convertStringToLocalDate(String dateStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = LocalDate.parse(dateStr, formatter);
         return localDate;
     }
-    public LocalDate DateToLocalDate(Date date) {
+    public static LocalDate DateToLocalDate(Date date) {
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return localDate;
     }
-    public String convertLocalDateToString(LocalDate localDate) {
+    public static String convertLocalDateToString(LocalDate localDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String dateStr = localDate.format(formatter);
         return dateStr;
