@@ -98,6 +98,7 @@ public class MainPage extends javax.swing.JFrame {
         jobMainbtn = new javax.swing.JButton();
         Tabs = new javax.swing.JTabbedPane();
         staffList1 = new Interface.StaffList(this);
+        generateReport1 = new Interface.GenerateDocument(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
 
@@ -131,6 +132,7 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.setBackground(new java.awt.Color(186, 255, 175));
         Tabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         Tabs.addTab("Staff List", staffList1);
+        Tabs.addTab("Generate Report", generateReport1);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -272,6 +274,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton ProfileBtn;
     private javax.swing.JTabbedPane Tabs;
     private javax.swing.JPanel bgPanel;
+    private Interface.GenerateDocument generateReport1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbtn;
     private javax.swing.JLabel rolelbl;
