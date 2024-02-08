@@ -6,6 +6,7 @@ package Interface;
 
 import Classes.SalesOrder;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
@@ -71,9 +72,10 @@ public class SearchSalesOrder extends javax.swing.JPanel {
         btnSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblQuotationSearch = new javax.swing.JTable();
+        btnBack = new javax.swing.JButton();
 
-        lblSearchSalesOrder.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
-        lblSearchSalesOrder.setText("SEARCH SALES ORDER");
+        lblSearchSalesOrder.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        lblSearchSalesOrder.setText("SEARCH SALES ORDER QUOTATION");
 
         tfOrderIDsearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,6 +102,8 @@ public class SearchSalesOrder extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblQuotationSearch);
 
+        btnBack.setText("BACK");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,7 +111,9 @@ public class SearchSalesOrder extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(176, 176, 176)
+                        .addGap(83, 83, 83)
+                        .addComponent(btnBack)
+                        .addGap(18, 18, 18)
                         .addComponent(btnSearch))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(85, 85, 85)
@@ -117,24 +123,26 @@ public class SearchSalesOrder extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(264, 264, 264)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblSearchSalesOrder)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(219, 219, 219))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(31, 31, 31)
                 .addComponent(lblSearchSalesOrder)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfOrderIDsearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblOrderID1))
                         .addGap(66, 66, 66)
-                        .addComponent(btnSearch))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSearch)
+                            .addComponent(btnBack)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54))
         );
@@ -151,8 +159,7 @@ public class SearchSalesOrder extends javax.swing.JPanel {
         }
         else{
             JOptionPane.showMessageDialog(this, "Order ID Not Found!");
-        }
-                
+        }             
     }//GEN-LAST:event_btnSearchActionPerformed
     
     private void updateTable(List<SalesOrder> data) {
@@ -181,25 +188,29 @@ public class SearchSalesOrder extends javax.swing.JPanel {
         // TODO add your handling code here:
         String orderIDsearch = tfOrderIDsearch.getText();
     }//GEN-LAST:event_tfOrderIDsearchActionPerformed
-   private String[] searchOrderIDinFile(String orderIDsearch) {
-        try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
+  private String searchOrderIDinFile(String orderIDsearch) {
+     try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
             String line;
+
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                String orderIDFromFile = parts[0].trim();
+                String orderIDFromFile = parts[0].trim(); // Assuming order ID is the first value in each line
                 if (orderIDFromFile.equals(orderIDsearch)) {
-                    // Order ID found, return the details
-                    return parts;
+                    System.out.println("Sales Order found:\n" + line);
+                    return line; // Return the details of the sales order
                 }
             }
+
         } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error searching for Order ID", "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Handle the exception according to your needs
         }
-        return null; 
+
+        System.out.println("Sales Order with ID " + orderIDsearch + " not found!!");
+        return null; // Order ID not found in the file or an error occurred
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSearch;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblOrderID1;
