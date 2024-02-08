@@ -4,18 +4,14 @@
  */
 package Interface;
 
+import Classes.File;
 import Classes.Furniture;
+import Classes.SalesOrder;
 import javax.swing.DefaultComboBoxModel;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,8 +23,8 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     double price;
     
     MainPage parent;
-    
-    private String[] selectedOrder; // To store the details of the selected order
+    private DefaultTableModel temp; 
+    private SalesOrder selectedOrder;  // To store the details of the selected order
 
 
     /**
@@ -41,6 +37,33 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             initComponents();
             this.parent = parent;
             LoadData();
+            loadDataTable();
+    }
+    
+    private void loadDataTable(){
+        populateTable();
+    }
+    public void populateTable() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                temp = (DefaultTableModel) tblQuotation1.getModel();
+                temp.setRowCount(0);
+                Object row[] = new Object[6];
+                for (SalesOrder sales : SalesOrder.salesOrders) {
+                    // Filter sales orders based on the logged-in salesperson's ID
+                    
+                        row[0] = sales.getId();
+                        row[1] = sales.getFurniture();
+                        row[2] = sales.getQuantity();
+                        row[3] = sales.getTotal();
+                        row[4] = sales.getCustomer();
+                        row[5] = sales.getStatus();
+                        temp.addRow(row);
+                    
+                }
+            }
+        });
     }
     private void LoadData(){
     List<String> idList = new ArrayList<>();
@@ -51,55 +74,29 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     tfFurnitureID.setModel(data);   
     }
     
+    private void displayOrderDetails(String selectedOrderId) {
+    DefaultTableModel model = (DefaultTableModel) tblQuotation1.getModel();
+    model.setRowCount(0); // Clear existing data in the table
+
+    // Find the order with the selected order ID in the SalesOrder list
+    for (SalesOrder sales : SalesOrder.salesOrders) {
+        if (sales.getId().equals(selectedOrderId)) {
+            // Add details to the table
+            Object[] rowData = {sales.getId(), sales.getFurniture(), sales.getQuantity(),
+                    sales.getTotal(), sales.getCustomer(), sales.getStatus()};
+            model.addRow(rowData);
+
+            // Set the selectedOrder to the current order
+            selectedOrder = sales;
+            return;
+        }
+    }
+
+    // If order is not found
+    JOptionPane.showMessageDialog(this, "Order not found", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+}
     
-    private String[] readTableDataFromFile(String selectedOrderId) {
-    DefaultTableModel model = (DefaultTableModel) tblQuotation1.getModel();
-    model.setRowCount(0); // Clear existing data in the table
-
-    try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split(",");
-            String orderIDFromFile = parts[0].trim();
-            if (orderIDFromFile.equals(selectedOrderId)) {
-                // Order ID found, return the details
-                selectedOrder = parts;
-                // Convert the array to a Vector before adding it to the table model
-                Vector<Object> rowData = new Vector<>(Arrays.asList(parts));
-                model.addRow(rowData);
-                return parts;
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error searching for Order ID", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    return null;
-}
-
-private void displayOrderDetails(String selectedOrderId) {
-    DefaultTableModel model = (DefaultTableModel) tblQuotation1.getModel();
-    model.setRowCount(0); // Clear existing data in the table
-
-    try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split(",");
-            String orderIDFromFile = parts[0].trim();
-            if (orderIDFromFile.equals(selectedOrderId)) {
-                // Order ID found, add details to the table
-                Vector<Object> rowData = new Vector<>(Arrays.asList(parts));
-                model.addRow(rowData);
-                return; // Exit the method after adding the details
-            }
-        }
-        // Handle case where the order is not found
-        JOptionPane.showMessageDialog(this, "Order not found", "Not Found", JOptionPane.INFORMATION_MESSAGE);
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error searching for Order ID", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,9 +123,10 @@ private void displayOrderDetails(String selectedOrderId) {
         btnSaveChanges = new javax.swing.JButton();
         tfFurnitureID = new javax.swing.JComboBox<>();
         tfQuantity = new javax.swing.JSpinner();
+        btnBack = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
-        jLabel1.setText("MODIFY SALES ORDER");
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel1.setText("MODIFY SALES ORDER QUOTATION");
 
         tfOrderID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +183,8 @@ private void displayOrderDetails(String selectedOrderId) {
             }
         });
 
+        btnBack.setText("BACK");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -194,38 +194,36 @@ private void displayOrderDetails(String selectedOrderId) {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCustomerID)
+                            .addComponent(lblStatus)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
+                                .addGap(83, 83, 83)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblOrderID)
                                     .addComponent(lblFurnitureID)
                                     .addComponent(lblQuantity)
-                                    .addComponent(lblTotal))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(50, 50, 50)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(tfOrderID)
-                                            .addComponent(tfFurnitureID, 0, 114, Short.MAX_VALUE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(43, 43, 43)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel8)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(tfTotal, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(tfQuantity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                                                .addComponent(tfCustomerID, javax.swing.GroupLayout.Alignment.LEADING))))))
-                            .addComponent(lblCustomerID)
-                            .addComponent(lblStatus))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSaveChanges)
-                        .addGap(128, 128, 128)))
+                                    .addComponent(lblTotal)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnBack)
+                                .addGap(12, 12, 12)))
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(btnSaveChanges)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(tfOrderID, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfFurnitureID, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfTotal, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfQuantity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                .addComponent(tfCustomerID, javax.swing.GroupLayout.Alignment.LEADING)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(313, 313, 313)
+                .addGap(245, 245, 245)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -261,7 +259,9 @@ private void displayOrderDetails(String selectedOrderId) {
                             .addComponent(lblStatus)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
-                        .addComponent(btnSaveChanges)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSaveChanges)
+                            .addComponent(btnBack))
                         .addGap(57, 57, 57))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
@@ -278,45 +278,51 @@ private void displayOrderDetails(String selectedOrderId) {
 
     private void tfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfOrderIDActionPerformed
         // TODO add your handling code here:
+        String enteredOrderId = tfOrderID.getText();
+        displayOrderDetails(enteredOrderId);
+        System.out.println("Entered Order ID: " + enteredOrderId);
     }//GEN-LAST:event_tfOrderIDActionPerformed
 
     private void tfOrderIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfOrderIDKeyTyped
         // TODO add your handling code here:
-        if((int)evt.getKeyChar()== 10){
-             selectedOrder = readTableDataFromFile(tfOrderID.getText());
-        } else {
-           // JOptionPane.showMessageDialog(this, "Please enter an order ID", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    
     }//GEN-LAST:event_tfOrderIDKeyTyped
 
     private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
         // TODO add your handling code here:
         // Validate that an order is selected
-        
-        if (selectedOrder == null ) {
-            JOptionPane.showMessageDialog(this, "Please select an order to modify", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        if (selectedOrder == null) {
+        JOptionPane.showMessageDialog(this, "Please select an order to modify", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Update the selected order details with the modified data
-        selectedOrder[1] = tfFurnitureID.getSelectedItem().toString();
-        selectedOrder[2] = tfQuantity.getValue().toString();
-        selectedOrder[3] = tfTotal.getText();
-        selectedOrder[4] = tfCustomerID.getText();
-        selectedOrder[5] = "Pending";
-        selectedOrder[6]= " ";
-        selectedOrder[7] = " ";
-        
+    // Validate input
+    if (!validateInput()) {
+        JOptionPane.showMessageDialog(this, "Please enter valid data for quantity and total.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Save the changes to the text file
-        saveChangesToFile();
+    // Retrieve modified data
+    String furniture = (String) tfFurnitureID.getSelectedItem();
+    int amount = (int) tfQuantity.getValue();
+    double total = Double.parseDouble(tfTotal.getText());
+    String customer = tfCustomerID.getText();
 
-        // Display a message indicating that changes are saved
-        JOptionPane.showMessageDialog(this, "Changes saved successfully!");
+    // Update the selected order details
+    selectedOrder.setFurniture(furniture);
+    selectedOrder.setQuantity(amount);
+    selectedOrder.setTotal(total);
+    selectedOrder.setCustomer(customer);
+    selectedOrder.setStatus("Pending");
+    selectedOrder.setGeneratedBy(parent.user.getId()); // Set the generatedBy field
+    selectedOrder.setApprovedBy(""); // Leave the approvedBy field empty for now
 
-        // Reload the table to reflect the changes
-        readTableDataFromFile(null);
+    // Save the changes to file
+    File.write("salesOrder", SalesOrder.salesOrders);
+
+    JOptionPane.showMessageDialog(this, "Changes saved successfully!");
+
+    // Reload the table to reflect the changes
+    displayOrderDetails(selectedOrder.getId());
     
     }//GEN-LAST:event_btnSaveChangesActionPerformed
 
@@ -335,62 +341,18 @@ private void displayOrderDetails(String selectedOrderId) {
      tfTotal.setText(Double.toString(price*quantity));
     }
      
-    private void saveChangesToFile() {
-    // Read all existing data from the file
-    List<String> allOrders = new ArrayList<>();
-    try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            allOrders.add(line);
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error reading data from file", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
+private boolean validateInput() {
+    try {
+        double total = Double.parseDouble(tfTotal.getText());
+        return true;
+    } catch (NumberFormatException e) {
+        return false;
     }
-
-    // Update the selected order in the list
-    for (int i = 0; i < allOrders.size(); i++) {
-        String[] parts = allOrders.get(i).split(",");
-        if (parts.length >= 6 && parts[0].equals(selectedOrder[0])) {
-            // Update the parts array with the new data
-            parts[1] = selectedOrder[1];
-            parts[2] = selectedOrder[2];
-            parts[3] = selectedOrder[3];
-            parts[4] = selectedOrder[4];
-            parts[5] = "Pending"; 
-            parts[6] = " ";
-            parts[7] = " ";
-            
-            // Join the array into a comma-separated string
-            String updatedOrder = String.join(",", Arrays.copyOfRange(parts, 0, 8));
-            allOrders.set(i, updatedOrder);
-
-            // Update the selectedOrder array
-            selectedOrder = Arrays.copyOfRange(parts, 0, 6); // Clone the array to avoid reference issues
-
-            break;
-        }
-    }
-
-    // Write the updated data back to the file
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("salesOrder.txt"))) {
-        for (String order : allOrders) {
-            writer.write(order);
-            writer.newLine();
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error writing data to file", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Redisplay modified order in table
-    displayOrderDetails(selectedOrder[0]);
-}
-
+}      
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSaveChanges;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel8;
