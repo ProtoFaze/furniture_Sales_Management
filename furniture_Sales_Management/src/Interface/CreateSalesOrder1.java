@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Interface;
+import Classes.File;
 import Classes.Furniture;
 import Classes.SalesOrder;
 import Classes.User;
@@ -226,7 +227,7 @@ private void LoadData(){
     cbFurniture.setModel(data);   
 }
     private void tfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfOrderIDActionPerformed
-     String orderID = tfOrderID.getText();
+     //String orderID = tfOrderID.getText();
    
     }//GEN-LAST:event_tfOrderIDActionPerformed
 
@@ -242,23 +243,23 @@ private void LoadData(){
             JOptionPane.showMessageDialog(this, "Please enter valid data for quantity and total.", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String id = tfOrderID.getText();
+     //   String id = tfOrderID.getText();
         String furniture = (String) cbFurniture.getSelectedItem();
         int amount = (int)tfQuantity.getValue();
         double total = Double.parseDouble(tfTotal.getText());
         String customer = tfCustomer.getText();
-        String status = "Pending";
 
     // Create a new SalesOrder instance with the retrieved values
    // SalesOrder newSalesOrder = new SalesOrder(id, furniture, amount, total, "", customer, status);
-     SalesOrder.createSalesOrder2(id, furniture, amount, total, customer, status, " ", " " );
-
+     SalesOrder record = new SalesOrder(furniture, amount, total, parent.user.getId(), customer);
+     SalesOrder.salesOrders.add(record);
+     File.write("salesOrder", SalesOrder.salesOrders);
     // Add the new sales order to the list
   //  newSalesOrder.createSalesOrder(id, furniture, amount, total, "", customer, status);
         JOptionPane.showMessageDialog(this, "Sales Order Created!");
         DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
         model.addRow(new Object[]{tfOrderID.getText(), cbFurniture.getSelectedItem(), tfQuantity.getValue(), 
-           tfTotal.getText(),tfCustomer.getText(), status}); 
+           tfTotal.getText(),tfCustomer.getText(), "Pending"}); 
     }//GEN-LAST:event_btnCreateActionPerformed
 
 
