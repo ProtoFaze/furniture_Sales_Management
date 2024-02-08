@@ -106,14 +106,14 @@ public class SalesOrder {
     }
 
     // Constructor with default "Pending" status, for create
-    public SalesOrder(String furniture, int quantity, double total, String generatedBy, String approvedBy) {
+    public SalesOrder(String furniture, int quantity, double total, String generatedBy, String customer) {
         this.orderID = String.valueOf(latestId+=1);
         this.furniture = furniture;
         this.quantity = quantity;
         this.total = total;
         this.generatedBy = generatedBy;
-        this.approvedBy = approvedBy;
-        this.customer = "";
+        this.approvedBy = " ";
+        this.customer = customer;
         this.status = "Pending";
     }
     // Constructor for read file
@@ -128,6 +128,7 @@ public class SalesOrder {
         this.status = status;
         if(Integer.parseInt(orderID)>latestId){
             latestId = Integer.parseInt(orderID);
+            System.out.println("Latest ID: " + Integer.toString(latestId));
         }
     }
   
