@@ -4,16 +4,10 @@
  */
 package Interface;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
+import Classes.File;
+import Classes.SalesOrder;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,7 +15,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Aryssa
  */
 public class DeleteSalesOrder extends javax.swing.JPanel {
-    public MainPage parent;
+    MainPage parent;
+    private DefaultTableModel temp;
     /**
      * Creates new form PersonalSales
      */
@@ -32,9 +27,32 @@ public class DeleteSalesOrder extends javax.swing.JPanel {
     public DeleteSalesOrder(MainPage parent) {
         initComponents();
         this.parent = parent;
-        loadData();
+        loadDataTable();
     }
-    private void loadData(){
+    private void loadDataTable(){
+        populateTable();
+    }
+    public void populateTable() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                temp = (DefaultTableModel) tblQuotation2.getModel();
+                temp.setRowCount(0);
+                Object row[] = new Object[6];
+                for (SalesOrder sales : SalesOrder.salesOrders) {
+                    // Filter sales orders based on the logged-in salesperson's ID
+                    
+                        row[0] = sales.getId();
+                        row[1] = sales.getFurniture();
+                        row[2] = sales.getQuantity();
+                        row[3] = sales.getTotal();
+                        row[4] = sales.getCustomer();
+                        row[5] = sales.getStatus();
+                        temp.addRow(row);
+                    
+                }
+            }
+        });
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,6 +69,7 @@ public class DeleteSalesOrder extends javax.swing.JPanel {
         btnSaveChanges = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblQuotation2 = new javax.swing.JTable();
+        btnBack = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel1.setText("DELETE SALES ORDER QUOTATION");
@@ -80,27 +99,34 @@ public class DeleteSalesOrder extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblQuotation2);
 
+        btnBack.setText("BACK");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblOrderID)
-                            .addGap(34, 34, 34)
-                            .addComponent(tfOrderID1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSaveChanges))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblOrderID)
+                        .addGap(34, 34, 34)
+                        .addComponent(tfOrderID1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSaveChanges))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel1))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(btnBack)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -108,8 +134,10 @@ public class DeleteSalesOrder extends javax.swing.JPanel {
                     .addComponent(lblOrderID)
                     .addComponent(btnSaveChanges))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnBack)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -126,73 +154,51 @@ public class DeleteSalesOrder extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSaveChangesActionPerformed
     
     private void displayOrderDetails(String selectedOrderId) {
-        DefaultTableModel model = (DefaultTableModel) tblQuotation2.getModel();
-        model.setRowCount(0); // Clear existing data in the table
+    DefaultTableModel model = (DefaultTableModel) tblQuotation2.getModel();
+    model.setRowCount(0); // Clear existing data in the table
 
-        try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                String orderIDFromFile = parts[0].trim();
-                if (orderIDFromFile.equals(selectedOrderId)) {
-                    // Order ID found, add details to the table
-                    Vector<Object> rowData = new Vector<>(Arrays.asList(parts));
-                    model.addRow(rowData);
-                    return; // Exit the method after adding the details
-                }
-            }
-            JOptionPane.showMessageDialog(this, "Order not found", "Not Found", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error searching for Order ID", "Error", JOptionPane.ERROR_MESSAGE);
+    // Find the order with the selected order ID in the SalesOrder list
+    for (SalesOrder sales : SalesOrder.salesOrders) {
+        if (sales.getId().equals(selectedOrderId)) {
+            // Add details to the table
+            Object[] rowData = {sales.getId(), sales.getFurniture(), sales.getQuantity(),
+                    sales.getTotal(), sales.getCustomer(), sales.getStatus()};
+            model.addRow(rowData);
+            return;
         }
+    }
     }
     
     private void deleteOrder(String selectedOrderId) {
-    // Read all existing data from the file
-    List<String> allOrders = new ArrayList<>();
-    try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            allOrders.add(line);
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error reading data from file", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Use an iterator to safely remove the selected order from the list
-    for (java.util.Iterator<String> iterator = allOrders.iterator(); iterator.hasNext(); ) {
-        String[] parts = iterator.next().split(",");
-        if (parts.length >= 6 && parts[0].equals(selectedOrderId)) {
-            iterator.remove();
+    SalesOrder selectedOrder = null;
+    for (SalesOrder sales : SalesOrder.salesOrders) {
+        if (sales.getId().equals(selectedOrderId)) {
+            selectedOrder = sales;
             break;
         }
     }
 
-    // Write the updated data back to the file
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("salesOrder.txt"))) {
-        for (String order : allOrders) {
-            writer.write(order);
-            writer.newLine();
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error writing data to file", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
+    // If the order is found, remove it from the list
+    if (selectedOrder != null) {
+        SalesOrder.salesOrders.remove(selectedOrder);
+
+        // Save the updated data to the file
+        File.write("salesOrder", SalesOrder.salesOrders);
+
+        //Display table again after delete
+        populateTable();
+
+        // Display a message indicating that the order is deleted
+        JOptionPane.showMessageDialog(this, "Order deleted successfully!");
+    } else {
+        // If the order is not found, display an error message
+        JOptionPane.showMessageDialog(this, "Order not found", "Error", JOptionPane.ERROR_MESSAGE);
     }
-
-    // Clear the table after delete
-    DefaultTableModel model = (DefaultTableModel) tblQuotation2.getModel();
-    model.setRowCount(0);
-
-    // Display a message indicating that the order is deleted
-    JOptionPane.showMessageDialog(this, "Order deleted successfully!");
 }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSaveChanges;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
