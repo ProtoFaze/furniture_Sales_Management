@@ -114,7 +114,6 @@ public class SearchSalesOrder extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
         //Get order ID from text field
         String orderIDsearch = tfOrderIDsearch.getText();     
         SalesOrder salesOrder = new SalesOrder();

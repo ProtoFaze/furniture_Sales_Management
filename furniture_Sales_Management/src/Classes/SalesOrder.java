@@ -29,16 +29,11 @@ public class SalesOrder {
     private String approvedBy;
     private String salesPersonId;
     public static List<SalesOrder> salesOrders;
-    public static int latestId = 1;
+    public static int latestId;
 
     static {
         populateList();
-        if(salesOrders.isEmpty()){
-            System.out.println("list is still empty");
-        }else{
-            System.out.println("list has values");
-            
-        }
+        latestId  = salesOrders.size()+1;
     }
 
     public SalesOrder() {
@@ -113,7 +108,8 @@ public class SalesOrder {
 
     // Constructor with default "Pending" status, for create
     public SalesOrder(String furniture, int quantity, double total, String generatedBy, String customer) {
-        this.orderID = String.valueOf(latestId+=1);
+        int newId = latestId++;
+        this.orderID = String.valueOf(newId);
         this.furniture = furniture;
         this.quantity = quantity;
         this.total = total;
@@ -123,7 +119,7 @@ public class SalesOrder {
         this.status = "Pending";
     }
     // Constructor for read file
-    public SalesOrder(String orderID, String furniture, int quantity, double total, String generatedBy, String approvedBy, String customer, String status) {
+    public SalesOrder(String ID, String furniture, int quantity, double total, String generatedBy, String approvedBy, String customer, String status) {
         this.orderID = orderID;
         this.furniture = furniture;
         this.quantity = quantity;
@@ -132,10 +128,6 @@ public class SalesOrder {
         this.approvedBy = approvedBy;
         this.customer = customer;
         this.status = status;
-        if(Integer.parseInt(orderID)>latestId){
-            latestId = Integer.parseInt(orderID);
-            System.out.println("Latest ID: " + Integer.toString(latestId));
-        }
     }
   
 
