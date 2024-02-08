@@ -1,6 +1,7 @@
 package Interface;
 
 import Classes.Admin;
+import Classes.SalesOrder;
 import Classes.User;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -21,6 +22,7 @@ public class MainPage extends javax.swing.JFrame {
     private Color colorPrimary, colorSecondary;
     private static List<User> users;
     private static List<Admin> admins;
+    private static List<SalesOrder> salesOrders;
     
     /**
      * Creates new form MainPage
@@ -64,7 +66,21 @@ public class MainPage extends javax.swing.JFrame {
 
     private void loadData(){
         welcometxt.setText("Welcome " + user.getFullName());
-//        staffList1 = new StaffList(this);
+        switch (this.user.getRole()){
+            case "admin" -> {
+                
+            }
+            case "officer" -> {
+                
+            }
+            case "sales person" -> {
+               salesOrders = SalesOrder.salesOrders;
+
+            }
+            default -> {
+                
+            }
+        }
         
     }
     

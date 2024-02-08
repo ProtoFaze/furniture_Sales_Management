@@ -253,6 +253,7 @@ private void LoadData(){
    // SalesOrder newSalesOrder = new SalesOrder(id, furniture, amount, total, "", customer, status);
      SalesOrder record = new SalesOrder(furniture, amount, total, parent.user.getId(), customer);
      SalesOrder.salesOrders.add(record);
+    System.out.println(SalesOrder.latestId);
      File.write("salesOrder", SalesOrder.salesOrders);
     // Add the new sales order to the list
   //  newSalesOrder.createSalesOrder(id, furniture, amount, total, "", customer, status);

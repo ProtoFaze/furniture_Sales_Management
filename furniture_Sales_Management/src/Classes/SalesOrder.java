@@ -29,10 +29,16 @@ public class SalesOrder {
     private String approvedBy;
     private String salesPersonId;
     public static List<SalesOrder> salesOrders;
-    public static int latestId;
+    public static int latestId = 1;
 
     static {
         populateList();
+        if(salesOrders.isEmpty()){
+            System.out.println("list is still empty");
+        }else{
+            System.out.println("list has values");
+            
+        }
     }
 
     public SalesOrder() {
