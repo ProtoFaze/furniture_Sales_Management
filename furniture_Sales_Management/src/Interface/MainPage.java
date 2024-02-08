@@ -120,6 +120,7 @@ public class MainPage extends javax.swing.JFrame {
         createSalesOrder11 = new Interface.CreateSalesOrder1(this);
         deleteSalesOrder1 = new Interface.DeleteSalesOrder(this);
         modifySalesOrder1 = new Interface.ModifySalesOrder(this);
+        personalSales2 = new Interface.PersonalSales(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
 
@@ -159,6 +160,7 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.addTab("Create Sales", createSalesOrder11);
         Tabs.addTab("Delete Sales", deleteSalesOrder1);
         Tabs.addTab("Edit Sales", modifySalesOrder1);
+        Tabs.addTab("tab9", personalSales2);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -189,9 +191,9 @@ public class MainPage extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addComponent(LogoutBtn)))
                 .addGap(31, 31, 31)
-                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 1065, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
-                .addContainerGap(782, Short.MAX_VALUE)
+                .addContainerGap(791, Short.MAX_VALUE)
                 .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(103, 103, 103)
                 .addComponent(ProfileBtn)
@@ -218,7 +220,8 @@ public class MainPage extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
                         .addComponent(ProfileBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(bgPanelLayout.createSequentialGroup()
@@ -310,6 +313,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbtn;
     private Interface.ModifySalesOrder modifySalesOrder1;
+    private Interface.PersonalSales personalSales2;
     private javax.swing.JLabel rolelbl;
     private Interface.SalesOrderPage salesOrderPage11;
     private Interface.SearchSalesOrder searchSalesOrder1;
