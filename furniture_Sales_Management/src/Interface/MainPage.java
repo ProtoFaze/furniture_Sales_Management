@@ -115,12 +115,12 @@ public class MainPage extends javax.swing.JFrame {
         Tabs = new javax.swing.JTabbedPane();
         staffList1 = new Interface.StaffList(this);
         generateReport1 = new Interface.GenerateDocument(this);
-        salesOrderPage11 = new Interface.SalesOrderPage(this);
-        searchSalesOrder1 = new Interface.SearchSalesOrder(this);
-        createSalesOrder11 = new Interface.CreateSalesOrder1(this);
-        deleteSalesOrder1 = new Interface.DeleteSalesOrder(this);
-        modifySalesOrder1 = new Interface.ModifySalesOrder(this);
-        personalSales2 = new Interface.PersonalSales(this);
+        salesOrderPage = new Interface.SalesOrderPage(this);
+        searchSalesOrder = new Interface.SearchSalesOrder(this);
+        createSalesOrder = new Interface.CreateSalesOrder(this);
+        deleteSalesOrder = new Interface.DeleteSalesOrder(this);
+        modifySalesOrder = new Interface.ModifySalesOrder(this);
+        personalSales = new Interface.PersonalSales(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
 
@@ -155,12 +155,12 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         Tabs.addTab("Staff List", staffList1);
         Tabs.addTab("Generate Report", generateReport1);
-        Tabs.addTab("Sales Order", salesOrderPage11);
-        Tabs.addTab("Search Sales", searchSalesOrder1);
-        Tabs.addTab("Create Sales", createSalesOrder11);
-        Tabs.addTab("Delete Sales", deleteSalesOrder1);
-        Tabs.addTab("Edit Sales", modifySalesOrder1);
-        Tabs.addTab("tab9", personalSales2);
+        Tabs.addTab("Sales Order", salesOrderPage);
+        Tabs.addTab("Search Sales", searchSalesOrder);
+        Tabs.addTab("Create Sales", createSalesOrder);
+        Tabs.addTab("Delete Sales", deleteSalesOrder);
+        Tabs.addTab("Edit Sales", modifySalesOrder);
+        Tabs.addTab("Sales List", personalSales);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -209,7 +209,7 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(bgPanelLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jobMainbtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 402, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LogoutBtn)
                 .addGap(18, 18, 18))
             .addGroup(bgPanelLayout.createSequentialGroup()
@@ -217,9 +217,7 @@ public class MainPage extends javax.swing.JFrame {
                     .addGroup(bgPanelLayout.createSequentialGroup()
                         .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
-                        .addComponent(ProfileBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                    .addComponent(ProfileBtn, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -307,16 +305,16 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton ProfileBtn;
     private javax.swing.JTabbedPane Tabs;
     private javax.swing.JPanel bgPanel;
-    private Interface.CreateSalesOrder1 createSalesOrder11;
-    private Interface.DeleteSalesOrder deleteSalesOrder1;
+    Interface.CreateSalesOrder createSalesOrder;
+    private Interface.DeleteSalesOrder deleteSalesOrder;
     private Interface.GenerateDocument generateReport1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbtn;
-    private Interface.ModifySalesOrder modifySalesOrder1;
-    private Interface.PersonalSales personalSales2;
+    private Interface.ModifySalesOrder modifySalesOrder;
+    private Interface.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
-    private Interface.SalesOrderPage salesOrderPage11;
-    private Interface.SearchSalesOrder searchSalesOrder1;
+    private Interface.SalesOrderPage salesOrderPage;
+    private Interface.SearchSalesOrder searchSalesOrder;
     private Interface.StaffList staffList1;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables

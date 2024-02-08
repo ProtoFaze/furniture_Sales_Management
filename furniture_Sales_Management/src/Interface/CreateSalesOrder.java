@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Aryssa
  */
-public class CreateSalesOrder1 extends javax.swing.JPanel {
+public class CreateSalesOrder extends javax.swing.JPanel {
     int quantity;
     double price;
     
@@ -27,11 +27,11 @@ public class CreateSalesOrder1 extends javax.swing.JPanel {
      */
     //private SalesOrder salesOrder;
     
-    public CreateSalesOrder1() {
+    public CreateSalesOrder() {
         initComponents();
        
     }
-    public CreateSalesOrder1(MainPage parent) {
+    public CreateSalesOrder(MainPage parent) {
         initComponents();
         this.parent = parent;
         LoadData();
@@ -358,7 +358,7 @@ private boolean validateInput() {
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblcreate;
     private javax.swing.JTable tblQuotation;
-    private javax.swing.JTextField tfCustomer;
+    javax.swing.JTextField tfCustomer;
     private javax.swing.JTextField tfOrderID;
     private javax.swing.JSpinner tfQuantity;
     private javax.swing.JTextField tfTotal;
