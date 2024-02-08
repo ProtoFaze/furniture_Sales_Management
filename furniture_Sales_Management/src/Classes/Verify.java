@@ -13,6 +13,7 @@ public class Verify {
     private static final int MAX_USERNAME_LENGTH = 20;
     private static final int MIN_PASSWORD_LENGTH = 8;
 
+//Username
     public static boolean isValidUsername(String userName) {
         return userName.length() >= MIN_USERNAME_LENGTH &&
                userName.length() <= MAX_USERNAME_LENGTH;
@@ -21,6 +22,8 @@ public class Verify {
      
 @param password
 @return */
+    
+//Password
 public static boolean isStrongPassword(String password) {//at least one uppercase, one lowercase, one digit
  
  boolean hasUppercase = false;
@@ -37,4 +40,36 @@ public static boolean isStrongPassword(String password) {//at least one uppercas
      if(hasUppercase && hasLowercase && hasDigit){
          break;}}
  return password.length() >= MIN_PASSWORD_LENGTH && hasUppercase && hasLowercase && hasDigit;}
+
+//Email
+public static String validateEmail(String emailAddress){
+    String trimmedInput = emailAddress.trim();
+    
+   if (trimmedInput.isEmpty()|| trimmedInput.length()<2){
+       return "Email must be more than 2 characters";
+   }
+   else if (!trimmedInput.matches("^[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z]{2,}$")){
+       return "Invalid email format";
+   }
+   else{
+       return null;
+   }
+}
+
+//FullName
+public static String validateFullName(String FullName){
+    String trimmedFullName = FullName.trim();
+    if (trimmedFullName.length()<2){
+        return "Full Name must be more than 2 characters";
+    }
+    else if (!trimmedFullName.matches("^[A-Za-z\\s]+$")){
+        return "Invalid characters in Full Name";
+    }
+    else{
+        return null; 
+    }
+}
+
+//Date
+
 }
