@@ -38,6 +38,10 @@ replay_pid*
 !/furniture_Sales_Management/lib/gson-2.10.1/gson-2.10.1-sources.jar
 !/furniture_Sales_Management/lib/gson-2.10.1/gson-2.10.1.jar
 !/furniture_Sales_Management/lib/jcalendar-1.4/jcalendar-1.4.jar
+!/furniture_Sales_Management/lib/itextpdf/itextpdf-5.5.7.jar
+!/furniture_Sales_Management/lib/javaxActivation/javax.activation-1.1.0.v201105071233.jar
+!/furniture_Sales_Management/lib/javaxMail/java.mail.jar
+!/furniture_Sales_Management/lib/jbcrypt/jbcrypt.jar
 /furniture_Sales_Management/src/furniture_sales_management/testGUI.form
 /furniture_Sales_Management/src/furniture_sales_management/testGUI.java
 YoYoSH/target
