@@ -8,7 +8,9 @@ import Classes.SalesOrder;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SearchSalesOrder extends javax.swing.JPanel {
     MainPage parent;
+    private DefaultTableModel temp;
     /**
      * Creates new form SearchSalesOrder
      */
@@ -26,8 +29,32 @@ public class SearchSalesOrder extends javax.swing.JPanel {
     public SearchSalesOrder(MainPage parent) {
         initComponents();
         this.parent = parent;
+        loadData();
     }
     
+    private void loadData(){
+        populateTable();
+    }
+    public void populateTable(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                temp = (DefaultTableModel) tblQuotationSearch.getModel();
+                temp.setRowCount(0);
+                Object row[] = new Object[6]; 
+                for (SalesOrder sales : SalesOrder.salesOrders) {
+                    //add to new temp table if room is available
+                    row[0] = sales.getId();
+                    row[1] = sales.getFurniture();
+                    row[2] = sales.getQuantity();
+                    row[3] = sales.getTotal();
+                    row[4] = sales.getCustomer();
+                    row[5] = sales.getStatus();
+                    temp.addRow(row);
+                }
+            }
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,8 +143,7 @@ public class SearchSalesOrder extends javax.swing.JPanel {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         //Get order ID from text field
         String orderIDsearch = tfOrderIDsearch.getText();     
-        SalesOrder salesOrder = new SalesOrder();
-        String searchQuotationDetails = salesOrder.searchOrderIDinFile(orderIDsearch);
+        List<SalesOrder> searchQuotationDetails = SalesOrder.searchOrderIDinFile(orderIDsearch);
         
         if(searchQuotationDetails != null){
             JOptionPane.showMessageDialog(this, "Order ID Found!");
@@ -129,38 +155,27 @@ public class SearchSalesOrder extends javax.swing.JPanel {
                 
     }//GEN-LAST:event_btnSearchActionPerformed
     
-   private void updateTable(String salesQuotationDetails) {
-    DefaultTableModel model = (DefaultTableModel) tblQuotationSearch.getModel();
-    model.setRowCount(0);
+    private void updateTable(List<SalesOrder> data) {
+        temp.setRowCount(0);
+        // Create a new array with the expected size for the table model
+        Object[] row = new Object[temp.getColumnCount()];
 
-    String[] parts = salesQuotationDetails.split(",");
+        // Fill in the values from the parts array, set empty string for missing values
+        for (SalesOrder sales: data) {
+            row[0] = sales.getId();
+            row[1] = sales.getFurniture();
+            row[2] = sales.getQuantity();
+            row[3] = sales.getTotal();
+            row[4] = sales.getCustomer();
+            row[5] = sales.getStatus();
+            temp.addRow(row);
+    //        } else {
+    //            row[i] = ""; // Set empty string for unknown columns
+    //        }
+            }
 
-    // Create a new array with the expected size for the table model
-    Object[] row = new Object[model.getColumnCount()];
-
-    // Fill in the values from the parts array, set empty string for missing values
-    for (int i = 0; i < model.getColumnCount(); i++) {
-        String columnName = model.getColumnName(i).trim();
-        if (columnName.equals("ORDER ID")) {
-            row[i] = parts[0].trim();
-        } else if (columnName.equals("FURNITURE ID")) {
-            row[i] = parts[1].trim();
-        } else if (columnName.equals("QUANTITY")) {
-            row[i] = parts[2].trim();
-        } else if (columnName.equals("TOTAL")) {
-            row[i] = parts[3].trim();
-        } else if (columnName.equals("CUSTOMER ID")) {
-            row[i] = parts[4].trim(); 
-        } else if (columnName.equals("STATUS")) {
-            row[i] = parts[5].trim(); 
-        } else {
-            row[i] = ""; // Set empty string for unknown columns
+            // Add the row to the table model
         }
-    }
-
-    // Add the row to the table model
-    model.addRow(row);
-}
 
     private void tfOrderIDsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfOrderIDsearchActionPerformed
         // TODO add your handling code here:

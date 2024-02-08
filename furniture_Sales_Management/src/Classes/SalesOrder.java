@@ -15,6 +15,7 @@ import java.util.List;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
@@ -213,25 +214,37 @@ public class SalesOrder {
         //    if (order.getId().equals(orderId)) {
           //      System.out.println("Sales Order found:\n" + order);
 
-    public String searchOrderIDinFile(String orderIDsearch) {
-    try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
-        String line;
-
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split(",");
-            String orderIDFromFile = parts[0].trim(); // Assuming order ID is the first value in each line
-            if (orderIDFromFile.equals(orderIDsearch)) {
-                System.out.println("Sales Order found:\n" + line);
-                return line; // Return the details of the sales order
-            }
+    //return list of salesorder with matching criteria
+    public static List<SalesOrder> searchOrderIDinFile(String orderIDsearch) {
+        List<SalesOrder> returnRecord = new ArrayList<>();
+        for(SalesOrder sales:salesOrders){
+            if (sales.getId().equals(orderIDsearch))
+                returnRecord.add(sales);
         }
-
-    } catch (IOException e) {
-        e.printStackTrace(); // Handle the exception according to your needs
-    }
-
-    System.out.println("Sales Order with ID " + orderIDsearch + " not found!!");
-    return null; // Order ID not found in the file or an error occurred
+        if(returnRecord.isEmpty()){
+            System.out.println("Sales Order with ID " + orderIDsearch + " not found!!");
+            return null;
+        }else{
+            return returnRecord;
+        }
+//    try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
+//        String line;
+//
+//        while ((line = br.readLine()) != null) {
+//            String[] parts = line.split(",");
+//            String orderIDFromFile = parts[0].trim(); // Assuming order ID is the first value in each line
+//            if (orderIDFromFile.equals(orderIDsearch)) {
+//                System.out.println("Sales Order found:\n" + line);
+//                return line; // Return the details of the sales order
+//            }
+//        }
+//
+//    } catch (IOException e) {
+//        e.printStackTrace(); // Handle the exception according to your needs
+//    }
+//
+//    System.out.println("Sales Order with ID " + orderIDsearch + " not found!!");
+//    return null; // Order ID not found in the file or an error occurred
 }
 
 
