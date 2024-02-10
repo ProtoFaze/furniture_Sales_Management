@@ -47,7 +47,7 @@ public class File {
             //Convert JSON String to JSONObject then return it
             return gson.fromJson(jsonContent.toString(), JsonObject.class);
         } catch (IOException ex) {
-            System.out.println("Failed to read File"+ex.toString());
+            System.out.println("Failed to read File as Object "+ex.toString());
             return null;
         }
     }
@@ -57,7 +57,7 @@ public class File {
             JsonObject object  = read(fileName);
             return object.get(fileName).getAsJsonArray();
         } catch(IllegalStateException ex) {
-            System.out.println("Failed to read File"+ex.toString());
+            System.out.println("Failed to read File "+ex.toString());
             return null;
         } catch(NullPointerException ex) {
             System.out.println("""

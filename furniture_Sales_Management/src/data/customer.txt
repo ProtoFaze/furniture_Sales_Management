@@ -1,0 +1,50 @@
+{customer:[
+  {
+    "id": "10",
+    "fullName": "Heddi Baldinotti",
+    "emailAddress": "hbaldinotti9@businessweek.com",
+    "dob": "03/06/1991",
+    "gender": "M",
+    "address": "123 Jalan Ampang, Kuala Lumpur"
+  },
+  {
+    "id": "11",
+    "fullName": "Thekla Wardrope",
+    "emailAddress": "twardropea@eepurl.com",
+    "dob": "03/03/1994",
+    "gender": "F",
+    "address": "456 Jalan Tun Razak, George Town"
+  },
+  {
+    "id": "12",
+    "fullName": "Rancell Overill",
+    "emailAddress": "roverillb@discovery.com",
+    "dob": "15/07/1991",
+    "gender": "M",
+    "address": "789 Jalan Bukit Bintang, Johor Bahru"
+  },
+  {
+    "id": "13",
+    "fullName": "Heida Crinidge",
+    "emailAddress": "hcrinidgec@youtube.com",
+    "dob": "24/10/1996",
+    "gender": "F",
+    "address": "101 Jalan Kuchai Lama, Kuching"
+  },
+  {
+    "id": "14",
+    "fullName": "Blayne Southcomb",
+    "emailAddress": "bsouthcombd@hao123.com",
+    "dob": "30/01/2000",
+    "gender": "M",
+    "address": "202 Jalan Imbi, Ipoh"
+  },
+  {
+    "id": "15",
+    "fullName": "Webster Cardwell",
+    "emailAddress": "wcardwelle@xrea.com",
+    "dob": "12/11/1990",
+    "gender": "M",
+    "address": "303 Jalan Sultan Ismail, Kota Kinabalu"
+  }
+]}
