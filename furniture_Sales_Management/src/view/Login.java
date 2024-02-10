@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Interface;
+package view;
 
-import Classes.Admin;
-import Classes.File;
-import Classes.Officer;
-import Classes.SalesPerson;
-import Classes.User;
+import classes.Admin;
+import classes.File;
+import classes.Officer;
+import classes.SalesPerson;
+import classes.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.time.LocalDate;
@@ -70,6 +70,7 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         LoginLbl.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        LoginLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LoginLbl.setText("Login");
 
         UserLbl.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -111,12 +112,9 @@ public class Login extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(123, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(278, 278, 278)
-                        .addComponent(LoginLbl))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(123, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(UserLbl)
                             .addComponent(PassLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -124,13 +122,13 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(UserTxt)
                             .addComponent(PassTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(RegisterBtn)
                         .addGap(18, 18, 18)
                         .addComponent(LoginBtn)
                         .addGap(18, 18, 18)
-                        .addComponent(ExitBtn)))
+                        .addComponent(ExitBtn))
+                    .addComponent(LoginLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(201, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

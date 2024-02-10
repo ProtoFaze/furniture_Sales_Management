@@ -76,10 +76,10 @@
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="Tabs" pref="0" max="32767" attributes="0"/>
+                  <Component id="Tabs" pref="1065" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="782" max="32767" attributes="0"/>
+                  <EmptySpace pref="791" max="32767" attributes="0"/>
                   <Component id="rolelbl" min="-2" pref="168" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                   <Component id="ProfileBtn" min="-2" max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Component id="jobMainbtn" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="402" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="LogoutBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
@@ -109,12 +109,10 @@
                           <Component id="rolelbl" min="-2" pref="36" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="ProfileBtn" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="ProfileBtn" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="Tabs" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="Tabs" min="-2" pref="451" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -165,9 +163,9 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
-            <Component class="Interface.StaffList" name="staffList1">
+            <Component class="view.StaffList" name="staffList1">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Interface.StaffList(this)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.StaffList(this)"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -177,9 +175,9 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="Interface.GenerateDocument" name="generateReport1">
+            <Component class="view.GenerateDocument" name="generateReport1">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Interface.GenerateDocument(this)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.GenerateDocument(this)"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -189,9 +187,9 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="Interface.SalesOrderPage" name="salesOrderPage11">
+            <Component class="view.SalesOrderPage" name="salesOrderPage">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Interface.SalesOrderPage(this)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.SalesOrderPage(this)"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -201,9 +199,9 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="Interface.SearchSalesOrder" name="searchSalesOrder1">
+            <Component class="view.SearchSalesOrder" name="searchSalesOrder">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Interface.SearchSalesOrder(this)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.SearchSalesOrder(this)"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -213,9 +211,10 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="Interface.CreateSalesOrder1" name="createSalesOrder11">
+            <Component class="view.CreateSalesOrder" name="createSalesOrder">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Interface.CreateSalesOrder1(this)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.CreateSalesOrder(this)"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -225,9 +224,9 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="Interface.DeleteSalesOrder" name="deleteSalesOrder1">
+            <Component class="view.DeleteSalesOrder" name="deleteSalesOrder">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Interface.DeleteSalesOrder(this)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.DeleteSalesOrder(this)"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -237,14 +236,26 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="Interface.ModifySalesOrder" name="modifySalesOrder1">
+            <Component class="view.ModifySalesOrder" name="modifySalesOrder">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Interface.ModifySalesOrder(this)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.ModifySalesOrder(this)"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Edit Sales">
                     <Property name="tabTitle" type="java.lang.String" value="Edit Sales"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="view.PersonalSales" name="personalSales">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.PersonalSales(this)"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Sales List">
+                    <Property name="tabTitle" type="java.lang.String" value="Sales List"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>

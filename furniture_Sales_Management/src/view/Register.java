@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Interface;
+package view;
 
 import java.awt.Color;
-import Classes.User;
-import Classes.Admin;
-import Classes.File;
-import Classes.Officer;
-import Classes.SalesPerson;
-import Classes.Verify;
+import classes.User;
+import classes.Admin;
+import classes.Customer;
+import classes.File;
+import classes.Officer;
+import classes.SalesPerson;
+import classes.Verify;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -19,18 +20,107 @@ import javax.swing.JOptionPane;
  * @author damonng
  */
 public class Register extends javax.swing.JFrame {
+    private static List<User> users;
+    private static List<Admin> admins;
+    private MainPage parent;
+    private String generatedId;
+    private String fullName,dob = null,userName,passWord,emailAddress,role = null,physicalAddress, //vars
+                validGender,validRole,validName,/*validUName,validPass,*/validEmail,validDate,validPhysicalAddress; //validations
+    private boolean validUName,validPass;
+    private char gndr = 0;
+    
     /**
      * Creates new form Register
      */
-    private static List<User> users;
-    private static List<Admin> admins;
-    
     public Register() {
         this.users = User.list;
         this.admins = Admin.admins;
+        parent = null;
         initComponents();
+        address.setEnabled(false);
+        address.setVisible(false);
+    }
+    public Register(MainPage parent) {
+        this.parent = parent;
+        initComponents();
+        pageTitle.setText("Customer Registration");
+        username.setEnabled(false);
+        password.setEnabled(false);
+        username.setVisible(false);
+        password.setVisible(false);
     }
 
+    private void registerUser(){
+        userName=txtUsername.getText();
+        passWord = String.valueOf(txtPassword.getPassword());
+        if (grpRole.getSelection() != null){
+            if(radAdmin.isSelected())
+                role=radAdmin.getText();
+            else if (radOfficer.isSelected())
+                role=radOfficer.getText();
+            else if (radSalesPerson.isSelected())
+                role=radSalesPerson.getText();
+            role = role.toLowerCase();
+            validRole = "";
+        }else{
+            validRole = "Role not selected.\n";
+        }
+        validUName = Verify.isValidUsername(userName);
+        if(passWord.equals(String.valueOf(txtPasswordRetype.getPassword()))){
+            validPass = Verify.isStrongPassword(passWord);
+        }else{
+            validPass = false;
+        }
+        if(
+//        validName == null && validUName == null && validEmail == null && validPass == null && validDate == null && validGender==null && validRole==null
+        ((validUName&&validPass) == true)&& validRole.isEmpty() && validGender.isEmpty() && validDate.isEmpty()){
+            User applicant;
+            switch (role.toLowerCase()) {
+                case "admin" ->{
+                        applicant = new Admin(userName, fullName, emailAddress, gndr, dob, passWord);
+                    }
+                case "officer" ->{
+                        applicant = new Officer(userName, fullName, emailAddress, gndr, dob, passWord);
+                    }
+                case "sales person" ->{
+                        applicant = new SalesPerson(userName, fullName, emailAddress, gndr, dob, passWord);
+                    }
+                default -> {
+                    applicant = null;
+                }
+            }
+            users.add(applicant);
+            String res=File.write("user", users);
+            if("Success".equals(res)){
+                JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
+            }else{          
+                JOptionPane.showMessageDialog(null, "Could not write into file due to "+res,"Error",JOptionPane.ERROR_MESSAGE);
+            }
+            MainPage page  = new MainPage(applicant);
+            page.setVisible(true);
+            this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(null,/*validUName+validPass+validName+validEmail+validDate+*/validGender+validRole,"Invalid Information",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void registerCustomer(){
+        physicalAddress = txtAddress.getText();
+        
+        if(validName == null && validEmail == null && validDate == null && validGender==null && validPhysicalAddress==null){
+            Customer customer=new Customer(fullName, emailAddress, dob, gndr, physicalAddress);
+            Customer.list.add(customer);
+            String res=File.write("customer", Customer.list);
+            if("Success".equals(res)){
+                JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, "Could not write into file due to "+res,"Error",JOptionPane.ERROR_MESSAGE);
+            }
+            parent.changeTab(4);
+            parent.createSalesOrder.tfCustomer.setText(generatedId);
+        }else{
+            JOptionPane.showMessageDialog(null,validName+validEmail+validDate+validGender+validPhysicalAddress,"Invalid Information",JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,38 +134,42 @@ public class Register extends javax.swing.JFrame {
         grpRole = new javax.swing.ButtonGroup();
         pageTitle = new javax.swing.JLabel();
         divider = new javax.swing.JSeparator();
-        password = new javax.swing.JPanel();
-        lblPassword = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JPasswordField();
+        name = new javax.swing.JPanel();
+        lblName = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        email = new javax.swing.JPanel();
+        lblEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        date = new javax.swing.JPanel();
+        lblDOB = new javax.swing.JLabel();
+        txtDate = new com.toedter.calendar.JDateChooser();
         gender = new javax.swing.JPanel();
         lblGender = new javax.swing.JLabel();
         radMale = new javax.swing.JRadioButton();
         radFemale = new javax.swing.JRadioButton();
-        email = new javax.swing.JPanel();
-        lblEmail = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
-        name = new javax.swing.JPanel();
-        lblName = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
-        date = new javax.swing.JPanel();
-        lblDOB = new javax.swing.JLabel();
-        txtDate = new com.toedter.calendar.JDateChooser();
         username = new javax.swing.JPanel();
         lblUsername = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         Role = new javax.swing.JPanel();
-        lblEmail1 = new javax.swing.JLabel();
+        lblRole = new javax.swing.JLabel();
         radAdmin = new javax.swing.JRadioButton();
         radSalesPerson = new javax.swing.JRadioButton();
         radOfficer = new javax.swing.JRadioButton();
-        buttons = new javax.swing.JPanel();
+        password = new javax.swing.JPanel();
+        lblPassword = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
         retypePassword = new javax.swing.JPanel();
         lblPasswordRetype = new javax.swing.JLabel();
         txtPasswordRetype = new javax.swing.JPasswordField();
+        address = new javax.swing.JPanel();
+        lblAddress = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAddress = new javax.swing.JTextArea();
+        buttons = new javax.swing.JPanel();
+        btnRegister = new javax.swing.JButton();
+        btnRedirect = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        btnRedirect = new javax.swing.JButton();
-        btnRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Rockwell", 0, 10)); // NOI18N
@@ -85,28 +179,104 @@ public class Register extends javax.swing.JFrame {
         pageTitle.setText("Staff Registration");
         pageTitle.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        lblPassword.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblPassword.setText("Password:");
+        lblName.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblName.setLabelFor(txtUsername);
+        lblName.setText("Name:");
 
-        txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        txtPassword.setPreferredSize(new java.awt.Dimension(64, 26));
+        txtName.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtName.setForeground(new java.awt.Color(204, 204, 204));
+        txtName.setText("Your name");
+        txtName.setMinimumSize(new java.awt.Dimension(64, 26));
+        txtName.setPreferredSize(new java.awt.Dimension(80, 26));
+        txtName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNameFocusLost(evt);
+            }
+        });
 
-        javax.swing.GroupLayout passwordLayout = new javax.swing.GroupLayout(password);
-        password.setLayout(passwordLayout);
-        passwordLayout.setHorizontalGroup(
-            passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passwordLayout.createSequentialGroup()
+        javax.swing.GroupLayout nameLayout = new javax.swing.GroupLayout(name);
+        name.setLayout(nameLayout);
+        nameLayout.setHorizontalGroup(
+            nameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nameLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        passwordLayout.setVerticalGroup(
-            passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(lblPassword))
+        nameLayout.setVerticalGroup(
+            nameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(nameLayout.createSequentialGroup()
+                .addGroup(nameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblName))
+                .addGap(0, 0, 0))
+        );
+
+        lblEmail.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblEmail.setText("Email:");
+
+        txtEmail.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtEmail.setForeground(new java.awt.Color(204, 204, 204));
+        txtEmail.setText("example@mail.my");
+        txtEmail.setMinimumSize(new java.awt.Dimension(64, 26));
+        txtEmail.setPreferredSize(new java.awt.Dimension(80, 26));
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtEmailFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtEmailFocusLost(evt);
+            }
+        });
+
+        javax.swing.GroupLayout emailLayout = new javax.swing.GroupLayout(email);
+        email.setLayout(emailLayout);
+        emailLayout.setHorizontalGroup(
+            emailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, emailLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        emailLayout.setVerticalGroup(
+            emailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(emailLayout.createSequentialGroup()
+                .addGroup(emailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEmail))
+                .addGap(0, 0, 0))
+        );
+
+        lblDOB.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblDOB.setText("DOB:");
+
+        txtDate.setPreferredSize(new java.awt.Dimension(80, 26));
+
+        javax.swing.GroupLayout dateLayout = new javax.swing.GroupLayout(date);
+        date.setLayout(dateLayout);
+        dateLayout.setHorizontalGroup(
+            dateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dateLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        dateLayout.setVerticalGroup(
+            dateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dateLayout.createSequentialGroup()
+                .addGroup(dateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(lblDOB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
 
         lblGender.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -144,103 +314,6 @@ public class Register extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        lblEmail.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblEmail.setText("Email:");
-
-        txtEmail.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        txtEmail.setForeground(new java.awt.Color(204, 204, 204));
-        txtEmail.setText("example@mail.my");
-        txtEmail.setMinimumSize(new java.awt.Dimension(64, 26));
-        txtEmail.setPreferredSize(new java.awt.Dimension(64, 26));
-        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtEmailFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtEmailFocusLost(evt);
-            }
-        });
-
-        javax.swing.GroupLayout emailLayout = new javax.swing.GroupLayout(email);
-        email.setLayout(emailLayout);
-        emailLayout.setHorizontalGroup(
-            emailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, emailLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        emailLayout.setVerticalGroup(
-            emailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(emailLayout.createSequentialGroup()
-                .addGroup(emailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEmail))
-                .addGap(0, 0, 0))
-        );
-
-        lblName.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblName.setLabelFor(txtUsername);
-        lblName.setText("Name:");
-
-        txtName.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        txtName.setForeground(new java.awt.Color(204, 204, 204));
-        txtName.setText("Your name");
-        txtName.setMinimumSize(new java.awt.Dimension(64, 26));
-        txtName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNameFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNameFocusLost(evt);
-            }
-        });
-
-        javax.swing.GroupLayout nameLayout = new javax.swing.GroupLayout(name);
-        name.setLayout(nameLayout);
-        nameLayout.setHorizontalGroup(
-            nameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nameLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        nameLayout.setVerticalGroup(
-            nameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(nameLayout.createSequentialGroup()
-                .addGroup(nameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblName))
-                .addGap(0, 0, 0))
-        );
-
-        lblDOB.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblDOB.setText("DOB:");
-
-        javax.swing.GroupLayout dateLayout = new javax.swing.GroupLayout(date);
-        date.setLayout(dateLayout);
-        dateLayout.setHorizontalGroup(
-            dateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dateLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        dateLayout.setVerticalGroup(
-            dateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dateLayout.createSequentialGroup()
-                .addGroup(dateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(lblDOB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
-        );
-
         lblUsername.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblUsername.setLabelFor(txtUsername);
         lblUsername.setText("Username:");
@@ -248,6 +321,7 @@ public class Register extends javax.swing.JFrame {
         txtUsername.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(204, 204, 204));
         txtUsername.setText("Enter username");
+        txtUsername.setPreferredSize(new java.awt.Dimension(80, 26));
         txtUsername.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtUsernameFocusGained(evt);
@@ -277,8 +351,8 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        lblEmail1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblEmail1.setText("Role :");
+        lblRole.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblRole.setText("Role :");
 
         grpRole.add(radAdmin);
         radAdmin.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -298,10 +372,10 @@ public class Register extends javax.swing.JFrame {
             RoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RoleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblRole, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(radAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radOfficer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radSalesPerson)
@@ -312,36 +386,42 @@ public class Register extends javax.swing.JFrame {
             .addGroup(RoleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(RoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmail1)
+                    .addComponent(lblRole)
                     .addComponent(radAdmin)
                     .addComponent(radSalesPerson)
                     .addComponent(radOfficer))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
-        buttons.setLayout(buttonsLayout);
-        buttonsLayout.setHorizontalGroup(
-            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
-                .addComponent(btnBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(btnReset)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(btnRedirect)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(btnRegister))
+        lblPassword.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblPassword.setText("Password:");
+
+        txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtPassword.setPreferredSize(new java.awt.Dimension(80, 26));
+
+        javax.swing.GroupLayout passwordLayout = new javax.swing.GroupLayout(password);
+        password.setLayout(passwordLayout);
+        passwordLayout.setHorizontalGroup(
+            passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passwordLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        buttonsLayout.setVerticalGroup(
-            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+        passwordLayout.setVerticalGroup(
+            passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblPassword))
         );
 
         lblPasswordRetype.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblPasswordRetype.setText("Retype Password:");
 
         txtPasswordRetype.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        txtPasswordRetype.setPreferredSize(new java.awt.Dimension(64, 26));
+        txtPasswordRetype.setPreferredSize(new java.awt.Dimension(80, 26));
 
         javax.swing.GroupLayout retypePasswordLayout = new javax.swing.GroupLayout(retypePassword);
         retypePassword.setLayout(retypePasswordLayout);
@@ -359,6 +439,62 @@ public class Register extends javax.swing.JFrame {
             .addComponent(txtPasswordRetype, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(lblPasswordRetype, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        lblAddress.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblAddress.setText("Address");
+
+        txtAddress.setColumns(20);
+        txtAddress.setForeground(new java.awt.Color(204, 204, 204));
+        txtAddress.setRows(5);
+        txtAddress.setText("Write Your address separated by ,");
+        txtAddress.setPreferredSize(new java.awt.Dimension(80, 26));
+        txtAddress.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtAddressFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtAddressFocusLost(evt);
+            }
+        });
+        jScrollPane1.setViewportView(txtAddress);
+
+        javax.swing.GroupLayout addressLayout = new javax.swing.GroupLayout(address);
+        address.setLayout(addressLayout);
+        addressLayout.setHorizontalGroup(
+            addressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addressLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        addressLayout.setVerticalGroup(
+            addressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addressLayout.createSequentialGroup()
+                .addGroup(addressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAddress)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        btnRegister.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnRegister.setText("Register");
+        btnRegister.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRegister.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
+
+        btnRedirect.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnRedirect.setText("Login");
+        btnRedirect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRedirectActionPerformed(evt);
+            }
+        });
 
         btnReset.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnReset.setText("Reset");
@@ -380,121 +516,102 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        btnRedirect.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnRedirect.setText("Login");
-        btnRedirect.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRedirectActionPerformed(evt);
-            }
-        });
-
-        btnRegister.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnRegister.setText("Register");
-        btnRegister.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRegister.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnRegister.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegisterUser(evt);
-            }
-        });
+        javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
+        buttons.setLayout(buttonsLayout);
+        buttonsLayout.setHorizontalGroup(
+            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnBack)
+                .addGap(18, 18, 18)
+                .addComponent(btnReset)
+                .addGap(18, 18, 18)
+                .addComponent(btnRedirect)
+                .addGap(18, 18, 18)
+                .addComponent(btnRegister)
+                .addGap(0, 0, 0))
+        );
+        buttonsLayout.setVerticalGroup(
+            buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonsLayout.createSequentialGroup()
+                .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRegister)
+                    .addComponent(btnRedirect)
+                    .addComponent(btnReset)
+                    .addComponent(btnBack))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 308, Short.MAX_VALUE)
-                .addComponent(pageTitle)
-                .addContainerGap(313, Short.MAX_VALUE))
+            .addComponent(divider)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(divider)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(pageTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(address, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(gender, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(username, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Role, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(retypePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(btnBack)
-                .addGap(65, 65, 65)
-                .addComponent(btnReset)
-                .addGap(57, 57, 57)
-                .addComponent(btnRedirect)
-                .addGap(55, 55, 55)
-                .addComponent(btnRegister)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(retypePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(gender, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(pageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(divider, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(retypePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
+                .addComponent(divider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(email, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRedirect, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnReset, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(retypePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void RegisterUser(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterUser
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         //declare variables
-        String fullName,dob = null,usr,pass,mail,role = null,
-                validGender,validRole/*,validName,validUName,validEmail,validPass*/,validDate;
-        
-        boolean validUName,validPass;
-        char gndr = 0;
-        
-        //assign values
         fullName=txtName.getText();
+        emailAddress = txtEmail.getText();
         if(txtDate.getDate() != null){
             dob = txtDate.getDate().toString();
             validDate = ""
 //                    Verify.isValidDate(dob,false)
                     ;
-
         }else{
-            validDate = "Date cannot be empty";
+            validDate = "Date cannot be empty\n";
         }
-        usr=txtUsername.getText();
-        pass = String.valueOf(txtPassword.getPassword());
-        mail = txtEmail.getText();
         if (grpGender.getSelection() != null){
+            System.out.println(grpGender.getSelection().toString());
             if(radMale.isSelected())
                 gndr=radMale.getText().charAt(0);
             else if (radFemale.isSelected())
@@ -503,60 +620,20 @@ public class Register extends javax.swing.JFrame {
         }else{
             validGender = "Gender not selected.\n";
         }
-        if (grpRole.getSelection() != null){
-            if(radAdmin.isSelected())
-                role=radAdmin.getText();
-            else if (radOfficer.isSelected())
-                role=radOfficer.getText();
-            else if (radSalesPerson.isSelected())
-                role=radSalesPerson.getText();
-            role.toLowerCase();
-            validRole = "";
+        validName = Verify.validateFullName(fullName);
+        validEmail = Verify.validateEmail(emailAddress);
+        if (parent!=null){
+            registerUser();
         }else{
-            validRole = "Role not selected.\n";
+            registerCustomer();
         }
+        //assign values
+
         //run validation
-//        validName = Verify.isValidName(fullName);
-        validUName = Verify.isValidUsername(usr);
-//        validEmail = Verify.isValidEmail(mail);
-        if(pass.equals(String.valueOf(txtPasswordRetype.getPassword()))){
-            validPass = Verify.isStrongPassword(pass);
-        }else{
-            validPass = false;
-        }
-        if(
-//        validName == null && validUName == null && validEmail == null && validPass == null && validDate == null && validGender==null && validRole==null
-        ((validUName&&validPass) == true)&& validRole.isEmpty() && validGender.isEmpty() && validDate.isEmpty()
-        ){
-            User applicant;
-            switch (role.toLowerCase()) {
-                case "admin" ->{
-                        applicant = new Admin(usr, fullName, mail, gndr, dob, pass);
-                    }
-                case "officer" ->{
-                        applicant = new Officer(usr, fullName, mail, gndr, dob, pass);
-                    }
-                case "sales person" ->{
-                        applicant = new SalesPerson(usr, fullName, mail, gndr, dob, pass);
-                    }
-                default -> {
-                    applicant = null;
-                }
-            }
-            users.add(applicant);
-            String res=File.write("user", users);
-            if("Success".equals(res)){
-                JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
-            }else{          
-                JOptionPane.showMessageDialog(null, "Could not write into file due to "+res,"Error",JOptionPane.ERROR_MESSAGE);
-            }
-            MainPage page  = new MainPage(applicant);
-            page.setVisible(true);
-            this.setVisible(false);
-        }else{
-            JOptionPane.showMessageDialog(null,/*validUName+validPass+validName+validEmail+validDate+*/validGender+validRole,"Invalid Information",JOptionPane.INFORMATION_MESSAGE);
-        }
-    }//GEN-LAST:event_RegisterUser
+
+
+
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         txtName.setText("");
@@ -623,6 +700,20 @@ public class Register extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnRedirectActionPerformed
 
+    private void txtAddressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAddressFocusGained
+        if (txtAddress.getText().equals("Write Your address separated by ,")){
+            txtAddress.setText("");
+            txtAddress.setForeground(new Color (69,69,69));
+        }
+    }//GEN-LAST:event_txtAddressFocusGained
+
+    private void txtAddressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAddressFocusLost
+        if (txtAddress.getText().equals("")){
+            txtAddress.setText("Write Your address separated by ,");
+            txtAddress.setForeground(new Color (204,204,204));
+        }
+    }//GEN-LAST:event_txtAddressFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -660,6 +751,7 @@ public class Register extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Role;
+    private javax.swing.JPanel address;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnRedirect;
     private javax.swing.JButton btnRegister;
@@ -671,13 +763,15 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JPanel gender;
     private javax.swing.ButtonGroup grpGender;
     private javax.swing.ButtonGroup grpRole;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblDOB;
     private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblEmail1;
     private javax.swing.JLabel lblGender;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblPasswordRetype;
+    private javax.swing.JLabel lblRole;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel name;
     private javax.swing.JLabel pageTitle;
@@ -688,6 +782,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JRadioButton radOfficer;
     private javax.swing.JRadioButton radSalesPerson;
     private javax.swing.JPanel retypePassword;
+    private javax.swing.JTextArea txtAddress;
     private com.toedter.calendar.JDateChooser txtDate;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;

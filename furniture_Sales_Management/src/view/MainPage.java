@@ -1,7 +1,8 @@
-package Interface;
+package view;
 
-import Classes.Admin;
-import Classes.User;
+import classes.Admin;
+import classes.SalesOrder;
+import classes.User;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
@@ -21,6 +22,7 @@ public class MainPage extends javax.swing.JFrame {
     private Color colorPrimary, colorSecondary;
     private static List<User> users;
     private static List<Admin> admins;
+    private static List<SalesOrder> salesOrders;
     
     /**
      * Creates new form MainPage
@@ -64,7 +66,21 @@ public class MainPage extends javax.swing.JFrame {
 
     private void loadData(){
         welcometxt.setText("Welcome " + user.getFullName());
-//        staffList1 = new StaffList(this);
+        switch (this.user.getRole()){
+            case "admin" -> {
+                
+            }
+            case "officer" -> {
+                
+            }
+            case "sales person" -> {
+               salesOrders = SalesOrder.salesOrders;
+
+            }
+            default -> {
+                
+            }
+        }
         
     }
     
@@ -97,13 +113,14 @@ public class MainPage extends javax.swing.JFrame {
         welcometxt = new javax.swing.JLabel();
         jobMainbtn = new javax.swing.JButton();
         Tabs = new javax.swing.JTabbedPane();
-        staffList1 = new Interface.StaffList(this);
-        generateReport1 = new Interface.GenerateDocument(this);
-        salesOrderPage11 = new Interface.SalesOrderPage(this);
-        searchSalesOrder1 = new Interface.SearchSalesOrder(this);
-        createSalesOrder11 = new Interface.CreateSalesOrder1(this);
-        deleteSalesOrder1 = new Interface.DeleteSalesOrder(this);
-        modifySalesOrder1 = new Interface.ModifySalesOrder(this);
+        staffList1 = new view.StaffList(this);
+        generateReport1 = new view.GenerateDocument(this);
+        salesOrderPage = new view.SalesOrderPage(this);
+        searchSalesOrder = new view.SearchSalesOrder(this);
+        createSalesOrder = new view.CreateSalesOrder(this);
+        deleteSalesOrder = new view.DeleteSalesOrder(this);
+        modifySalesOrder = new view.ModifySalesOrder(this);
+        personalSales = new view.PersonalSales(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
 
@@ -138,11 +155,12 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         Tabs.addTab("Staff List", staffList1);
         Tabs.addTab("Generate Report", generateReport1);
-        Tabs.addTab("Sales Order", salesOrderPage11);
-        Tabs.addTab("Search Sales", searchSalesOrder1);
-        Tabs.addTab("Create Sales", createSalesOrder11);
-        Tabs.addTab("Delete Sales", deleteSalesOrder1);
-        Tabs.addTab("Edit Sales", modifySalesOrder1);
+        Tabs.addTab("Sales Order", salesOrderPage);
+        Tabs.addTab("Search Sales", searchSalesOrder);
+        Tabs.addTab("Create Sales", createSalesOrder);
+        Tabs.addTab("Delete Sales", deleteSalesOrder);
+        Tabs.addTab("Edit Sales", modifySalesOrder);
+        Tabs.addTab("Sales List", personalSales);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -173,9 +191,9 @@ public class MainPage extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addComponent(LogoutBtn)))
                 .addGap(31, 31, 31)
-                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 1065, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
-                .addContainerGap(782, Short.MAX_VALUE)
+                .addContainerGap(791, Short.MAX_VALUE)
                 .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(103, 103, 103)
                 .addComponent(ProfileBtn)
@@ -191,7 +209,7 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(bgPanelLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jobMainbtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 402, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LogoutBtn)
                 .addGap(18, 18, 18))
             .addGroup(bgPanelLayout.createSequentialGroup()
@@ -199,10 +217,9 @@ public class MainPage extends javax.swing.JFrame {
                     .addGroup(bgPanelLayout.createSequentialGroup()
                         .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
-                        .addComponent(ProfileBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(ProfileBtn, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(bgPanelLayout.createSequentialGroup()
@@ -288,16 +305,17 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton ProfileBtn;
     private javax.swing.JTabbedPane Tabs;
     private javax.swing.JPanel bgPanel;
-    private Interface.CreateSalesOrder1 createSalesOrder11;
-    private Interface.DeleteSalesOrder deleteSalesOrder1;
-    private Interface.GenerateDocument generateReport1;
+    view.CreateSalesOrder createSalesOrder;
+    private view.DeleteSalesOrder deleteSalesOrder;
+    private view.GenerateDocument generateReport1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbtn;
-    private Interface.ModifySalesOrder modifySalesOrder1;
+    private view.ModifySalesOrder modifySalesOrder;
+    private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
-    private Interface.SalesOrderPage salesOrderPage11;
-    private Interface.SearchSalesOrder searchSalesOrder1;
-    private Interface.StaffList staffList1;
+    private view.SalesOrderPage salesOrderPage;
+    private view.SearchSalesOrder searchSalesOrder;
+    private view.StaffList staffList1;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
 }
