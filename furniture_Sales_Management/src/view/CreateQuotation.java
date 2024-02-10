@@ -4,7 +4,7 @@
  */
 package view;
 
-import classes.Furniture;
+import Classes.Furniture;
 import java.util.ArrayList;
 import java.util.List;
 

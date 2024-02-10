@@ -4,7 +4,7 @@
  */
 package view;
 
-import classes.SalesOrder;
+import Classes.SalesOrder;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -75,6 +75,7 @@ public class SearchSalesOrder extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
 
         lblSearchSalesOrder.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        lblSearchSalesOrder.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSearchSalesOrder.setText("SEARCH SALES ORDER QUOTATION");
 
         tfOrderIDsearch.addActionListener(new java.awt.event.ActionListener() {
@@ -111,40 +112,34 @@ public class SearchSalesOrder extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
                         .addComponent(btnBack)
-                        .addGap(18, 18, 18)
+                        .addGap(47, 47, 47)
                         .addComponent(btnSearch))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
                         .addComponent(lblOrderID1)
-                        .addGap(39, 39, 39)
+                        .addGap(40, 40, 40)
                         .addComponent(tfOrderIDsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblSearchSalesOrder)
-                .addGap(219, 219, 219))
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE))
+            .addComponent(lblSearchSalesOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(30, 30, 30)
                 .addComponent(lblSearchSalesOrder)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfOrderIDsearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblOrderID1))
-                        .addGap(66, 66, 66)
+                        .addGap(114, 114, 114)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSearch)
-                            .addComponent(btnBack)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54))
+                            .addComponent(btnBack))
+                        .addContainerGap())
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 

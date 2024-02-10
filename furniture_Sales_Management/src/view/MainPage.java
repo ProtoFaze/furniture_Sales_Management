@@ -1,8 +1,8 @@
 package view;
 
-import classes.Admin;
-import classes.SalesOrder;
-import classes.User;
+import Classes.Admin;
+import Classes.SalesOrder;
+import Classes.User;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
@@ -32,8 +32,6 @@ public class MainPage extends javax.swing.JFrame {
 
         this.user = user;
         String roleLblText;
-        this.admins = Admin.admins;
-        this.users = User.list;
         profilePage = new ProfilePage(this);
 
         //PREINIT-setColor scheme
@@ -68,17 +66,20 @@ public class MainPage extends javax.swing.JFrame {
         welcometxt.setText("Welcome " + user.getFullName());
         switch (this.user.getRole()){
             case "admin" -> {
-                
+                users = User.list;
             }
             case "officer" -> {
                 
             }
             case "sales person" -> {
                salesOrders = SalesOrder.salesOrders;
+               
 
             }
             default -> {
-                
+                users = null;
+                admins = null;
+                salesOrders = null;
             }
         }
         
@@ -113,8 +114,8 @@ public class MainPage extends javax.swing.JFrame {
         welcometxt = new javax.swing.JLabel();
         jobMainbtn = new javax.swing.JButton();
         Tabs = new javax.swing.JTabbedPane();
-        staffList1 = new view.StaffList(this);
-        generateReport1 = new view.GenerateDocument(this);
+        staffList = new view.StaffList(this);
+        generateReport = new view.GenerateDocument(this);
         salesOrderPage = new view.SalesOrderPage(this);
         searchSalesOrder = new view.SearchSalesOrder(this);
         createSalesOrder = new view.CreateSalesOrder(this);
@@ -123,6 +124,11 @@ public class MainPage extends javax.swing.JFrame {
         personalSales = new view.PersonalSales(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
+        jobMainbtn1 = new javax.swing.JButton();
+        jobMainbtn2 = new javax.swing.JButton();
+        jobMainbtn3 = new javax.swing.JButton();
+        jobMainbtn4 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,7 +150,9 @@ public class MainPage extends javax.swing.JFrame {
         welcometxt.setText("Welcome, ");
 
         jobMainbtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jobMainbtn.setText("button1");
+        jobMainbtn.setText("func1");
+        jobMainbtn.setPreferredSize(new java.awt.Dimension(120, 30));
+        jobMainbtn.setSize(new java.awt.Dimension(120, 30));
         jobMainbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobMainbtnActionPerformed(evt);
@@ -152,9 +160,8 @@ public class MainPage extends javax.swing.JFrame {
         });
 
         Tabs.setBackground(new java.awt.Color(186, 255, 175));
-        Tabs.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        Tabs.addTab("Staff List", staffList1);
-        Tabs.addTab("Generate Report", generateReport1);
+        Tabs.addTab("Staff List", staffList);
+        Tabs.addTab("Generate Report", generateReport);
         Tabs.addTab("Sales Order", salesOrderPage);
         Tabs.addTab("Search Sales", searchSalesOrder);
         Tabs.addTab("Create Sales", createSalesOrder);
@@ -172,9 +179,54 @@ public class MainPage extends javax.swing.JFrame {
 
         LogoutBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         LogoutBtn.setText("Logout");
+        LogoutBtn.setSize(new java.awt.Dimension(120, 30));
         LogoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LogoutBtnActionPerformed(evt);
+            }
+        });
+
+        lblTitle.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Logo_small.png"))); // NOI18N
+        lblTitle.setText("YOYO Sales Helper");
+
+        jobMainbtn1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jobMainbtn1.setText("func2");
+        jobMainbtn1.setPreferredSize(new java.awt.Dimension(120, 30));
+        jobMainbtn1.setSize(new java.awt.Dimension(120, 30));
+        jobMainbtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobMainbtn1ActionPerformed(evt);
+            }
+        });
+
+        jobMainbtn2.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jobMainbtn2.setText("func3");
+        jobMainbtn2.setPreferredSize(new java.awt.Dimension(120, 30));
+        jobMainbtn2.setSize(new java.awt.Dimension(120, 30));
+        jobMainbtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobMainbtn2ActionPerformed(evt);
+            }
+        });
+
+        jobMainbtn3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jobMainbtn3.setText("func4");
+        jobMainbtn3.setPreferredSize(new java.awt.Dimension(120, 30));
+        jobMainbtn3.setSize(new java.awt.Dimension(120, 30));
+        jobMainbtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobMainbtn3ActionPerformed(evt);
+            }
+        });
+
+        jobMainbtn4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jobMainbtn4.setText("func5");
+        jobMainbtn4.setPreferredSize(new java.awt.Dimension(120, 30));
+        jobMainbtn4.setSize(new java.awt.Dimension(120, 30));
+        jobMainbtn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobMainbtn4ActionPerformed(evt);
             }
         });
 
@@ -183,49 +235,53 @@ public class MainPage extends javax.swing.JFrame {
         bgPanelLayout.setHorizontalGroup(
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jobMainbtn))
+                        .addComponent(lblTitle)
+                        .addGap(89, 89, 89)
+                        .addComponent(welcometxt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 369, Short.MAX_VALUE)
+                        .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(120, 120, 120)
+                        .addComponent(ProfileBtn))
                     .addGroup(bgPanelLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(LogoutBtn)))
-                .addGap(31, 31, 31)
-                .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 1065, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
-                .addContainerGap(791, Short.MAX_VALUE)
-                .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103)
-                .addComponent(ProfileBtn)
-                .addGap(21, 21, 21))
-            .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(bgPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(welcometxt)
-                    .addContainerGap(1109, Short.MAX_VALUE)))
+                        .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jobMainbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jobMainbtn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jobMainbtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jobMainbtn3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jobMainbtn4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(LogoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addComponent(Tabs)))
+                .addContainerGap())
         );
         bgPanelLayout.setVerticalGroup(
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bgPanelLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jobMainbtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(LogoutBtn)
-                .addGap(18, 18, 18))
-            .addGroup(bgPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitle)
+                    .addComponent(welcometxt)
+                    .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ProfileBtn))
+                .addGap(16, 16, 16)
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgPanelLayout.createSequentialGroup()
-                        .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addComponent(ProfileBtn, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jobMainbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(jobMainbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(jobMainbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(jobMainbtn3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(jobMainbtn4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addComponent(LogoutBtn))
+                    .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(bgPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(welcometxt)
-                    .addContainerGap(485, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -233,14 +289,14 @@ public class MainPage extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(bgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(bgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -264,6 +320,22 @@ public class MainPage extends javax.swing.JFrame {
         profilePage.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_ProfileBtnActionPerformed
+
+    private void jobMainbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jobMainbtn1ActionPerformed
+
+    private void jobMainbtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jobMainbtn2ActionPerformed
+
+    private void jobMainbtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jobMainbtn3ActionPerformed
+
+    private void jobMainbtn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jobMainbtn4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -307,15 +379,20 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JPanel bgPanel;
     view.CreateSalesOrder createSalesOrder;
     private view.DeleteSalesOrder deleteSalesOrder;
-    private view.GenerateDocument generateReport1;
+    private view.GenerateDocument generateReport;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbtn;
+    private javax.swing.JButton jobMainbtn1;
+    private javax.swing.JButton jobMainbtn2;
+    private javax.swing.JButton jobMainbtn3;
+    private javax.swing.JButton jobMainbtn4;
+    private javax.swing.JLabel lblTitle;
     private view.ModifySalesOrder modifySalesOrder;
     private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
     private view.SalesOrderPage salesOrderPage;
     private view.SearchSalesOrder searchSalesOrder;
-    private view.StaffList staffList1;
+    private view.StaffList staffList;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
 }

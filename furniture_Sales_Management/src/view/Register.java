@@ -5,13 +5,14 @@
 package view;
 
 import java.awt.Color;
-import classes.User;
-import classes.Admin;
-import classes.Customer;
-import classes.File;
-import classes.Officer;
-import classes.SalesPerson;
-import classes.Verify;
+import Classes.User;
+import Classes.Admin;
+import Classes.Customer;
+import Classes.File;
+import Classes.Officer;
+import Classes.SalesPerson;
+import Classes.Verify;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -25,8 +26,8 @@ public class Register extends javax.swing.JFrame {
     private MainPage parent;
     private String generatedId;
     private String fullName,dob = null,userName,passWord,emailAddress,role = null,physicalAddress, //vars
-                validGender,validRole,validName,/*validUName,validPass,*/validEmail,validDate,validPhysicalAddress; //validations
-    private boolean validUName,validPass;
+                validGender,validRole,validName,validUName,validPass,validEmail,validDate,validPhysicalAddress; //validations
+//    private boolean validUName,validPass;
     private char gndr = 0;
     
     /**
@@ -39,6 +40,7 @@ public class Register extends javax.swing.JFrame {
         initComponents();
         address.setEnabled(false);
         address.setVisible(false);
+
     }
     public Register(MainPage parent) {
         this.parent = parent;
@@ -51,8 +53,10 @@ public class Register extends javax.swing.JFrame {
     }
 
     private void registerUser(){
+        //assign values
         userName=txtUsername.getText();
         passWord = String.valueOf(txtPassword.getPassword());
+        //UserSpecific validation
         if (grpRole.getSelection() != null){
             if(radAdmin.isSelected())
                 role=radAdmin.getText();
@@ -62,18 +66,14 @@ public class Register extends javax.swing.JFrame {
                 role=radSalesPerson.getText();
             role = role.toLowerCase();
             validRole = "";
+            System.out.println("valid role is still empty");
         }else{
             validRole = "Role not selected.\n";
         }
         validUName = Verify.isValidUsername(userName);
-        if(passWord.equals(String.valueOf(txtPasswordRetype.getPassword()))){
-            validPass = Verify.isStrongPassword(passWord);
-        }else{
-            validPass = false;
-        }
-        if(
-//        validName == null && validUName == null && validEmail == null && validPass == null && validDate == null && validGender==null && validRole==null
-        ((validUName&&validPass) == true)&& validRole.isEmpty() && validGender.isEmpty() && validDate.isEmpty()){
+        validPass = passWord.equals(String.valueOf(txtPasswordRetype.getPassword())) ? Verify.isStrongPassword(passWord) : "password and retyped password is different";
+        String errors = validName+validEmail+validDate+validGender+validUName+validRole+validPass;
+        if((errors.isEmpty())){
             User applicant;
             switch (role.toLowerCase()) {
                 case "admin" ->{
@@ -92,33 +92,34 @@ public class Register extends javax.swing.JFrame {
             users.add(applicant);
             String res=File.write("user", users);
             if("Success".equals(res)){
-                JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.PLAIN_MESSAGE);
             }else{          
-                JOptionPane.showMessageDialog(null, "Could not write into file due to "+res,"Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
             }
             MainPage page  = new MainPage(applicant);
             page.setVisible(true);
             this.setVisible(false);
         }else{
-            JOptionPane.showMessageDialog(null,/*validUName+validPass+validName+validEmail+validDate+*/validGender+validRole,"Invalid Information",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,errors,"Invalid Information",JOptionPane.ERROR_MESSAGE);
         }
     }
     private void registerCustomer(){
-        physicalAddress = txtAddress.getText();
-        
-        if(validName == null && validEmail == null && validDate == null && validGender==null && validPhysicalAddress==null){
+        physicalAddress = txtAddress.getText().equals("Write Your address separated by ,")?"":txtAddress.getText();//assign value
+        validPhysicalAddress = Verify.validateAddress(physicalAddress);//customer specific validation
+        String error = validName+validEmail+validDate+validGender+validPhysicalAddress;
+        if(error.isEmpty()){
             Customer customer=new Customer(fullName, emailAddress, dob, gndr, physicalAddress);
             Customer.list.add(customer);
             String res=File.write("customer", Customer.list);
             if("Success".equals(res)){
                 JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
             }else{
-                JOptionPane.showMessageDialog(null, "Could not write into file due to "+res,"Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
             }
             parent.changeTab(4);
             parent.createSalesOrder.tfCustomer.setText(generatedId);
         }else{
-            JOptionPane.showMessageDialog(null,validName+validEmail+validDate+validGender+validPhysicalAddress,"Invalid Information",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,error,"Invalid Information",JOptionPane.ERROR_MESSAGE);
         }
     }
     /**
@@ -569,8 +570,8 @@ public class Register extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(pageTitle)
                 .addGap(12, 12, 12)
                 .addComponent(divider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
@@ -600,18 +601,16 @@ public class Register extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         //declare variables
-        fullName=txtName.getText();
-        emailAddress = txtEmail.getText();
-        if(txtDate.getDate() != null){
-            dob = txtDate.getDate().toString();
-            validDate = ""
-//                    Verify.isValidDate(dob,false)
-                    ;
+        fullName=txtName.getText().equals("Your name")? "":txtName.getText();
+        emailAddress = txtEmail.getText().equals("example@mail.my")? "":txtEmail.getText();
+        //basic info validation
+        if(txtDate.getDate()!=null){
+            dob = Verify.DateToString(txtDate.getDate());
+            validDate = Verify.validateDate(dob, false);
         }else{
-            validDate = "Date cannot be empty\n";
+            validDate = "Date is empty\n";
         }
         if (grpGender.getSelection() != null){
-            System.out.println(grpGender.getSelection().toString());
             if(radMale.isSelected())
                 gndr=radMale.getText().charAt(0);
             else if (radFemale.isSelected())
@@ -623,9 +622,9 @@ public class Register extends javax.swing.JFrame {
         validName = Verify.validateFullName(fullName);
         validEmail = Verify.validateEmail(emailAddress);
         if (parent!=null){
-            registerUser();
-        }else{
             registerCustomer();
+        }else{
+            registerUser();
         }
         //assign values
 

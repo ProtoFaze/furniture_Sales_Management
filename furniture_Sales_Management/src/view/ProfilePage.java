@@ -4,9 +4,9 @@
  */
 package view;
 
-import classes.Admin;
-import classes.File;
-import classes.User;
+import Classes.Admin;
+import Classes.File;
+import Classes.User;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -185,7 +185,7 @@ public class ProfilePage extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(30, 30, 30)
                 .addComponent(ProfileLbl)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -214,7 +214,7 @@ public class ProfilePage extends javax.swing.JFrame {
                         .addComponent(PassTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(EditBtn))
                     .addComponent(PassBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(BackBtn)
                 .addGap(16, 16, 16))
         );
