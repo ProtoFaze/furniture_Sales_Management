@@ -4,11 +4,11 @@
  */
 package furniture_sales_management;
 
-import Classes.Admin;
-import Classes.Officer;
-import Classes.SalesPerson;
-import Classes.User;
-import Interface.Login;
+import classes.Admin;
+import classes.Officer;
+import classes.SalesPerson;
+import classes.User;
+import view.Login;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.time.LocalDate;

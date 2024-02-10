@@ -1,8 +1,8 @@
-package Interface;
+package view;
 
-import Classes.Admin;
-import Classes.SalesOrder;
-import Classes.User;
+import classes.Admin;
+import classes.SalesOrder;
+import classes.User;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
@@ -113,14 +113,14 @@ public class MainPage extends javax.swing.JFrame {
         welcometxt = new javax.swing.JLabel();
         jobMainbtn = new javax.swing.JButton();
         Tabs = new javax.swing.JTabbedPane();
-        staffList1 = new Interface.StaffList(this);
-        generateReport1 = new Interface.GenerateDocument(this);
-        salesOrderPage = new Interface.SalesOrderPage(this);
-        searchSalesOrder = new Interface.SearchSalesOrder(this);
-        createSalesOrder = new Interface.CreateSalesOrder(this);
-        deleteSalesOrder = new Interface.DeleteSalesOrder(this);
-        modifySalesOrder = new Interface.ModifySalesOrder(this);
-        personalSales = new Interface.PersonalSales(this);
+        staffList1 = new view.StaffList(this);
+        generateReport1 = new view.GenerateDocument(this);
+        salesOrderPage = new view.SalesOrderPage(this);
+        searchSalesOrder = new view.SearchSalesOrder(this);
+        createSalesOrder = new view.CreateSalesOrder(this);
+        deleteSalesOrder = new view.DeleteSalesOrder(this);
+        modifySalesOrder = new view.ModifySalesOrder(this);
+        personalSales = new view.PersonalSales(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
 
@@ -305,17 +305,17 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton ProfileBtn;
     private javax.swing.JTabbedPane Tabs;
     private javax.swing.JPanel bgPanel;
-    Interface.CreateSalesOrder createSalesOrder;
-    private Interface.DeleteSalesOrder deleteSalesOrder;
-    private Interface.GenerateDocument generateReport1;
+    view.CreateSalesOrder createSalesOrder;
+    private view.DeleteSalesOrder deleteSalesOrder;
+    private view.GenerateDocument generateReport1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbtn;
-    private Interface.ModifySalesOrder modifySalesOrder;
-    private Interface.PersonalSales personalSales;
+    private view.ModifySalesOrder modifySalesOrder;
+    private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
-    private Interface.SalesOrderPage salesOrderPage;
-    private Interface.SearchSalesOrder searchSalesOrder;
-    private Interface.StaffList staffList1;
+    private view.SalesOrderPage salesOrderPage;
+    private view.SearchSalesOrder searchSalesOrder;
+    private view.StaffList staffList1;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
 }

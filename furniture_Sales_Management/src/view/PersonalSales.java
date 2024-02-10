@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Interface;
+package view;
 
-import Classes.SalesOrder;
+import classes.SalesOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 

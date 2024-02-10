@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Interface;
-import Classes.File;
-import Classes.Furniture;
-import Classes.SalesOrder;
-import Classes.User;
+package view;
+import classes.File;
+import classes.Furniture;
+import classes.SalesOrder;
+import classes.User;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;

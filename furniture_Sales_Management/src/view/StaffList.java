@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Interface;
+package view;
 
-import Classes.Officer;
-import Classes.SalesPerson;
-import Classes.User;
+import classes.Officer;
+import classes.SalesPerson;
+import classes.User;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;

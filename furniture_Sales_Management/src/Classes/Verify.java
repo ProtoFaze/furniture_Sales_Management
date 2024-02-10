@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Classes;
+package classes;
 
 /**
  *
@@ -46,13 +46,13 @@ public static String validateEmail(String emailAddress){
     String trimmedInput = emailAddress.trim();
     
    if (trimmedInput.isEmpty()|| trimmedInput.length()<2){
-       return "Email must be more than 2 characters";
+       return "Email must be more than 2 characters\n";
    }
    else if (!trimmedInput.matches("^[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z]{2,}$")){
-       return "Invalid email format";
+       return "Invalid email format\n";
    }
    else{
-       return null;
+       return "";
    }
 }
 
@@ -60,13 +60,13 @@ public static String validateEmail(String emailAddress){
 public static String validateFullName(String FullName){
     String trimmedFullName = FullName.trim();
     if (trimmedFullName.length()<2){
-        return "Full Name must be more than 2 characters";
+        return "Full Name must be more than 2 characters\n";
     }
     else if (!trimmedFullName.matches("^[A-Za-z\\s]+$")){
-        return "Invalid characters in Full Name";
+        return "Invalid characters in Full Name\n";
     }
     else{
-        return null; 
+        return ""; 
     }
 }
 
