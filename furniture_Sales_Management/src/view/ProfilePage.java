@@ -20,7 +20,7 @@ public class ProfilePage extends javax.swing.JFrame {
      * Creates new form ProfilePage
      */
     private MainPage parent;
-    private StaffList workerSource;
+    private PersonList workerSource;
     User user;
     private static List<User> users;
     private static List<Admin> admins;
@@ -42,7 +42,7 @@ public class ProfilePage extends javax.swing.JFrame {
         PassTxt.setText(user.getPass());
         System.out.println(user);
     }
-    public ProfilePage(StaffList parent) {
+    public ProfilePage(PersonList parent) {
         this.workerSource = parent;
         this.user = workerSource.selectedWorker;
         this.admins = Admin.admins;

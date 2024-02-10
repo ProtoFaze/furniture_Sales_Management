@@ -4,6 +4,7 @@
  */
 package view;
 
+import Classes.Customer;
 import Classes.Officer;
 import Classes.SalesPerson;
 import Classes.User;
@@ -27,7 +28,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author damonng
  */
-public class StaffList extends javax.swing.JPanel {
+public class PersonList extends javax.swing.JPanel {
     MainPage parent;
     User selectedWorker;
     private ProfilePage subPage;
@@ -36,56 +37,87 @@ public class StaffList extends javax.swing.JPanel {
     private static List<Officer> officers;
     private static List<SalesPerson> salesPeople;
     private static List<User> workers;
+    Customer selectedCustomer;
+    
     /**
-     * Creates new form StaffList
+     * Creates new form PersonList
      */
-    public StaffList(){
+    public PersonList(){
         initComponents();
     }
     /**
      * 
      * @param parent to reuse the generated main page and its attributes
      */
-    public StaffList(MainPage parent) {
+    public PersonList(MainPage parent) {
         initComponents();
         this.parent = parent;
-        officers = Officer.officers;
-        salesPeople = SalesPerson.salesPeople;
-        if(officers!=null && salesPeople!=null){
-            workers = new ArrayList<>();
-            btnInspect = new JButton();
-            workers.addAll(officers);
-            workers.addAll(salesPeople);
-            populateTable();
-            tblworkers.getColumn("Action").setCellRenderer( new ButtonRenderer());
-            tblworkers.getColumn("Action").setCellEditor( new ButtonEditor(new JCheckBox()));
-            btnInspect.addActionListener((ActionEvent event) -> {
-                int row = tblworkers.getSelectedRow();
-                String id = (String) tblworkers.getValueAt(row, 0);
-                workers.stream()
-                .filter(worker -> worker.getId().equals(id))
-                .findFirst()
-                .ifPresent(worker -> selectedWorker = worker);
-                subPage = new ProfilePage(this);
-                subPage.setVisible(true);
-            });
+        loadData();
+        populateTable();
+        setupActions();
+    }
+    
+    private void loadData(){
+        if (parent.user.getRole().equals("sales person")){
+            officers = null;
+            salesPeople = null;
+            workers = null;
+            selectedWorker = null;
+            filter.setVisible(false);
+        }else{
+            officers = Officer.officers;
+            salesPeople = SalesPerson.salesPeople;
+            if(officers!=null && salesPeople!=null){
+                workers = new ArrayList<>();
+                workers.addAll(officers);
+                workers.addAll(salesPeople);
+            }
+            selectedCustomer = null;
         }
     }
 
+    private void setupActions(){
+        btnInspect = new JButton();
+        tblPeople.getColumn("Action").setCellRenderer( new ButtonRenderer());
+        tblPeople.getColumn("Action").setCellEditor( new ButtonEditor(new JCheckBox()));
+        btnInspect.addActionListener((ActionEvent event) -> {
+            int row = tblPeople.getSelectedRow();
+            String id = (String) tblPeople.getValueAt(row, 0);
+            if (parent.user.getRole().equals("sales person")){
+                Customer.list.stream().filter(customer -> customer.getId().equals(id)).findFirst().ifPresent(customer ->selectedCustomer = customer);
+                parent.createSalesOrder.tfCustomer.setText(selectedCustomer.getId());
+                parent.changeTab(4);
+            }else{
+                workers.stream().filter(worker -> worker.getId().equals(id)).findFirst().ifPresent(worker -> selectedWorker = worker);
+                subPage = new ProfilePage(this);
+                subPage.setVisible(true);
+            }
+        });
+    }
     public void populateTable(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                helper = (DefaultTableModel) tblworkers.getModel();
+                helper = (DefaultTableModel) tblPeople.getModel();
                 helper.setRowCount(0);
                 Object row[] = new Object[5]; 
-                for (User worker : workers) {
-                    //add to new temp table if room is available
-                    row[0] = worker.getId();
-                    row[1] = worker.getFullName();
-                    row[2] = worker.getMail();
-                    row[3] = worker.getDob();
-                    helper.addRow(row);
+                if (parent.user.getRole().equals("sales person")){
+                    for (Customer customer : Customer.list) {
+                        row[0] = customer.getId();
+                        row[1] = customer.getFullName();
+                        row[2] = customer.getMail();
+                        row[3] = customer.getDob();
+                        helper.addRow(row);
+                    }
+                }else{
+                    for (User worker : workers) {
+                        row[0] = worker.getId();
+                        row[1] = worker.getFullName();
+                        row[2] = worker.getMail();
+                        row[3] = worker.getDob();
+                        helper.addRow(row);
+                    }
+
                 }
             }
         });
@@ -95,8 +127,8 @@ public class StaffList extends javax.swing.JPanel {
             @Override
             public void run() {
                 // Create a TableRowSorter and set it to the JTable
-                TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblworkers.getModel());
-                tblworkers.setRowSorter(sorter);
+                TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblPeople.getModel());
+                tblPeople.setRowSorter(sorter);
 
                 // Create a RowFilter based on the filter condition
                 RowFilter<Object, Object> rowFilter = new RowFilter<Object, Object>() {
@@ -122,7 +154,7 @@ public class StaffList extends javax.swing.JPanel {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null)? "Inspect" : value.toString());
+            setText((value == null)? "Choose" : value.toString());
             return this;
         }
 
@@ -136,7 +168,7 @@ public class StaffList extends javax.swing.JPanel {
         
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            label = (value == null) ? "Inspect" : value.toString();
+            label = (value == null) ? "Choose" : value.toString();
             btnInspect.setText(label);
             return btnInspect;
         }
@@ -156,12 +188,12 @@ public class StaffList extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblworkers = new javax.swing.JTable();
+        tblPeople = new javax.swing.JTable();
         title = new javax.swing.JLabel();
         filter = new javax.swing.JComboBox<>();
 
-        tblworkers.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        tblworkers.setModel(new javax.swing.table.DefaultTableModel(
+        tblPeople.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        tblPeople.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null}
             },
@@ -184,13 +216,13 @@ public class StaffList extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblworkers.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tblworkers);
-        if (tblworkers.getColumnModel().getColumnCount() > 0) {
-            tblworkers.getColumnModel().getColumn(0).setResizable(false);
-            tblworkers.getColumnModel().getColumn(0).setPreferredWidth(10);
-            tblworkers.getColumnModel().getColumn(2).setResizable(false);
-            tblworkers.getColumnModel().getColumn(4).setResizable(false);
+        tblPeople.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblPeople);
+        if (tblPeople.getColumnModel().getColumnCount() > 0) {
+            tblPeople.getColumnModel().getColumn(0).setResizable(false);
+            tblPeople.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tblPeople.getColumnModel().getColumn(2).setResizable(false);
+            tblPeople.getColumnModel().getColumn(4).setResizable(false);
         }
 
         title.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
@@ -238,7 +270,7 @@ public class StaffList extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> filter;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblworkers;
+    private javax.swing.JTable tblPeople;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

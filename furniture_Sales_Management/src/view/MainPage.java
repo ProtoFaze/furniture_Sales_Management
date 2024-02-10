@@ -114,7 +114,7 @@ public class MainPage extends javax.swing.JFrame {
         welcometxt = new javax.swing.JLabel();
         jobMainbtn = new javax.swing.JButton();
         Tabs = new javax.swing.JTabbedPane();
-        staffList = new view.StaffList(this);
+        PeopleList = new view.PersonList(this);
         generateReport = new view.GenerateDocument(this);
         salesOrderPage = new view.SalesOrderPage(this);
         searchSalesOrder = new view.SearchSalesOrder(this);
@@ -160,7 +160,7 @@ public class MainPage extends javax.swing.JFrame {
         });
 
         Tabs.setBackground(new java.awt.Color(186, 255, 175));
-        Tabs.addTab("Staff List", staffList);
+        Tabs.addTab("Staff List", PeopleList);
         Tabs.addTab("Generate Report", generateReport);
         Tabs.addTab("Sales Order", salesOrderPage);
         Tabs.addTab("Search Sales", searchSalesOrder);
@@ -374,6 +374,7 @@ public class MainPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogoutBtn;
+    private view.PersonList PeopleList;
     private javax.swing.JButton ProfileBtn;
     private javax.swing.JTabbedPane Tabs;
     private javax.swing.JPanel bgPanel;
@@ -392,7 +393,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel rolelbl;
     private view.SalesOrderPage salesOrderPage;
     private view.SearchSalesOrder searchSalesOrder;
-    private view.StaffList staffList;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
 }
