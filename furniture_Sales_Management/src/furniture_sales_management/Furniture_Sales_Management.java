@@ -20,21 +20,34 @@ public class Furniture_Sales_Management {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        users=User.list;
         Login page = new Login();
         page.setVisible(true);
-//        test.testAlnum();
     }
     
+    /**
+     * @deprecated use method in Verify
+     * @param dateStr
+     * @return
+     */
     public static LocalDate convertStringToLocalDate(String dateStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = LocalDate.parse(dateStr, formatter);
         return localDate;
     }
+    /**
+     * @deprecated use method in Verify
+     * @param date
+     * @return
+     */
     public static LocalDate DateToLocalDate(Date date) {
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return localDate;
     }
+    /**
+     * @deprecated use method in Verify
+     * @param localDate
+     * @return
+     */
     public static String convertLocalDateToString(LocalDate localDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String dateStr = localDate.format(formatter);
