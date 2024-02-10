@@ -17,7 +17,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -31,20 +31,26 @@
                       </Group>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="tfOrderID" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
-                          <Component id="cbFurniture" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
-                          <Component id="tfTotal" alignment="1" min="-2" pref="159" max="-2" attributes="0"/>
-                          <Component id="tfQuantity" min="-2" pref="159" max="-2" attributes="0"/>
-                          <Component id="btnCreate" min="-2" pref="159" max="-2" attributes="0"/>
-                          <Component id="tfCustomer" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
+                          <Component id="cbFurniture" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnCreate" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfOrderID" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="tfCustomer" pref="76" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRegisterCustomer" min="-2" pref="61" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="btnCustomerList" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="tfTotal" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfQuantity" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="lblcreate" max="32767" attributes="0"/>
+                  <Component id="lblcreate" min="-2" pref="329" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="574" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="505" max="32767" attributes="0"/>
                   <Component id="lblQuotation" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -85,6 +91,8 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblCustomer" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="tfCustomer" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnRegisterCustomer" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCustomerList" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -270,6 +278,22 @@
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="SALES ORDER QUOTATION"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRegisterCustomer">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="new"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegisterCustomerActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCustomerList">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="choose"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCustomerListActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

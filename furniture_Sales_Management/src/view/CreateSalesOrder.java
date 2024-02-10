@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Aryssa
  */
 public class CreateSalesOrder extends javax.swing.JPanel {
+    DefaultTableModel model;
     int quantity;
     double price;
     
@@ -32,9 +33,19 @@ public class CreateSalesOrder extends javax.swing.JPanel {
        
     }
     public CreateSalesOrder(MainPage parent) {
-        initComponents();
         this.parent = parent;
+        initComponents();
         LoadData();
+    }
+    
+    private void LoadData(){
+        List<String> idList = new ArrayList<>();
+        for (Furniture furniture: Furniture.list){
+            idList.add(furniture.getId());
+        }
+        model = (DefaultTableModel) tblQuotation.getModel();
+        DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String [0]));
+        cbFurniture.setModel(data);   
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,6 +74,8 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblQuotation = new javax.swing.JTable();
         lblQuotation = new javax.swing.JLabel();
+        btnRegisterCustomer = new javax.swing.JButton();
+        btnCustomerList = new javax.swing.JButton();
 
         lblcreate.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         lblcreate.setText("CREATE SALES ORDER ");
@@ -135,6 +148,20 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         lblQuotation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblQuotation.setText("SALES ORDER QUOTATION");
 
+        btnRegisterCustomer.setText("new");
+        btnRegisterCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterCustomerActionPerformed(evt);
+            }
+        });
+
+        btnCustomerList.setText("choose");
+        btnCustomerList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCustomerListActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -153,17 +180,22 @@ public class CreateSalesOrder extends javax.swing.JPanel {
                             .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbFurniture, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lblcreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cbFurniture, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfOrderID)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tfCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnRegisterCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCustomerList))
+                            .addComponent(tfTotal)
+                            .addComponent(tfQuantity)))
+                    .addComponent(lblcreate, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
                     .addComponent(lblQuotation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -195,7 +227,9 @@ public class CreateSalesOrder extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCustomer)
-                            .addComponent(tfCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRegisterCustomer)
+                            .addComponent(btnCustomerList))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblStatus)
@@ -208,14 +242,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
-private void LoadData(){
-    List<String> idList = new ArrayList<>();
-        for (Furniture furniture: Furniture.list){
-            idList.add(furniture.getId());
-        }
-    DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String [0]));
-    cbFurniture.setModel(data);   
-}
+
     private void tfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfOrderIDActionPerformed
      //String orderID = tfOrderID.getText();
    
@@ -248,16 +275,15 @@ private void LoadData(){
     // Add the new sales order to the list
   //  newSalesOrder.createSalesOrder(id, furniture, amount, total, "", customer, status);
         JOptionPane.showMessageDialog(this, "Sales Order Created!");
-        DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
-        model.addRow(new Object[]{tfOrderID.getText(), cbFurniture.getSelectedItem(), tfQuantity.getValue(), 
-           tfTotal.getText(),tfCustomer.getText(), "Pending"}); 
+        model.addRow(new Object[]{record.getId(), record.getFurniture(), record.getQuantity(), 
+           record.getTotal(),record.getCustomer(), record.getStatus()}); 
     }//GEN-LAST:event_btnCreateActionPerformed
 
 
     
     private void cbFurnitureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFurnitureActionPerformed
         // TODO add your handling code here:
-        String furniture = (String) cbFurniture.getSelectedItem();
+        String furniture = cbFurniture.getSelectedItem().toString();
         for (Furniture record: Furniture.list){
             if (record.getId().equals(furniture)){
                price = record.getPrice();
@@ -276,6 +302,16 @@ private void LoadData(){
         quantity = (int)tfQuantity.getValue();
         calculateTotal();
     }//GEN-LAST:event_tfQuantityStateChanged
+
+    private void btnRegisterCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterCustomerActionPerformed
+        Register subPage = new Register(this.parent);
+        subPage.setVisible(true);
+    }//GEN-LAST:event_btnRegisterCustomerActionPerformed
+
+    private void btnCustomerListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerListActionPerformed
+        //change to Customerlist tab
+        parent.changeTab(0);
+    }//GEN-LAST:event_btnCustomerListActionPerformed
 private boolean validateInput() {
         try {
        //     int quantity = Integer.parseInt(tfQuantity.getText());
@@ -297,6 +333,8 @@ private boolean validateInput() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnCustomerList;
+    private javax.swing.JButton btnRegisterCustomer;
     private javax.swing.JComboBox<String> cbFurniture;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
