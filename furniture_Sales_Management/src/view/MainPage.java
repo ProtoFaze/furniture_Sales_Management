@@ -79,6 +79,7 @@ public class MainPage extends javax.swing.JFrame {
                jobMainbtn3.setText(Tabs.getTitleAt(2));
                jobMainbtn4.setText(Tabs.getTitleAt(3));
                jobMainbtn5.setText(Tabs.getTitleAt(4));
+               Tabs.setTitleAt(5, "Customer List");
 
             }
             default -> {
