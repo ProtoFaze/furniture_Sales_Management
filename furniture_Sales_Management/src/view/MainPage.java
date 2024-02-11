@@ -127,7 +127,7 @@ public class MainPage extends javax.swing.JFrame {
         deleteSalesOrder = new view.DeleteSalesOrder(this);
         PeopleList = new view.PersonList(this);
         generateReport = new view.GenerateDocument(this);
-        officerApproval2 = new Interface.OfficerApproval();
+        officerApproval2 = new view.OfficerApproval();
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
@@ -405,7 +405,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private view.ModifySalesOrder modifySalesOrder;
     private view.PersonalSales personalSales;
-    private Interface.OfficerApproval officerApproval2;
+    private view.OfficerApproval officerApproval2;
     private javax.swing.JLabel rolelbl;
     private view.SearchSalesOrder searchSalesOrder;
     private javax.swing.JLabel welcometxt;

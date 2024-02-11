@@ -17,7 +17,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="Interface.OfficerApproval" name="officerApproval1">
+    <Component class="view.OfficerApproval" name="officerApproval1">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -256,7 +256,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="Interface.OfficerApproval" name="officerApproval2">
+            <Component class="view.OfficerApproval" name="officerApproval2">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Quotation List">
