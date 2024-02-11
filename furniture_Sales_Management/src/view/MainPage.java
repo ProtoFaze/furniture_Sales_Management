@@ -74,7 +74,11 @@ public class MainPage extends javax.swing.JFrame {
             }
             case "sales person" -> {
                salesOrders = SalesOrder.salesOrders;
-               
+               jobMainbt1.setText(Tabs.getTitleAt(0));
+               jobMainbtn2.setText(Tabs.getTitleAt(1));
+               jobMainbtn3.setText(Tabs.getTitleAt(2));
+               jobMainbtn4.setText(Tabs.getTitleAt(3));
+               jobMainbtn5.setText(Tabs.getTitleAt(4));
 
             }
             default -> {
@@ -113,23 +117,22 @@ public class MainPage extends javax.swing.JFrame {
         };
         rolelbl = new javax.swing.JLabel();
         welcometxt = new javax.swing.JLabel();
-        jobMainbtn = new javax.swing.JButton();
+        jobMainbt1 = new javax.swing.JButton();
         Tabs = new javax.swing.JTabbedPane();
+        personalSales = new view.PersonalSales(this);
+        createSalesOrder = new view.CreateSalesOrder(this);
+        searchSalesOrder = new view.SearchSalesOrder(this);
+        modifySalesOrder = new view.ModifySalesOrder(this);
+        deleteSalesOrder = new view.DeleteSalesOrder(this);
         PeopleList = new view.PersonList(this);
         generateReport = new view.GenerateDocument(this);
-        salesOrderPage = new view.SalesOrderPage(this);
-        searchSalesOrder = new view.SearchSalesOrder(this);
-        createSalesOrder = new view.CreateSalesOrder(this);
-        deleteSalesOrder = new view.DeleteSalesOrder(this);
-        modifySalesOrder = new view.ModifySalesOrder(this);
-        personalSales = new view.PersonalSales(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
-        jobMainbtn1 = new javax.swing.JButton();
         jobMainbtn2 = new javax.swing.JButton();
         jobMainbtn3 = new javax.swing.JButton();
         jobMainbtn4 = new javax.swing.JButton();
+        jobMainbtn5 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -150,25 +153,24 @@ public class MainPage extends javax.swing.JFrame {
         welcometxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         welcometxt.setText("Welcome, ");
 
-        jobMainbtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jobMainbtn.setText("func1");
-        jobMainbtn.setPreferredSize(new java.awt.Dimension(120, 30));
-        jobMainbtn.setSize(new java.awt.Dimension(120, 30));
-        jobMainbtn.addActionListener(new java.awt.event.ActionListener() {
+        jobMainbt1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jobMainbt1.setText("func1");
+        jobMainbt1.setPreferredSize(new java.awt.Dimension(120, 30));
+        jobMainbt1.setSize(new java.awt.Dimension(120, 30));
+        jobMainbt1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jobMainbtnActionPerformed(evt);
+                jobMainbt1ActionPerformed(evt);
             }
         });
 
         Tabs.setBackground(new java.awt.Color(186, 255, 175));
+        Tabs.addTab("Sales List", personalSales);
+        Tabs.addTab("Create Sales", createSalesOrder);
+        Tabs.addTab("Search Sales", searchSalesOrder);
+        Tabs.addTab("Edit Sales", modifySalesOrder);
+        Tabs.addTab("Delete Sales", deleteSalesOrder);
         Tabs.addTab("Staff List", PeopleList);
         Tabs.addTab("Generate Report", generateReport);
-        Tabs.addTab("Sales Order", salesOrderPage);
-        Tabs.addTab("Search Sales", searchSalesOrder);
-        Tabs.addTab("Create Sales", createSalesOrder);
-        Tabs.addTab("Delete Sales", deleteSalesOrder);
-        Tabs.addTab("Edit Sales", modifySalesOrder);
-        Tabs.addTab("Sales List", personalSales);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -190,19 +192,14 @@ public class MainPage extends javax.swing.JFrame {
         lblTitle.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/Logo_small.png"))); // NOI18N
         lblTitle.setText("YOYO Sales Helper");
-
-        jobMainbtn1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jobMainbtn1.setText("func2");
-        jobMainbtn1.setPreferredSize(new java.awt.Dimension(120, 30));
-        jobMainbtn1.setSize(new java.awt.Dimension(120, 30));
-        jobMainbtn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jobMainbtn1ActionPerformed(evt);
+        lblTitle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTitleMouseClicked(evt);
             }
         });
 
         jobMainbtn2.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jobMainbtn2.setText("func3");
+        jobMainbtn2.setText("func2");
         jobMainbtn2.setPreferredSize(new java.awt.Dimension(120, 30));
         jobMainbtn2.setSize(new java.awt.Dimension(120, 30));
         jobMainbtn2.addActionListener(new java.awt.event.ActionListener() {
@@ -212,7 +209,7 @@ public class MainPage extends javax.swing.JFrame {
         });
 
         jobMainbtn3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jobMainbtn3.setText("func4");
+        jobMainbtn3.setText("func3");
         jobMainbtn3.setPreferredSize(new java.awt.Dimension(120, 30));
         jobMainbtn3.setSize(new java.awt.Dimension(120, 30));
         jobMainbtn3.addActionListener(new java.awt.event.ActionListener() {
@@ -222,12 +219,22 @@ public class MainPage extends javax.swing.JFrame {
         });
 
         jobMainbtn4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jobMainbtn4.setText("func5");
+        jobMainbtn4.setText("func4");
         jobMainbtn4.setPreferredSize(new java.awt.Dimension(120, 30));
         jobMainbtn4.setSize(new java.awt.Dimension(120, 30));
         jobMainbtn4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobMainbtn4ActionPerformed(evt);
+            }
+        });
+
+        jobMainbtn5.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jobMainbtn5.setText("func5");
+        jobMainbtn5.setPreferredSize(new java.awt.Dimension(120, 30));
+        jobMainbtn5.setSize(new java.awt.Dimension(120, 30));
+        jobMainbtn5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobMainbtn5ActionPerformed(evt);
             }
         });
 
@@ -248,11 +255,11 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(ProfileBtn))
                     .addGroup(bgPanelLayout.createSequentialGroup()
                         .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jobMainbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jobMainbtn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jobMainbt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jobMainbtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jobMainbtn3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jobMainbtn4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jobMainbtn5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(LogoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
                         .addComponent(Tabs)))
@@ -270,15 +277,15 @@ public class MainPage extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgPanelLayout.createSequentialGroup()
-                        .addComponent(jobMainbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(jobMainbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jobMainbt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
                         .addComponent(jobMainbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
                         .addComponent(jobMainbtn3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
                         .addComponent(jobMainbtn4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(jobMainbtn5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                         .addComponent(LogoutBtn))
                     .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -303,9 +310,9 @@ public class MainPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jobMainbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtnActionPerformed
-
-    }//GEN-LAST:event_jobMainbtnActionPerformed
+    private void jobMainbt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbt1ActionPerformed
+        changeTab(1);
+    }//GEN-LAST:event_jobMainbt1ActionPerformed
 
     private void LogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtnActionPerformed
         int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?","Confirm Exit", JOptionPane.YES_NO_OPTION);
@@ -322,21 +329,25 @@ public class MainPage extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_ProfileBtnActionPerformed
 
-    private void jobMainbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jobMainbtn1ActionPerformed
-
     private void jobMainbtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn2ActionPerformed
-        // TODO add your handling code here:
+        changeTab(2);
     }//GEN-LAST:event_jobMainbtn2ActionPerformed
 
     private void jobMainbtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn3ActionPerformed
-        // TODO add your handling code here:
+        changeTab(3);
     }//GEN-LAST:event_jobMainbtn3ActionPerformed
 
     private void jobMainbtn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn4ActionPerformed
-        // TODO add your handling code here:
+        changeTab(4);
     }//GEN-LAST:event_jobMainbtn4ActionPerformed
+
+    private void jobMainbtn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn5ActionPerformed
+        changeTab(5);
+    }//GEN-LAST:event_jobMainbtn5ActionPerformed
+
+    private void lblTitleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTitleMouseClicked
+        changeTab(0);
+    }//GEN-LAST:event_lblTitleMouseClicked
 
     /**
      * @param args the command line arguments
@@ -383,16 +394,15 @@ public class MainPage extends javax.swing.JFrame {
     private view.DeleteSalesOrder deleteSalesOrder;
     private view.GenerateDocument generateReport;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton jobMainbtn;
-    private javax.swing.JButton jobMainbtn1;
+    private javax.swing.JButton jobMainbt1;
     private javax.swing.JButton jobMainbtn2;
     private javax.swing.JButton jobMainbtn3;
     private javax.swing.JButton jobMainbtn4;
+    private javax.swing.JButton jobMainbtn5;
     private javax.swing.JLabel lblTitle;
     private view.ModifySalesOrder modifySalesOrder;
     private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
-    private view.SalesOrderPage salesOrderPage;
     private view.SearchSalesOrder searchSalesOrder;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
