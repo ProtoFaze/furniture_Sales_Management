@@ -79,6 +79,7 @@ public class MainPage extends javax.swing.JFrame {
                jobMainbtn3.setText(Tabs.getTitleAt(2));
                jobMainbtn4.setText(Tabs.getTitleAt(3));
                jobMainbtn5.setText(Tabs.getTitleAt(4));
+               Tabs.setTitleAt(5, "Customer List");
 
             }
             default -> {
@@ -126,6 +127,7 @@ public class MainPage extends javax.swing.JFrame {
         deleteSalesOrder = new view.DeleteSalesOrder(this);
         PeopleList = new view.PersonList(this);
         generateReport = new view.GenerateDocument(this);
+        officerApproval2 = new Interface.OfficerApproval();
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
@@ -171,6 +173,7 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.addTab("Delete Sales", deleteSalesOrder);
         Tabs.addTab("Staff List", PeopleList);
         Tabs.addTab("Generate Report", generateReport);
+        Tabs.addTab("Quotation List", officerApproval2);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -402,6 +405,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private view.ModifySalesOrder modifySalesOrder;
     private view.PersonalSales personalSales;
+    private Interface.OfficerApproval officerApproval2;
     private javax.swing.JLabel rolelbl;
     private view.SearchSalesOrder searchSalesOrder;
     private javax.swing.JLabel welcometxt;
