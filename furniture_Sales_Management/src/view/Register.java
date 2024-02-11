@@ -5,13 +5,16 @@
 package view;
 
 import java.awt.Color;
-import classes.User;
-import classes.Admin;
-import classes.Customer;
-import classes.File;
-import classes.Officer;
-import classes.SalesPerson;
-import classes.Verify;
+import Classes.User;
+import Classes.Admin;
+import Classes.Customer;
+import Classes.File;
+import Classes.Officer;
+import Classes.SalesOrder;
+import Classes.SalesPerson;
+import Classes.Verify;
+import java.awt.Graphics2D;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -21,12 +24,10 @@ import javax.swing.JOptionPane;
  */
 public class Register extends javax.swing.JFrame {
     private static List<User> users;
-    private static List<Admin> admins;
     private MainPage parent;
-    private String generatedId;
     private String fullName,dob = null,userName,passWord,emailAddress,role = null,physicalAddress, //vars
-                validGender,validRole,validName,/*validUName,validPass,*/validEmail,validDate,validPhysicalAddress; //validations
-    private boolean validUName,validPass;
+                validGender,validRole,validName,validUName,validPass,validEmail,validDate,validPhysicalAddress; //validations
+//    private boolean validUName,validPass;
     private char gndr = 0;
     
     /**
@@ -34,25 +35,42 @@ public class Register extends javax.swing.JFrame {
      */
     public Register() {
         this.users = User.list;
-        this.admins = Admin.admins;
         parent = null;
         initComponents();
         address.setEnabled(false);
         address.setVisible(false);
+
     }
     public Register(MainPage parent) {
         this.parent = parent;
+        setContentPane(new javax.swing.JPanel(){
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                int width = getWidth();
+                int height = getHeight();
+                java.awt.GradientPaint gp = new java.awt.GradientPaint(0, 0, parent.colorPrimary, 0, height, parent.colorSecondary);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, width, height);
+            }
+        });
         initComponents();
         pageTitle.setText("Customer Registration");
         username.setEnabled(false);
         password.setEnabled(false);
         username.setVisible(false);
         password.setVisible(false);
+        retypePassword.setVisible(false);
+        btnRedirect.setVisible(false);
+        
     }
 
     private void registerUser(){
+        //assign values
         userName=txtUsername.getText();
         passWord = String.valueOf(txtPassword.getPassword());
+        //UserSpecific validation
         if (grpRole.getSelection() != null){
             if(radAdmin.isSelected())
                 role=radAdmin.getText();
@@ -62,18 +80,14 @@ public class Register extends javax.swing.JFrame {
                 role=radSalesPerson.getText();
             role = role.toLowerCase();
             validRole = "";
+            System.out.println("valid role is still empty");
         }else{
             validRole = "Role not selected.\n";
         }
         validUName = Verify.isValidUsername(userName);
-        if(passWord.equals(String.valueOf(txtPasswordRetype.getPassword()))){
-            validPass = Verify.isStrongPassword(passWord);
-        }else{
-            validPass = false;
-        }
-        if(
-//        validName == null && validUName == null && validEmail == null && validPass == null && validDate == null && validGender==null && validRole==null
-        ((validUName&&validPass) == true)&& validRole.isEmpty() && validGender.isEmpty() && validDate.isEmpty()){
+        validPass = passWord.equals(String.valueOf(txtPasswordRetype.getPassword())) ? Verify.isStrongPassword(passWord) : "password and retyped password is different";
+        String errors = validName+validEmail+validDate+validGender+validUName+validRole+validPass;
+        if((errors.isEmpty())){
             User applicant;
             switch (role.toLowerCase()) {
                 case "admin" ->{
@@ -92,33 +106,37 @@ public class Register extends javax.swing.JFrame {
             users.add(applicant);
             String res=File.write("user", users);
             if("Success".equals(res)){
-                JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.PLAIN_MESSAGE);
             }else{          
-                JOptionPane.showMessageDialog(null, "Could not write into file due to "+res,"Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
             }
             MainPage page  = new MainPage(applicant);
             page.setVisible(true);
             this.setVisible(false);
         }else{
-            JOptionPane.showMessageDialog(null,/*validUName+validPass+validName+validEmail+validDate+*/validGender+validRole,"Invalid Information",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,errors,"Invalid Information",JOptionPane.ERROR_MESSAGE);
         }
     }
     private void registerCustomer(){
-        physicalAddress = txtAddress.getText();
-        
-        if(validName == null && validEmail == null && validDate == null && validGender==null && validPhysicalAddress==null){
+        physicalAddress = txtAddress.getText().equals("Write Your address separated by ,")?"":txtAddress.getText();//assign value
+        validPhysicalAddress = Verify.validateAddress(physicalAddress);//customer specific validation
+        String error = validName+validEmail+validDate+validGender+validPhysicalAddress;
+        if(error.isEmpty()){
             Customer customer=new Customer(fullName, emailAddress, dob, gndr, physicalAddress);
             Customer.list.add(customer);
             String res=File.write("customer", Customer.list);
             if("Success".equals(res)){
                 JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
+                SalesOrder.populateList();
+                parent.changeTab(4);
+                parent.createSalesOrder.tfCustomer.setText(customer.getId());
+                parent.PeopleList.populateTable();
+                this.setVisible(false);
             }else{
-                JOptionPane.showMessageDialog(null, "Could not write into file due to "+res,"Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
             }
-            parent.changeTab(4);
-            parent.createSalesOrder.tfCustomer.setText(generatedId);
         }else{
-            JOptionPane.showMessageDialog(null,validName+validEmail+validDate+validGender+validPhysicalAddress,"Invalid Information",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,error,"Invalid Information",JOptionPane.ERROR_MESSAGE);
         }
     }
     /**
@@ -179,6 +197,8 @@ public class Register extends javax.swing.JFrame {
         pageTitle.setText("Staff Registration");
         pageTitle.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
+        name.setOpaque(false);
+
         lblName.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblName.setLabelFor(txtUsername);
         lblName.setText("Name:");
@@ -217,6 +237,8 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
+        email.setOpaque(false);
+
         lblEmail.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblEmail.setText("Email:");
 
@@ -254,9 +276,12 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
+        date.setOpaque(false);
+
         lblDOB.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblDOB.setText("DOB:");
 
+        txtDate.setOpaque(false);
         txtDate.setPreferredSize(new java.awt.Dimension(80, 26));
 
         javax.swing.GroupLayout dateLayout = new javax.swing.GroupLayout(date);
@@ -278,6 +303,8 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(lblDOB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
+
+        gender.setOpaque(false);
 
         lblGender.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblGender.setText("Gender:");
@@ -313,6 +340,8 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(radMale))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        username.setOpaque(false);
 
         lblUsername.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblUsername.setLabelFor(txtUsername);
@@ -350,6 +379,8 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(lblUsername))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        Role.setOpaque(false);
 
         lblRole.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblRole.setText("Role :");
@@ -393,6 +424,8 @@ public class Register extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        password.setOpaque(false);
+
         lblPassword.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblPassword.setText("Password:");
 
@@ -417,6 +450,8 @@ public class Register extends javax.swing.JFrame {
                 .addComponent(lblPassword))
         );
 
+        retypePassword.setOpaque(false);
+
         lblPasswordRetype.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblPasswordRetype.setText("Retype Password:");
 
@@ -439,6 +474,8 @@ public class Register extends javax.swing.JFrame {
             .addComponent(txtPasswordRetype, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(lblPasswordRetype, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        address.setOpaque(false);
 
         lblAddress.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblAddress.setText("Address");
@@ -477,6 +514,8 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        buttons.setOpaque(false);
 
         btnRegister.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnRegister.setText("Register");
@@ -569,8 +608,8 @@ public class Register extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(pageTitle)
                 .addGap(12, 12, 12)
                 .addComponent(divider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
@@ -600,18 +639,16 @@ public class Register extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         //declare variables
-        fullName=txtName.getText();
-        emailAddress = txtEmail.getText();
-        if(txtDate.getDate() != null){
-            dob = txtDate.getDate().toString();
-            validDate = ""
-//                    Verify.isValidDate(dob,false)
-                    ;
+        fullName=txtName.getText().equals("Your name")? "":txtName.getText();
+        emailAddress = txtEmail.getText().equals("example@mail.my")? "":txtEmail.getText();
+        //basic info validation
+        if(txtDate.getDate()!=null){
+            dob = Verify.DateToString(txtDate.getDate());
+            validDate = Verify.validateDate(dob, false);
         }else{
-            validDate = "Date cannot be empty\n";
+            validDate = "Date is empty\n";
         }
         if (grpGender.getSelection() != null){
-            System.out.println(grpGender.getSelection().toString());
             if(radMale.isSelected())
                 gndr=radMale.getText().charAt(0);
             else if (radFemale.isSelected())
@@ -623,16 +660,10 @@ public class Register extends javax.swing.JFrame {
         validName = Verify.validateFullName(fullName);
         validEmail = Verify.validateEmail(emailAddress);
         if (parent!=null){
-            registerUser();
-        }else{
             registerCustomer();
+        }else{
+            registerUser();
         }
-        //assign values
-
-        //run validation
-
-
-
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
@@ -646,10 +677,16 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        int n = JOptionPane.showConfirmDialog(null,"Are you sure you want to quit the app.","Confirm Exit",JOptionPane.YES_NO_OPTION);
-        if(n==JOptionPane.YES_OPTION){
-            JOptionPane.showMessageDialog(null,"Thank you for using the system.","Exiting System",JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);}
+        if(parent==null){
+            int n = JOptionPane.showConfirmDialog(null,"Are you sure you want to quit the app.","Confirm Exit",JOptionPane.YES_NO_OPTION);
+            if(n==JOptionPane.YES_OPTION){
+                JOptionPane.showMessageDialog(null,"Thank you for using the system.","Exiting System",JOptionPane.INFORMATION_MESSAGE);
+                System.exit(0);
+            }
+        }else{
+            this.setVisible(false);
+        }
+        
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void txtUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusGained

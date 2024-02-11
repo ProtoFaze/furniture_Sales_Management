@@ -3,10 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package view;
-import classes.File;
-import classes.Furniture;
-import classes.SalesOrder;
-import classes.User;
+import Classes.File;
+import Classes.Furniture;
+import Classes.SalesOrder;
+import Classes.User;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Aryssa
  */
 public class CreateSalesOrder extends javax.swing.JPanel {
+    DefaultTableModel model;
     int quantity;
     double price;
     
@@ -32,9 +33,19 @@ public class CreateSalesOrder extends javax.swing.JPanel {
        
     }
     public CreateSalesOrder(MainPage parent) {
-        initComponents();
         this.parent = parent;
+        initComponents();
         LoadData();
+    }
+    
+    private void LoadData(){
+        List<String> idList = new ArrayList<>();
+        for (Furniture furniture: Furniture.list){
+            idList.add(furniture.getId());
+        }
+        model = (DefaultTableModel) tblQuotation.getModel();
+        DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String [0]));
+        cbFurniture.setModel(data);   
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,9 +74,12 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblQuotation = new javax.swing.JTable();
         lblQuotation = new javax.swing.JLabel();
-        checkid = new javax.swing.JButton();
-        checkuid = new javax.swing.JButton();
+        btnRegisterCustomer = new javax.swing.JButton();
+        btnCustomerList = new javax.swing.JButton();
 
+        setOpaque(false);
+
+        lblcreate.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         lblcreate.setText("CREATE SALES ORDER ");
 
         lblOrderID.setText("ORDER ID");
@@ -132,19 +146,21 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblQuotation);
 
+        lblQuotation.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        lblQuotation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblQuotation.setText("SALES ORDER QUOTATION");
 
-        checkid.setText("checkid");
-        checkid.addActionListener(new java.awt.event.ActionListener() {
+        btnRegisterCustomer.setText("new");
+        btnRegisterCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkidActionPerformed(evt);
+                btnRegisterCustomerActionPerformed(evt);
             }
         });
 
-        checkuid.setText("checkuid");
-        checkuid.addActionListener(new java.awt.event.ActionListener() {
+        btnCustomerList.setText("choose");
+        btnCustomerList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkuidActionPerformed(evt);
+                btnCustomerListActionPerformed(evt);
             }
         });
 
@@ -153,62 +169,45 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblCustomer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblQuantity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblFurnitureID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblOrderID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbFurniture, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfOrderID)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(84, 84, 84)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblOrderID)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnBack)
-                                        .addGap(108, 108, 108)
-                                        .addComponent(btnCreate))
-                                    .addComponent(lblFurnitureID)
-                                    .addComponent(lblCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(lblStatus)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel1))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(lblQuantity)
-                                                .addComponent(lblTotal))
-                                            .addGap(118, 118, 118)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(tfCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(tfTotal, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(tfOrderID, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(cbFurniture, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(tfQuantity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(checkid)
+                                .addComponent(tfCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(checkuid)
-                                .addGap(82, 82, 82)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblcreate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblQuotation)
-                        .addGap(211, 211, 211))))
+                                .addComponent(btnRegisterCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCustomerList))
+                            .addComponent(tfTotal)
+                            .addComponent(tfQuantity)))
+                    .addComponent(lblcreate, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                    .addComponent(lblQuotation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblcreate)
-                        .addGap(13, 13, 13))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblQuotation)
-                        .addGap(18, 18, 18)))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblQuotation)
+                    .addComponent(lblcreate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
@@ -223,38 +222,29 @@ public class CreateSalesOrder extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblQuantity)
                             .addComponent(tfQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTotal)
                             .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCustomer)
-                            .addComponent(tfCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRegisterCustomer)
+                            .addComponent(btnCustomerList))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblStatus)
                             .addComponent(jLabel1))
-                        .addGap(37, 37, 37)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCreate)
-                            .addComponent(btnBack))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(checkid)
-                            .addComponent(checkuid)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46))
+                            .addComponent(btnBack)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
-private void LoadData(){
-    List<String> idList = new ArrayList<>();
-        for (Furniture furniture: Furniture.list){
-            idList.add(furniture.getId());
-        }
-    DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String [0]));
-    cbFurniture.setModel(data);   
-}
+
     private void tfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfOrderIDActionPerformed
      //String orderID = tfOrderID.getText();
    
@@ -287,16 +277,15 @@ private void LoadData(){
     // Add the new sales order to the list
   //  newSalesOrder.createSalesOrder(id, furniture, amount, total, "", customer, status);
         JOptionPane.showMessageDialog(this, "Sales Order Created!");
-        DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
-        model.addRow(new Object[]{tfOrderID.getText(), cbFurniture.getSelectedItem(), tfQuantity.getValue(), 
-           tfTotal.getText(),tfCustomer.getText(), "Pending"}); 
+        model.addRow(new Object[]{record.getId(), record.getFurniture(), record.getQuantity(), 
+           record.getTotal(),record.getCustomer(), record.getStatus()}); 
     }//GEN-LAST:event_btnCreateActionPerformed
 
 
     
     private void cbFurnitureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFurnitureActionPerformed
         // TODO add your handling code here:
-        String furniture = (String) cbFurniture.getSelectedItem();
+        String furniture = cbFurniture.getSelectedItem().toString();
         for (Furniture record: Furniture.list){
             if (record.getId().equals(furniture)){
                price = record.getPrice();
@@ -316,13 +305,15 @@ private void LoadData(){
         calculateTotal();
     }//GEN-LAST:event_tfQuantityStateChanged
 
-    private void checkidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkidActionPerformed
-        System.out.println(SalesOrder.latestId);
-    }//GEN-LAST:event_checkidActionPerformed
+    private void btnRegisterCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterCustomerActionPerformed
+        Register subPage = new Register(this.parent);
+        subPage.setVisible(true);
+    }//GEN-LAST:event_btnRegisterCustomerActionPerformed
 
-    private void checkuidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkuidActionPerformed
-        System.out.println(User.latestId);
-    }//GEN-LAST:event_checkuidActionPerformed
+    private void btnCustomerListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerListActionPerformed
+        //change to Customerlist tab
+        parent.changeTab(0);
+    }//GEN-LAST:event_btnCustomerListActionPerformed
 private boolean validateInput() {
         try {
        //     int quantity = Integer.parseInt(tfQuantity.getText());
@@ -344,9 +335,9 @@ private boolean validateInput() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnCustomerList;
+    private javax.swing.JButton btnRegisterCustomer;
     private javax.swing.JComboBox<String> cbFurniture;
-    private javax.swing.JButton checkid;
-    private javax.swing.JButton checkuid;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCustomer;

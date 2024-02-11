@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package classes;
+package Classes;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,7 +47,7 @@ public class File {
             //Convert JSON String to JSONObject then return it
             return gson.fromJson(jsonContent.toString(), JsonObject.class);
         } catch (IOException ex) {
-            System.out.println("Failed to read File"+ex.toString());
+            System.out.println("Failed to read File as Object "+ex.toString());
             return null;
         }
     }
@@ -57,7 +57,7 @@ public class File {
             JsonObject object  = read(fileName);
             return object.get(fileName).getAsJsonArray();
         } catch(IllegalStateException ex) {
-            System.out.println("Failed to read File"+ex.toString());
+            System.out.println("Failed to read File "+ex.toString());
             return null;
         } catch(NullPointerException ex) {
             System.out.println("""
@@ -148,7 +148,7 @@ public class File {
             outputFile.println("\n]}");
             return "Success";
         }catch (IOException ex){
-            return ex.toString();
+            return "File write failed due to "+ ex.toString();
         }
     }
     /**

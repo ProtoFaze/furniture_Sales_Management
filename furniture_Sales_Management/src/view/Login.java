@@ -4,11 +4,11 @@
  */
 package view;
 
-import classes.Admin;
-import classes.File;
-import classes.Officer;
-import classes.SalesPerson;
-import classes.User;
+import Classes.Admin;
+import Classes.File;
+import Classes.Officer;
+import Classes.SalesPerson;
+import Classes.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.time.LocalDate;
@@ -134,7 +134,7 @@ public class Login extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(30, 30, 30)
                 .addComponent(LoginLbl)
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -144,12 +144,12 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PassTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PassLbl))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ExitBtn)
                     .addComponent(LoginBtn)
                     .addComponent(RegisterBtn))
-                .addGap(86, 86, 86))
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -226,15 +226,30 @@ public class Login extends javax.swing.JFrame {
         });
     }
     
+    /**
+     *@deprecated 
+     * @param dateStr
+     * @return
+     */
     public static LocalDate convertStringToLocalDate(String dateStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = LocalDate.parse(dateStr, formatter);
         return localDate;
     }
+    /**
+     *@deprecated 
+     * @param date
+     * @return
+     */
     public static LocalDate DateToLocalDate(Date date) {
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return localDate;
     }
+    /**
+     *@deprecated 
+     * @param localDate
+     * @return
+     */
     public static String convertLocalDateToString(LocalDate localDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String dateStr = localDate.format(formatter);

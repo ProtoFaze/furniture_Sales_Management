@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package classes;
+package Classes;
 
 import java.util.List;
 
@@ -39,6 +39,6 @@ public class Customer extends Person{
     }
     
     public static void populateList(){
-        File.read("customer", Customer.class);
+        list = File.read("customer", Customer.class);
     }
 }
