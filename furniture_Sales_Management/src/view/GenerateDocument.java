@@ -6,19 +6,17 @@ package view;
 
 import Classes.SalesOrder;
 import Classes.User;
+import Classes.Verify;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 //import com.itextpdf.text.;
-import view.Login;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -91,27 +89,27 @@ public class GenerateDocument extends javax.swing.JPanel {
     }
     public boolean isWithinRange(String id, Date inputStartDate, Date inputEndDate) {
         
-        LocalDate searchStart = Login.DateToLocalDate(inputStartDate),
-                searchEnd = Login.DateToLocalDate(inputEndDate);
+        LocalDate searchStart = Verify.DateToLocalDate(inputStartDate),
+                searchEnd = Verify.DateToLocalDate(inputEndDate);
         //loop through records
         for(SalesOrder salesOrder : SalesOrder.salesOrders){
             //assign values
             String recordId = salesOrder.getId();
             String productionState = salesOrder.getStatus();
 
-            LocalDate generationDate = Login.DateToLocalDate(new Date("today"));
+            LocalDate generationDate = LocalDate.now();
 
             //booking status check
             if (recordId.equals(id) && productionState.equals("done")) { //matched record and state
                 // Check if the generation date is out of the date range
                 if ((searchStart.isBefore(generationDate) || searchStart.isEqual(generationDate))
                         && (searchEnd.isAfter(generationDate) || searchEnd.isEqual(generationDate))) {
-                    return true; // Not Within Range
+                    return true; // Is Within Range
                 }
             }
             break;
         }
-        return false; // Is Within Range
+        return false; // Not Within Range
     }
 
     public static void generatePDF(String outputFilePath) {

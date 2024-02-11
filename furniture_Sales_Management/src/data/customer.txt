@@ -1,50 +1,12 @@
-{customer:[
-  {
-    "id": "10",
-    "fullName": "Heddi Baldinotti",
-    "emailAddress": "hbaldinotti9@businessweek.com",
-    "dob": "03/06/1991",
-    "gender": "M",
-    "address": "123 Jalan Ampang, Kuala Lumpur"
-  },
-  {
-    "id": "11",
-    "fullName": "Thekla Wardrope",
-    "emailAddress": "twardropea@eepurl.com",
-    "dob": "03/03/1994",
-    "gender": "F",
-    "address": "456 Jalan Tun Razak, George Town"
-  },
-  {
-    "id": "12",
-    "fullName": "Rancell Overill",
-    "emailAddress": "roverillb@discovery.com",
-    "dob": "15/07/1991",
-    "gender": "M",
-    "address": "789 Jalan Bukit Bintang, Johor Bahru"
-  },
-  {
-    "id": "13",
-    "fullName": "Heida Crinidge",
-    "emailAddress": "hcrinidgec@youtube.com",
-    "dob": "24/10/1996",
-    "gender": "F",
-    "address": "101 Jalan Kuchai Lama, Kuching"
-  },
-  {
-    "id": "14",
-    "fullName": "Blayne Southcomb",
-    "emailAddress": "bsouthcombd@hao123.com",
-    "dob": "30/01/2000",
-    "gender": "M",
-    "address": "202 Jalan Imbi, Ipoh"
-  },
-  {
-    "id": "15",
-    "fullName": "Webster Cardwell",
-    "emailAddress": "wcardwelle@xrea.com",
-    "dob": "12/11/1990",
-    "gender": "M",
-    "address": "303 Jalan Sultan Ismail, Kota Kinabalu"
-  }
+{"customer":[
+{"address":"123 Jalan Ampang, Kuala Lumpur","id":"10","fullName":"Heddi Baldinotti","emailAddress":"hbaldinotti9@businessweek.com","dob":"03/06/1991","gender":"M"},
+{"address":"456 Jalan Tun Razak, George Town","id":"11","fullName":"Thekla Wardrope","emailAddress":"twardropea@eepurl.com","dob":"03/03/1994","gender":"F"},
+{"address":"789 Jalan Bukit Bintang, Johor Bahru","id":"12","fullName":"Rancell Overill","emailAddress":"roverillb@discovery.com","dob":"15/07/1991","gender":"M"},
+{"address":"101 Jalan Kuchai Lama, Kuching","id":"13","fullName":"Heida Crinidge","emailAddress":"hcrinidgec@youtube.com","dob":"24/10/1996","gender":"F"},
+{"address":"202 Jalan Imbi, Ipoh","id":"14","fullName":"Blayne Southcomb","emailAddress":"bsouthcombd@hao123.com","dob":"30/01/2000","gender":"M"},
+{"address":"303 Jalan Sultan Ismail, Kota Kinabalu","id":"15","fullName":"Webster Cardwell","emailAddress":"wcardwelle@xrea.com","dob":"12/11/1990","gender":"M"},
+{"address":"green Street, Ruruluona Village","id":"7","fullName":"Rudeus Greyrat","emailAddress":"RGrat@mail.my","dob":"01/02/2010","gender":"M"},
+{"address":"Royal Capital, Kingdom of Asura","id":"8","fullName":"Eris Greyrat","emailAddress":"EGrat@mail.my","dob":"01/02/2012","gender":"F"},
+{"address":"Green Street, Ruruluona Village","id":"9","fullName":"Paul Greyrat","emailAddress":"PGrat@mail.my","dob":"01/02/1998","gender":"M"},
+{"address":"Green Street, Ruruluona Village","id":"10","fullName":"Zenith Greyrat","emailAddress":"ZGrat@mail.my","dob":"01/02/1997","gender":"F"}
 ]}
