@@ -77,6 +77,8 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         btnRegisterCustomer = new javax.swing.JButton();
         btnCustomerList = new javax.swing.JButton();
 
+        setOpaque(false);
+
         lblcreate.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         lblcreate.setText("CREATE SALES ORDER ");
 

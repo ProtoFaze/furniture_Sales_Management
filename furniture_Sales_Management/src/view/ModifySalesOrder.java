@@ -125,6 +125,8 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         tfQuantity = new javax.swing.JSpinner();
         btnBack = new javax.swing.JButton();
 
+        setOpaque(false);
+
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MODIFY SALES ORDER QUOTATION");

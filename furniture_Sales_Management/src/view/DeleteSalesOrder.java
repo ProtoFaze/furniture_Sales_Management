@@ -71,6 +71,8 @@ public class DeleteSalesOrder extends javax.swing.JPanel {
         tblQuotation2 = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
 
+        setOpaque(false);
+
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DELETE SALES ORDER QUOTATION");

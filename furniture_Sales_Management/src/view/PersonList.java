@@ -192,6 +192,8 @@ public class PersonList extends javax.swing.JPanel {
         title = new javax.swing.JLabel();
         filter = new javax.swing.JComboBox<>();
 
+        setOpaque(false);
+
         tblPeople.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         tblPeople.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

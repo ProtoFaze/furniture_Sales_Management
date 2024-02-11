@@ -19,7 +19,8 @@ public class MainPage extends javax.swing.JFrame {
     */
     User user;
     ProfilePage profilePage;
-    private Color colorPrimary, colorSecondary;
+    Color colorPrimary, colorSecondary;
+    
     private static List<User> users;
     private static List<Admin> admins;
     private static List<SalesOrder> salesOrders;

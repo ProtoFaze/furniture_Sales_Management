@@ -74,6 +74,8 @@ public class SearchSalesOrder extends javax.swing.JPanel {
         tblQuotationSearch = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
 
+        setOpaque(false);
+
         lblSearchSalesOrder.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         lblSearchSalesOrder.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSearchSalesOrder.setText("SEARCH SALES ORDER QUOTATION");

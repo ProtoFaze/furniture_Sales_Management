@@ -72,6 +72,8 @@ public class PersonalSales extends javax.swing.JPanel {
         lblOrderID = new javax.swing.JLabel();
         btnShowSales = new javax.swing.JButton();
 
+        setOpaque(false);
+
         lblPersonalSales.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         lblPersonalSales.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPersonalSales.setText("PERSONAL SALES");
@@ -124,8 +126,7 @@ public class PersonalSales extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnShowSales)
-                        .addGap(0, 0, 0))))
+                        .addComponent(btnShowSales))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
