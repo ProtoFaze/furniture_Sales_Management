@@ -104,6 +104,7 @@ public class MainPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        officerApproval1 = new view.OfficerApproval();
         bgPanel =  new javax.swing.JPanel() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
@@ -128,6 +129,8 @@ public class MainPage extends javax.swing.JFrame {
         PeopleList = new view.PersonList(this);
         generateReport = new view.GenerateDocument(this);
         officerApproval2 = new view.OfficerApproval();
+        furnitureList1 = new view.FurnitureList(this);
+        createQuotation11 = new view.CreateQuotation1(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
@@ -158,7 +161,6 @@ public class MainPage extends javax.swing.JFrame {
         jobMainbt1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jobMainbt1.setText("func1");
         jobMainbt1.setPreferredSize(new java.awt.Dimension(120, 30));
-        jobMainbt1.setSize(new java.awt.Dimension(120, 30));
         jobMainbt1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobMainbt1ActionPerformed(evt);
@@ -174,6 +176,8 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.addTab("Staff List", PeopleList);
         Tabs.addTab("Generate Report", generateReport);
         Tabs.addTab("Quotation List", officerApproval2);
+        Tabs.addTab("tab9", furnitureList1);
+        Tabs.addTab("tab10", createQuotation11);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -185,7 +189,6 @@ public class MainPage extends javax.swing.JFrame {
 
         LogoutBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         LogoutBtn.setText("Logout");
-        LogoutBtn.setSize(new java.awt.Dimension(120, 30));
         LogoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LogoutBtnActionPerformed(evt);
@@ -204,7 +207,6 @@ public class MainPage extends javax.swing.JFrame {
         jobMainbtn2.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jobMainbtn2.setText("func2");
         jobMainbtn2.setPreferredSize(new java.awt.Dimension(120, 30));
-        jobMainbtn2.setSize(new java.awt.Dimension(120, 30));
         jobMainbtn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobMainbtn2ActionPerformed(evt);
@@ -214,7 +216,6 @@ public class MainPage extends javax.swing.JFrame {
         jobMainbtn3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jobMainbtn3.setText("func3");
         jobMainbtn3.setPreferredSize(new java.awt.Dimension(120, 30));
-        jobMainbtn3.setSize(new java.awt.Dimension(120, 30));
         jobMainbtn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobMainbtn3ActionPerformed(evt);
@@ -224,7 +225,6 @@ public class MainPage extends javax.swing.JFrame {
         jobMainbtn4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jobMainbtn4.setText("func4");
         jobMainbtn4.setPreferredSize(new java.awt.Dimension(120, 30));
-        jobMainbtn4.setSize(new java.awt.Dimension(120, 30));
         jobMainbtn4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobMainbtn4ActionPerformed(evt);
@@ -234,7 +234,6 @@ public class MainPage extends javax.swing.JFrame {
         jobMainbtn5.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jobMainbtn5.setText("func5");
         jobMainbtn5.setPreferredSize(new java.awt.Dimension(120, 30));
-        jobMainbtn5.setSize(new java.awt.Dimension(120, 30));
         jobMainbtn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobMainbtn5ActionPerformed(evt);
@@ -393,8 +392,10 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton ProfileBtn;
     private javax.swing.JTabbedPane Tabs;
     private javax.swing.JPanel bgPanel;
+    view.CreateQuotation1 createQuotation11;
     view.CreateSalesOrder createSalesOrder;
     private view.DeleteSalesOrder deleteSalesOrder;
+    private view.FurnitureList furnitureList1;
     private view.GenerateDocument generateReport;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbt1;
@@ -404,8 +405,9 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jobMainbtn5;
     private javax.swing.JLabel lblTitle;
     private view.ModifySalesOrder modifySalesOrder;
-    private view.PersonalSales personalSales;
+    private view.OfficerApproval officerApproval1;
     private view.OfficerApproval officerApproval2;
+    private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
     private view.SearchSalesOrder searchSalesOrder;
     private javax.swing.JLabel welcometxt;
