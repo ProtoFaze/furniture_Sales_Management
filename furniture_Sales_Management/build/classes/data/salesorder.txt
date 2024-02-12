@@ -1,6 +1,6 @@
 {"salesOrder":[
 {"orderID":"1","furniture":"10122647","quantity":3,"total":1035.0,"customer":"4","status":"Pending","generatedBy":"4","approvedBy":""},
-{"orderID":"2","furniture":"30180504","quantity":2,"total":138.0,"customer":"","status":"","generatedBy":"","approvedBy":""},
+{"orderID":"2","furniture":"80155205","quantity":2,"total":138.0,"customer":"7","status":"Pending","generatedBy":"4","approvedBy":""},
 {"orderID":"3","furniture":"30180504","quantity":1,"total":225.0,"customer":"2","status":"Pending","generatedBy":"1","approvedBy":""},
 {"orderID":"4","furniture":"30180504","quantity":1,"total":225.0,"customer":"2","status":"Pending","generatedBy":"1","approvedBy":""},
 {"orderID":"5","furniture":"70404875","quantity":2,"total":258.0,"customer":"2","status":"Pending","generatedBy":"4","approvedBy":""}

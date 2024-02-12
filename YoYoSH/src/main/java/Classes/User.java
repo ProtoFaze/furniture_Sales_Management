@@ -13,17 +13,18 @@ public abstract class User extends Person {
     //Declare variables
     protected String userName, passWord, role;
     public static List<User> list;
-    public static int latestId = 1;
+    public static int latestId;
     
 //    private static List<ListUpdateListener<User>> listeners = new ArrayList<>();
 
     
     static{
         populateList();
+        latestId = list.size()+1;
     }
     //constructor for registration
     public User(String userName, String fullName, String emailAddress, char gender, String dob, String passWord) {
-        super(String.valueOf(latestId+=1), fullName, emailAddress, dob, gender);
+        super(String.valueOf(latestId++), fullName, emailAddress, dob, gender);
         this.userName = userName;
         this.passWord = passWord;
         this.role = "";
@@ -35,9 +36,6 @@ public abstract class User extends Person {
         this.userName = userName;
         this.passWord = passWord;
         this.role = "";
-        if(Integer.parseInt(id)>latestId){
-            latestId = Integer.parseInt(id);
-        }
     }
     
     //SETTERS

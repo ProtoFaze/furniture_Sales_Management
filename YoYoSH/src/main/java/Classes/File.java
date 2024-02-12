@@ -12,14 +12,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter; 
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.text.Document;
 
 
 
@@ -28,7 +26,10 @@ import javax.swing.text.Document;
  * @author damonng
  */
 public class File {
-    private static final String PROJECTDIRECTORY = System.getProperty("user.dir"), REPORTPATH = "./src/Report/", DATAPATH = "./src/data/", EXT = ".txt";
+    //if using Repo directory
+    // private static final String SRCDIRECTORY = "./YOYOSH/src/main/java/", REPORTPATH = SRCDIRECTORY+"report/", DATAPATH = SRCDIRECTORY+"data/", EXT = ".txt";
+    // if using Project directory
+    private static final String SRCDIRECTORY = "./src/main/java/", REPORTPATH = SRCDIRECTORY+"report/", DATAPATH = SRCDIRECTORY+"data/", EXT = ".txt";
     //private static final Gson HELPER = new Gson();
     //<editor-fold defaultstate="collapsed" desc="read operations">
     /**
@@ -49,7 +50,7 @@ public class File {
             //Convert JSON String to JSONObject then return it
             return gson.fromJson(jsonContent.toString(), JsonObject.class);
         } catch (IOException ex) {
-            System.out.println("Failed to read File"+ex.toString());
+            System.out.println("Failed to read File as Object "+ex.toString());
             return null;
         }
     }
@@ -59,7 +60,7 @@ public class File {
             JsonObject object  = read(fileName);
             return object.get(fileName).getAsJsonArray();
         } catch(IllegalStateException ex) {
-            System.out.println("Failed to read File"+ex.toString());
+            System.out.println("Failed to read File "+ex.toString());
             return null;
         } catch(NullPointerException ex) {
             System.out.println("""
@@ -150,7 +151,7 @@ public class File {
             outputFile.println("\n]}");
             return "Success";
         }catch (IOException ex){
-            return ex.toString();
+            return "File write failed due to "+ ex.toString();
         }
     }
     /**
