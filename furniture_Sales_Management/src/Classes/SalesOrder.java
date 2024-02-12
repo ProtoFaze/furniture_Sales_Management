@@ -28,7 +28,7 @@ public class SalesOrder {
     private String status;
     private String generatedBy;
     private String approvedBy;
-    private String salesPersonId;
+    private String quotationID;
     public static List<SalesOrder> salesOrders;
     public static int latestId;
 
@@ -106,9 +106,17 @@ public class SalesOrder {
     public void setStatus(String status) {
         this.status = status;
     }
+    public String getquotation() {
+        return quotationID;
+    }
+
+    public void setquotation(String quotationID) {
+        this.quotationID = quotationID;
+    }
+  
 
     // Constructor with default "Pending" status, for create
-    public SalesOrder(String furniture, int quantity, double total, String generatedBy, String customer) {
+    public SalesOrder(String furniture, int quantity, double total, String generatedBy, String customer, String quotationID) {
         int newId = latestId++;
         this.orderID = String.valueOf(newId);
         this.furniture = furniture;
@@ -118,10 +126,11 @@ public class SalesOrder {
         this.approvedBy = " ";
         this.customer = customer;
         this.status = "Pending";
+        this.quotationID = quotationID;
     }
     // Constructor for read file
-    public SalesOrder(String ID, String furniture, int quantity, double total, String generatedBy, String approvedBy, String customer, String status) {
-        this.orderID = orderID;
+    public SalesOrder(String ID, String furniture, int quantity, double total, String generatedBy, String approvedBy, String customer, String status, String quotationID) {
+     //   this.orderID = orderID;
         this.furniture = furniture;
         this.quantity = quantity;
         this.total = total;
@@ -129,6 +138,7 @@ public class SalesOrder {
         this.approvedBy = approvedBy;
         this.customer = customer;
         this.status = status;
+        this.quotationID = quotationID;
     }
   
 
@@ -142,6 +152,7 @@ public class SalesOrder {
     setStatus(status);  // Use the value passed as an argument
     setGeneratedBy(generatedBy);  // Use the value passed as an argument
     setApprovedBy(approvedBy);  // Use the value passed as an argument
+    
 
     salesOrders.add(this);
     System.out.println("Sales Order created successfully!");
@@ -275,16 +286,5 @@ public class SalesOrder {
         salesOrders = File.read("salesOrder", SalesOrder.class);
     }
     
-    public static void createSalesOrder2(String id, String furniture, int quantity, double total, String customer, String status,String generatedBy, String approvedBy) {
-    String filePath = "salesOrder.txt";
-
-    try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
-        // Append the new sales order to the file
-        writer.println(id + "," + furniture + "," + quantity + "," + total + "," + customer + "," + status + "," + generatedBy + "," + approvedBy );
-        writer.flush();  // Ensure that any buffered data is written immediately
-    } catch (IOException e) {
-        e.printStackTrace(); // Handle the exception according to your needs
-    }
-}
 
 }
