@@ -43,8 +43,9 @@ public class SearchQuotation extends javax.swing.JPanel {
             public void run() {
                 temp = (DefaultTableModel) tblQuotation.getModel();
                 temp.setRowCount(0);
-                Object row[] = new Object[7]; 
+                Object row[] = new Object[8]; 
                 for (SalesOrder sales : SalesOrder.salesOrders) {
+                    if ("Pending".equals(sales.getStatus()) || "Approve".equals(sales.getStatus())) {
                     //add to new temp table if room is available
                     row[0] = sales.getId();
                     row[1] = sales.getFurniture();
@@ -61,7 +62,9 @@ public class SearchQuotation extends javax.swing.JPanel {
                     row[4] = sales.getTotal();
                     row[5] = sales.getCustomer();
                     row[6] = sales.getquotation();
+                    row[7] = sales.getStatus();
                     temp.addRow(row);
+                }
                 }
             }
         });
@@ -75,10 +78,13 @@ public class SearchQuotation extends javax.swing.JPanel {
         return null;
     }
     private void updateTable(List<SalesOrder> data) {
-        temp.setRowCount(0);
-        double totalQuotationPrice = 0.0;
-        for (SalesOrder sales : data) {
-            Object[] row = new Object[7];
+    temp.setRowCount(0);
+    double totalQuotationPrice = 0.0;
+    
+    for (SalesOrder sales : data) {
+        // Check if the status is "Pending" or "Approve"
+       if ("Pending".equals(sales.getStatus()) || "Approve".equals(sales.getStatus())) {
+            Object[] row = new Object[8];
             row[0] = sales.getId();
             row[1] = sales.getFurniture();
             row[2] = sales.getQuantity();
@@ -94,15 +100,18 @@ public class SearchQuotation extends javax.swing.JPanel {
             row[4] = sales.getTotal();
             row[5] = sales.getCustomer();
             row[6] = sales.getquotation();
+            row[7] = sales.getStatus();
 
             temp.addRow(row);
-            //Add the total price 
-            totalQuotationPrice +=sales.getTotal();
-
-            //Set tfTotalPrice to totalQuotationPrice
-            tfTotalPrice.setText(String.valueOf(totalQuotationPrice));
+            // Add the total price
+            totalQuotationPrice += sales.getTotal();
         }
     }
+
+    // Set tfTotalPrice to totalQuotationPrice
+    tfTotalPrice.setText(String.valueOf(totalQuotationPrice));
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -142,13 +151,13 @@ public class SearchQuotation extends javax.swing.JPanel {
 
         tblQuotation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID", "QUOTATION ID"
+                "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID", "QUOTATION ID", "STATUS"
             }
         ));
         jScrollPane1.setViewportView(tblQuotation);
