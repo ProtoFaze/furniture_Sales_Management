@@ -225,36 +225,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
     }
-    
-    /**
-     *@deprecated 
-     * @param dateStr
-     * @return
-     */
-    public static LocalDate convertStringToLocalDate(String dateStr) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate localDate = LocalDate.parse(dateStr, formatter);
-        return localDate;
-    }
-    /**
-     *@deprecated 
-     * @param date
-     * @return
-     */
-    public static LocalDate DateToLocalDate(Date date) {
-        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return localDate;
-    }
-    /**
-     *@deprecated 
-     * @param localDate
-     * @return
-     */
-    public static String convertLocalDateToString(LocalDate localDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String dateStr = localDate.format(formatter);
-        return dateStr;
-    }
 
     /**
      * @param args the command line arguments

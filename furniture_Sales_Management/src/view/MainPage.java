@@ -68,24 +68,36 @@ public class MainPage extends javax.swing.JFrame {
         switch (this.user.getRole()){
             case "admin" -> {
                 users = User.list;
+                jobMainbtn1.setText(Tabs.getTitleAt(1));
             }
             case "officer" -> {
-                
+                jobMainbtn1.setText(Tabs.getTitleAt(1));
+                jobMainbtn2.setText(Tabs.getTitleAt(2));
+                jobMainbtn3.setText(Tabs.getTitleAt(3));
+                jobMainbtn4.setText(Tabs.getTitleAt(4));
+                jobMainbtn5.setText(Tabs.getTitleAt(5));
+
             }
             case "sales person" -> {
                salesOrders = SalesOrder.salesOrders;
-               jobMainbt1.setText(Tabs.getTitleAt(0));
-               jobMainbtn2.setText(Tabs.getTitleAt(1));
-               jobMainbtn3.setText(Tabs.getTitleAt(2));
-               jobMainbtn4.setText(Tabs.getTitleAt(3));
-               jobMainbtn5.setText(Tabs.getTitleAt(4));
-               Tabs.setTitleAt(5, "Customer List");
+                Tabs.setTitleAt(5, "Customer List");
+                jobMainbtn1.setText(Tabs.getTitleAt(1));
+                jobMainbtn2.setText(Tabs.getTitleAt(2));
+                jobMainbtn3.setText(Tabs.getTitleAt(3));
+                jobMainbtn4.setText(Tabs.getTitleAt(4));
+                jobMainbtn5.setText(Tabs.getTitleAt(5));
+                Tabs.remove(officerApproval2);
+                Tabs.remove(generateReport);
+                officerApproval2 = null;
+                generateReport = null;
+
 
             }
             default -> {
                 users = null;
                 admins = null;
                 salesOrders = null;
+                Tabs = null;
             }
         }
         
@@ -119,7 +131,7 @@ public class MainPage extends javax.swing.JFrame {
         };
         rolelbl = new javax.swing.JLabel();
         welcometxt = new javax.swing.JLabel();
-        jobMainbt1 = new javax.swing.JButton();
+        jobMainbtn1 = new javax.swing.JButton();
         Tabs = new javax.swing.JTabbedPane();
         personalSales = new view.PersonalSales(this);
         createSalesOrder = new view.CreateSalesOrder(this);
@@ -158,12 +170,12 @@ public class MainPage extends javax.swing.JFrame {
         welcometxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         welcometxt.setText("Welcome, ");
 
-        jobMainbt1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jobMainbt1.setText("func1");
-        jobMainbt1.setPreferredSize(new java.awt.Dimension(120, 30));
-        jobMainbt1.addActionListener(new java.awt.event.ActionListener() {
+        jobMainbtn1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jobMainbtn1.setText("func1");
+        jobMainbtn1.setPreferredSize(new java.awt.Dimension(120, 30));
+        jobMainbtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jobMainbt1ActionPerformed(evt);
+                jobMainbtn1ActionPerformed(evt);
             }
         });
 
@@ -257,7 +269,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(ProfileBtn))
                     .addGroup(bgPanelLayout.createSequentialGroup()
                         .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jobMainbt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jobMainbtn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jobMainbtn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jobMainbtn3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jobMainbtn4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -279,7 +291,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgPanelLayout.createSequentialGroup()
-                        .addComponent(jobMainbt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jobMainbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
                         .addComponent(jobMainbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
@@ -312,9 +324,9 @@ public class MainPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jobMainbt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbt1ActionPerformed
+    private void jobMainbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn1ActionPerformed
         changeTab(1);
-    }//GEN-LAST:event_jobMainbt1ActionPerformed
+    }//GEN-LAST:event_jobMainbtn1ActionPerformed
 
     private void LogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtnActionPerformed
         int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?","Confirm Exit", JOptionPane.YES_NO_OPTION);
@@ -398,7 +410,7 @@ public class MainPage extends javax.swing.JFrame {
     private view.FurnitureList furnitureList1;
     private view.GenerateDocument generateReport;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton jobMainbt1;
+    private javax.swing.JButton jobMainbtn1;
     private javax.swing.JButton jobMainbtn2;
     private javax.swing.JButton jobMainbtn3;
     private javax.swing.JButton jobMainbtn4;
