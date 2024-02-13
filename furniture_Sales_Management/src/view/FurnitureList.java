@@ -121,6 +121,8 @@ public class FurnitureList extends javax.swing.JPanel {
         tblFurniture = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
+        setOpaque(false);
+
         tblFurniture.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
