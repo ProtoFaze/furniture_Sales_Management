@@ -15,7 +15,6 @@ public class Invoice {
     private String id;
     private String generationDate;
     private double grandTotal;
-    private String Customer;
     private boolean payment;
     private boolean production;
     private boolean delivery;
@@ -37,21 +36,19 @@ public class Invoice {
      * @param production
      * @param delivery
      */
-    public Invoice(String id, String generationDate, double grandTotal, String Customer, boolean payment, boolean production, boolean delivery) {
+    public Invoice(String id, String generationDate, double grandTotal, boolean payment, boolean production, boolean delivery) {
         this.id = id;
         this.generationDate = generationDate;
         this.grandTotal = grandTotal;
-        this.Customer = Customer;
         this.payment = payment;
         this.production = production;
         this.delivery = delivery;
     }
     
-    public Invoice(String id, String generationDate, double grandTotal, String Customer) {
+    public Invoice(String id, double grandTotal) {
         this.id = id /*Integer.toString(latestId)*/;
         this.generationDate = Verify.LocalDateToString(LocalDate.now());
         this.grandTotal = grandTotal;
-        this.Customer = Customer;
         this.payment = false;
         this.production = false;
         this.delivery = false;
@@ -79,14 +76,6 @@ public class Invoice {
 
     public void setGrandTotal(double grandTotal) {
         this.grandTotal = grandTotal;
-    }
-
-    public String getCustomer() {
-        return Customer;
-    }
-
-    public void setCustomer(String Customer) {
-        this.Customer = Customer;
     }
 
     public boolean isPayed() {
