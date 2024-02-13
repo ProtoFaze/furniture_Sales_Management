@@ -148,7 +148,7 @@ public class SearchSalesOrder extends javax.swing.JPanel {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         //Get order ID from text field
         String orderIDsearch = tfOrderIDsearch.getText();     
-        List<SalesOrder> searchQuotationDetails = SalesOrder.searchOrderIDinFile(orderIDsearch);
+        List<SalesOrder> searchQuotationDetails = SalesOrder.searchOrders(orderIDsearch,"orderID");
         
         if(searchQuotationDetails != null){
             JOptionPane.showMessageDialog(this, "Order ID Found!");

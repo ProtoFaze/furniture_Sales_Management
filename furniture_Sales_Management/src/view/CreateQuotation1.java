@@ -55,6 +55,8 @@ public class CreateQuotation1 extends javax.swing.JPanel {
         btnCreate = new javax.swing.JButton();
         cbQuotationID = new javax.swing.JComboBox<>();
 
+        setOpaque(false);
+
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel1.setText("QUOTATION");
 

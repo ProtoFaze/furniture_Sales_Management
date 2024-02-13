@@ -66,6 +66,91 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         model = (DefaultTableModel) tblQuotation.getModel();
        
     }
+    private boolean quotationExists(String quotationID) {
+        // Iterate through the list of sales orders
+        for (SalesOrder order : SalesOrder.salesOrders) {
+            // Check if the current sales order's quotation ID matches the specified ID
+            if (order.getquotation() != null && order.getquotation().equals(quotationID)) {
+                return true; // Quotation ID exists
+            }
+        }
+        return false; // Quotation ID does not exist
+    }
+    private boolean validateCustomerForQuotation(String customerID, String quotationID) {
+        // Iterate through the list of sales orders
+        for (SalesOrder order : SalesOrder.salesOrders) {
+            // Check if the current sales order's quotation ID matches the specified ID
+            if (order.getquotation() != null && order.getquotation().equals(quotationID)) {
+                // Check if the customer ID matches
+                if (!order.getCustomer().equals(customerID)) {
+                    return false; // Customer ID does not match for the same quotation number
+                }
+            }
+        }
+        return true; // Customer ID matches for the same quotation number
+    }
+    private boolean validateInput() {
+        try {
+       //     int quantity = Integer.parseInt(tfQuantity.getText());
+            double total = Double.parseDouble(tfTotal.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    private void calculateTotal(){
+       // Get the selected furniture ID
+       String furnitureID = cbFurniture.getText();
+
+       // Find the corresponding Furniture object
+       Furniture selectedFurniture = null;
+       for (Furniture record : Furniture.list) {
+           if (record.getId().equals(furnitureID)) {
+               selectedFurniture = record;
+               break;
+                }
+        }
+
+       // Calculate the total based on the quantity and furniture price
+       if (selectedFurniture != null) {
+           quantity = (int) tfQuantity.getValue();
+           price = selectedFurniture.getPrice();
+           tfTotal.setText(Double.toString(price * quantity));
+        }
+    }
+    private String getCustomerID(String quotationID) {
+        // Iterate through the list of sales orders
+        for (SalesOrder order : SalesOrder.salesOrders) {
+            // Check if the current sales order's quotation ID matches the specified ID
+            if (order.getquotation() != null && order.getquotation().equals(quotationID)) {
+                // Return the customer ID associated with the quotation number
+                return order.getCustomer();
+            }
+        }
+        // Return an empty string or handle the case when the quotation ID is not found
+        return "";
+    }
+    private void handleQuotationIDChange() {
+        String quotationID = tfQuotationID.getText();
+        // Check if the quotation number exists in the text file
+         if (quotationExists(quotationID)) {
+         String customerID = getCustomerID(quotationID);
+
+        // Display the customer ID
+        tfCustomer.setText(customerID);
+        // Disable the tfCustomer field if the quotation number exists
+        tfCustomer.setEnabled(false);
+        // Disable the btnCustomerList and btnRegisterCustomer buttons
+        btnCustomerList.setEnabled(false);
+        btnRegisterCustomer.setEnabled(false);
+         } else {
+        // Enable the tfCustomer field if the quotation number doesn't exist
+        tfCustomer.setEnabled(true);
+        // Enable the btnCustomerList and btnRegisterCustomer buttons
+        btnCustomerList.setEnabled(true);
+        btnRegisterCustomer.setEnabled(true);
+         }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -312,10 +397,10 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Please enter the same customer ID for the same quotation number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
-     SalesOrder record = new SalesOrder(furniture, amount, total, parent.user.getId(), customer, quotationID);
-     SalesOrder.salesOrders.add(record);
+    SalesOrder record = new SalesOrder(furniture, amount, total, parent.user.getId(), customer, quotationID);
+    SalesOrder.salesOrders.add(record);
     System.out.println(SalesOrder.latestId);
-     File.write("salesOrder", SalesOrder.salesOrders);
+    File.write("salesOrder", SalesOrder.salesOrders);
     // Add the new sales order to the list
   //  newSalesOrder.createSalesOrder(id, furniture, amount, total, "", customer, status);
         JOptionPane.showMessageDialog(this, "Sales Order Created!");
@@ -323,30 +408,6 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         record.getTotal(),record.getCustomer(), record.getStatus(), record.getquotation()}); 
         parent.changeTab(9);
     }//GEN-LAST:event_btnCreateActionPerformed
-
-private boolean quotationExists(String quotationID) {
-    // Iterate through the list of sales orders
-    for (SalesOrder order : SalesOrder.salesOrders) {
-        // Check if the current sales order's quotation ID matches the specified ID
-        if (order.getquotation() != null && order.getquotation().equals(quotationID)) {
-            return true; // Quotation ID exists
-        }
-    }
-    return false; // Quotation ID does not exist
-}
-private boolean validateCustomerForQuotation(String customerID, String quotationID) {
-    // Iterate through the list of sales orders
-    for (SalesOrder order : SalesOrder.salesOrders) {
-        // Check if the current sales order's quotation ID matches the specified ID
-        if (order.getquotation() != null && order.getquotation().equals(quotationID)) {
-            // Check if the customer ID matches
-            if (!order.getCustomer().equals(customerID)) {
-                return false; // Customer ID does not match for the same quotation number
-            }
-        }
-    }
-    return true; // Customer ID matches for the same quotation number
-}
     
     private void tfCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCustomerActionPerformed
         // TODO add your handling code here:   
@@ -382,76 +443,12 @@ private boolean validateCustomerForQuotation(String customerID, String quotation
         // TODO add your handling code here:
         parent.changeTab(8);
     }//GEN-LAST:event_btnFurnitureChooseActionPerformed
-    
-    private String getCustomerID(String quotationID) {
-    // Iterate through the list of sales orders
-    for (SalesOrder order : SalesOrder.salesOrders) {
-        // Check if the current sales order's quotation ID matches the specified ID
-        if (order.getquotation() != null && order.getquotation().equals(quotationID)) {
-            // Return the customer ID associated with the quotation number
-            return order.getCustomer();
-        }
-    }
-    // Return an empty string or handle the case when the quotation ID is not found
-    return "";
-}
-   private void handleQuotationIDChange() {
-        String quotationID = tfQuotationID.getText();
-        // Check if the quotation number exists in the text file
-         if (quotationExists(quotationID)) {
-         String customerID = getCustomerID(quotationID);
-        
-        // Display the customer ID
-        tfCustomer.setText(customerID);
-        // Disable the tfCustomer field if the quotation number exists
-        tfCustomer.setEnabled(false);
-        // Disable the btnCustomerList and btnRegisterCustomer buttons
-        btnCustomerList.setEnabled(false);
-        btnRegisterCustomer.setEnabled(false);
-         } else {
-        // Enable the tfCustomer field if the quotation number doesn't exist
-        tfCustomer.setEnabled(true);
-        // Enable the btnCustomerList and btnRegisterCustomer buttons
-        btnCustomerList.setEnabled(true);
-        btnRegisterCustomer.setEnabled(true);
-         }
-   }
+
     private void tfQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQuotationIDActionPerformed
         // TODO add your handling code here:
         String quotationID = tfQuotationID.getText();
          
     }//GEN-LAST:event_tfQuotationIDActionPerformed
-private boolean validateInput() {
-        try {
-       //     int quantity = Integer.parseInt(tfQuantity.getText());
-            double total = Double.parseDouble(tfTotal.getText());
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
- private void calculateTotal(){
-    // Get the selected furniture ID
-    String furnitureID = cbFurniture.getText();
-    
-    // Find the corresponding Furniture object
-    Furniture selectedFurniture = null;
-    for (Furniture record : Furniture.list) {
-        if (record.getId().equals(furnitureID)) {
-            selectedFurniture = record;
-            break;
-        }
-    }
-
-    // Calculate the total based on the quantity and furniture price
-    if (selectedFurniture != null) {
-        quantity = (int) tfQuantity.getValue();
-        price = selectedFurniture.getPrice();
-        tfTotal.setText(Double.toString(price * quantity));
-    }
- }
- 
-
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

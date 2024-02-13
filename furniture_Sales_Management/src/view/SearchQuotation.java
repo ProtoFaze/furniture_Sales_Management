@@ -67,13 +67,43 @@ public class SearchQuotation extends javax.swing.JPanel {
         });
     }
     private Furniture findFurnitureById(String furnitureId) {
-    for (Furniture furniture : Furniture.list) {
-        if (furniture.getId().equals(furnitureId)) {
-            return furniture;
+        for (Furniture furniture : Furniture.list) {
+            if (furniture.getId().equals(furnitureId)) {
+                return furniture;
+            }
+        }
+        return null;
+    }
+    private void updateTable(List<SalesOrder> data) {
+        temp.setRowCount(0);
+        double totalQuotationPrice = 0.0;
+        for (SalesOrder sales : data) {
+            Object[] row = new Object[7];
+            row[0] = sales.getId();
+            row[1] = sales.getFurniture();
+            row[2] = sales.getQuantity();
+
+            Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
+
+            if (matchingFurniture != null) {
+                row[3] = matchingFurniture.getPrice();
+            } else {
+                row[3] = ""; // Set as empty if furniture is not found
+            }
+
+            row[4] = sales.getTotal();
+            row[5] = sales.getCustomer();
+            row[6] = sales.getquotation();
+
+            temp.addRow(row);
+            //Add the total price 
+            totalQuotationPrice +=sales.getTotal();
+
+            //Set tfTotalPrice to totalQuotationPrice
+            tfTotalPrice.setText(String.valueOf(totalQuotationPrice));
         }
     }
-    return null;
-}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -180,29 +210,10 @@ public class SearchQuotation extends javax.swing.JPanel {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
-private String searchQuotationIDinFile(String quotationIDsearch) {
-     try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                String quotationIDFromFile = parts[7].trim();
-                if (quotationIDFromFile.equals(quotationIDsearch)) {
-                    System.out.println("Quotation found:\n" + line);
-                    return line; // Return the details of the sales order
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception according to your needs
-        }
-
-        System.out.println("Quotation with ID " + quotationIDsearch + " not found!!");
-        return null; // Order ID not found in the file or an error occurred
-    }
+    
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String quotationIDsearch = tfquotationID.getText();
-        List searchQuotationDetails = SalesOrder.searchQuotationIDinFile(quotationIDsearch);
+        List searchQuotationDetails = SalesOrder.searchOrders(quotationIDsearch,"quotationID");
         
         if(searchQuotationDetails != null){
             JOptionPane.showMessageDialog(this, "Quotation Found!");
@@ -221,36 +232,6 @@ private String searchQuotationIDinFile(String quotationIDsearch) {
     private void tfTotalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTotalPriceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfTotalPriceActionPerformed
-private void updateTable(List<SalesOrder> data) {
-    temp.setRowCount(0);
-    double totalQuotationPrice = 0.0;
-    for (SalesOrder sales : data) {
-        Object[] row = new Object[7];
-        row[0] = sales.getId();
-        row[1] = sales.getFurniture();
-        row[2] = sales.getQuantity();
-        
-        Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
-        
-        if (matchingFurniture != null) {
-            row[3] = matchingFurniture.getPrice();
-        } else {
-            row[3] = ""; // Set as empty if furniture is not found
-        }
-
-        row[4] = sales.getTotal();
-        row[5] = sales.getCustomer();
-        row[6] = sales.getquotation();
-
-        temp.addRow(row);
-        //Add the total price 
-        totalQuotationPrice +=sales.getTotal();
-        
-        //Set tfTotalPrice to totalQuotationPrice
-        tfTotalPrice.setText(String.valueOf(totalQuotationPrice));
-    }
-}
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
