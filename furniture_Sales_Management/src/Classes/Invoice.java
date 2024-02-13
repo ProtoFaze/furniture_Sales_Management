@@ -47,8 +47,8 @@ public class Invoice {
         this.delivery = delivery;
     }
     
-    public Invoice(String generationDate, double grandTotal, String Customer) {
-        this.id = Integer.toString(latestId);
+    public Invoice(String id, String generationDate, double grandTotal, String Customer) {
+        this.id = id /*Integer.toString(latestId)*/;
         this.generationDate = Verify.LocalDateToString(LocalDate.now());
         this.grandTotal = grandTotal;
         this.Customer = Customer;
