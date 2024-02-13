@@ -144,6 +144,7 @@ public class MainPage extends javax.swing.JFrame {
         furnitureList1 = new view.FurnitureList(this);
         createQuotation11 = new view.CreateQuotation1(this);
         searchQuotation1 = new view.SearchQuotation(this);
+        deleteQuotation1 = new view.DeleteQuotation(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
@@ -192,6 +193,7 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.addTab("tab9", furnitureList1);
         Tabs.addTab("tab10", createQuotation11);
         Tabs.addTab("tab11", searchQuotation1);
+        Tabs.addTab("tab12", deleteQuotation1);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -408,6 +410,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JPanel bgPanel;
     view.CreateQuotation1 createQuotation11;
     view.CreateSalesOrder createSalesOrder;
+    private view.DeleteQuotation deleteQuotation1;
     private view.DeleteSalesOrder deleteSalesOrder;
     private view.FurnitureList furnitureList1;
     private view.GenerateDocument generateReport;

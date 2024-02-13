@@ -4,6 +4,7 @@
  */
 package view;
 
+import Classes.File;
 import Classes.Furniture;
 import Classes.SalesOrder;
 import java.io.BufferedReader;
@@ -35,6 +36,7 @@ public class CreateQuotation1 extends javax.swing.JPanel {
         initComponents();
         this.parent = parent;
         tfTotalPrice.setEnabled(false);
+        tfQuotationID.setEnabled(false);
         LoadData();
     }
 
@@ -54,6 +56,8 @@ public class CreateQuotation1 extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         btnCreate = new javax.swing.JButton();
         cbQuotationID = new javax.swing.JComboBox<>();
+        tfQuotationID = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setOpaque(false);
 
@@ -99,6 +103,14 @@ public class CreateQuotation1 extends javax.swing.JPanel {
             }
         });
 
+        tfQuotationID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfQuotationIDActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("QUOTATION ID");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,9 +119,11 @@ public class CreateQuotation1 extends javax.swing.JPanel {
                 .addContainerGap(75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(156, 156, 156)
-                        .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnCreate)
@@ -119,19 +133,22 @@ public class CreateQuotation1 extends javax.swing.JPanel {
                             .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(66, 66, 66))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(280, 280, 280)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -157,9 +174,11 @@ private void LoadData() {
     }
     DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String[0]));
     cbQuotationID.setModel(data);
+    
 }
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
+           // TODO add your handling code here:
+    String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
 
         // Check if the selectedQuotationID is not empty
         if (!selectedQuotationID.isEmpty()) {
@@ -173,10 +192,11 @@ private void LoadData() {
 public void updateTable(String quotationID) {
     DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
     model.setRowCount(0); // Clear existing data in the table
-    
+
     totalPrice = 0.0;
     for (SalesOrder sales : SalesOrder.salesOrders) {
-        if (sales.getquotation().equals(quotationID)) {
+        // Check if the status is "Approve" and the quotation ID matches
+        if ("Approve".equalsIgnoreCase(sales.getStatus()) && sales.getquotation().equals(quotationID)) {
             // Retrieve the furniture object associated with the furniture ID
             Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
 
@@ -191,7 +211,7 @@ public void updateTable(String quotationID) {
                         sales.getCustomer(),
                 };
                 model.addRow(rowData);
-                //Update total price
+                // Update total price
                 totalPrice += sales.getTotal();
             }
         }
@@ -200,19 +220,27 @@ public void updateTable(String quotationID) {
     // If no records found for the given quotation ID
     if (model.getRowCount() == 0) {
         JOptionPane.showMessageDialog(this, "No records found for the given quotation ID", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+        btnCreate.setEnabled(false);
     }
     tfTotalPrice.setText(String.valueOf(totalPrice));
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void cbQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbQuotationIDActionPerformed
-        String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
-        updateTable(selectedQuotationID);
-   
+    String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
+    tfQuotationID.setText(selectedQuotationID);
+    btnCreate.setEnabled(true);
+    updateTable(selectedQuotationID);
+
+    
     }//GEN-LAST:event_cbQuotationIDActionPerformed
 
     private void tfTotalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTotalPriceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfTotalPriceActionPerformed
+
+    private void tfQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQuotationIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfQuotationIDActionPerformed
 
 private Furniture findFurnitureById(String furnitureId) {
     // Iterate through the list of furniture objects
@@ -232,8 +260,10 @@ private Furniture findFurnitureById(String furnitureId) {
     private javax.swing.JComboBox<String> cbQuotationID;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblQuotation;
+    private javax.swing.JTextField tfQuotationID;
     private javax.swing.JTextField tfTotalPrice;
     // End of variables declaration//GEN-END:variables
 }
