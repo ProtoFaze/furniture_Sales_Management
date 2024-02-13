@@ -159,18 +159,16 @@ private void LoadData() {
     cbQuotationID.setModel(data);
 }
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-           // TODO add your handling code here:
-    String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
+        String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
 
-    // Check if the selectedQuotationID is not empty
-    if (!selectedQuotationID.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Quotation Created!");
-        LoadData(); // Update the combo box with the latest quotation IDs
-        updateTable(selectedQuotationID); // Update the table with the details
-    } else {
-        JOptionPane.showMessageDialog(this, "Please select a Quotation ID", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
+        // Check if the selectedQuotationID is not empty
+        if (!selectedQuotationID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Quotation Created!");
+            LoadData(); // Update the combo box with the latest quotation IDs
+            updateTable(selectedQuotationID); // Update the table with the details
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a Quotation ID", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 public void updateTable(String quotationID) {
     DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
@@ -207,7 +205,6 @@ public void updateTable(String quotationID) {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void cbQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbQuotationIDActionPerformed
-        // TODO add your handling code here:
         String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
         updateTable(selectedQuotationID);
    
