@@ -37,14 +37,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="cbQuotationID" min="-2" pref="162" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="cbSalesOrderID" alignment="0" max="32767" attributes="0"/>
+                              <Component id="cbSalesOrderID" alignment="0" pref="159" max="32767" attributes="0"/>
                               <Component id="tfQuantity" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="tfFurnitureID" min="-2" pref="81" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnFurnitureChoose" min="-2" max="-2" attributes="0"/>
-                              </Group>
                               <Component id="tfTotal" alignment="0" max="32767" attributes="0"/>
+                              <Component id="tfFurnitureID" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <Component id="btnSaveChanges" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
                       </Group>
@@ -84,10 +80,9 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="tfFurnitureID" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnFurnitureChoose" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblFurnitureID" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblQuantity" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="tfQuantity" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -270,13 +265,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfFurnitureID">
-    </Component>
-    <Component class="javax.swing.JButton" name="btnFurnitureChoose">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="choose"/>
-      </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFurnitureChooseActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfFurnitureIDActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">

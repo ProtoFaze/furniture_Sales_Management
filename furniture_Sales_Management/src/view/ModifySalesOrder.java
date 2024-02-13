@@ -38,6 +38,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             this.parent = parent;
             LoadData();
             loadSalesOrders(quotationID);
+            tfFurnitureID.setEnabled(false);
     }
 
     private void LoadData(){
@@ -136,7 +137,6 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         tfTotalPrice = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         tfFurnitureID = new javax.swing.JTextField();
-        btnFurnitureChoose = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         cbSalesOrderID = new javax.swing.JComboBox<>();
 
@@ -198,10 +198,9 @@ public class ModifySalesOrder extends javax.swing.JPanel {
 
         jLabel3.setText("TOTAL PRICE");
 
-        btnFurnitureChoose.setText("choose");
-        btnFurnitureChoose.addActionListener(new java.awt.event.ActionListener() {
+        tfFurnitureID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFurnitureChooseActionPerformed(evt);
+                tfFurnitureIDActionPerformed(evt);
             }
         });
 
@@ -235,13 +234,10 @@ public class ModifySalesOrder extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cbSalesOrderID, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbSalesOrderID, 0, 159, Short.MAX_VALUE)
                                 .addComponent(tfQuantity)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(tfFurnitureID, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnFurnitureChoose))
-                                .addComponent(tfTotal))
+                                .addComponent(tfTotal)
+                                .addComponent(tfFurnitureID))
                             .addComponent(btnSaveChanges, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 52, Short.MAX_VALUE)))
                 .addGap(0, 0, 0)
@@ -271,9 +267,8 @@ public class ModifySalesOrder extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfFurnitureID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnFurnitureChoose)
                             .addComponent(lblFurnitureID))
-                        .addGap(20, 20, 20)
+                        .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblQuantity)
                             .addComponent(tfQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -355,11 +350,6 @@ private void updateSelectedOrder() {
         updateTable(selectedQuotationID);
     }//GEN-LAST:event_cbQuotationIDActionPerformed
 
-    private void btnFurnitureChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFurnitureChooseActionPerformed
-        // TODO add your handling code here:
-        parent.changeTab(8);
-    }//GEN-LAST:event_btnFurnitureChooseActionPerformed
-
     private void cbSalesOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSalesOrderIDActionPerformed
         String selectedSalesOrderID = cbSalesOrderID.getSelectedItem().toString();
         selectedOrder = getSelectedSalesOrder(selectedSalesOrderID);
@@ -372,6 +362,10 @@ private void updateSelectedOrder() {
           clearOrderDetails();
         }
     }//GEN-LAST:event_cbSalesOrderIDActionPerformed
+
+    private void tfFurnitureIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFurnitureIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfFurnitureIDActionPerformed
     
      private void calculateTotal(){
      tfTotal.setText(Double.toString(price*quantity));
@@ -414,7 +408,6 @@ private SalesOrder getSelectedSalesOrder(String selectedSalesOrderID) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnFurnitureChoose;
     private javax.swing.JButton btnSaveChanges;
     private javax.swing.JComboBox<String> cbQuotationID;
     private javax.swing.JComboBox<String> cbSalesOrderID;
