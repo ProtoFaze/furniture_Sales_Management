@@ -61,7 +61,7 @@ public class SearchQuotation extends javax.swing.JPanel {
                 }
                     row[4] = sales.getTotal();
                     row[5] = sales.getCustomer();
-                    row[6] = sales.getquotation();
+                    row[6] = sales.getQuotation();
                     row[7] = sales.getStatus();
                     temp.addRow(row);
                 }
@@ -99,7 +99,7 @@ public class SearchQuotation extends javax.swing.JPanel {
 
                 row[4] = sales.getTotal();
                 row[5] = sales.getCustomer();
-                row[6] = sales.getquotation();
+                row[6] = sales.getQuotation();
                 row[7] = sales.getStatus();
 
                 temp.addRow(row);

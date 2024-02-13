@@ -11,7 +11,6 @@ import javax.swing.DefaultComboBoxModel;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,85 +33,138 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         initComponents();
     }
     public ModifySalesOrder(MainPage parent){
-            initComponents();
-            this.parent = parent;
-            LoadData();
-            loadSalesOrders(quotationID);
-            tfFurnitureID.setEnabled(false);
+        initComponents();
+        this.parent = parent;
+        LoadData();
+        loadSalesOrders(quotationID);
+        tfFurnitureID.setEnabled(false);
     }
 
     void LoadData(){
         List<String> idList = new ArrayList<>();
             for (SalesOrder salesOrder: SalesOrder.salesOrders){
-                String quotationID = salesOrder.getquotation();
+                String quotationID = salesOrder.getQuotation();
                 if (quotationID != null && !idList.contains(quotationID)) {
-                idList.add(quotationID);
+                    idList.add(quotationID);
+                }
             }
-            }
-         DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String [0]));
+        DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String [0]));
         cbQuotationID.setModel(data);   
     }
-   private void loadSalesOrders(String quotationID) {
-    DefaultComboBoxModel<String> salesOrderModel = new DefaultComboBoxModel<>();
+    private void loadSalesOrders(String quotationID) {
+        DefaultComboBoxModel<String> salesOrderModel = new DefaultComboBoxModel<>();
 
-    for (SalesOrder salesOrder : SalesOrder.salesOrders) {
-        if (salesOrder.getquotation().equals(quotationID) && ("Pending".equalsIgnoreCase(salesOrder.getStatus()) || "Approve".equalsIgnoreCase(salesOrder.getStatus()))) {
-            salesOrderModel.addElement(salesOrder.getId());
-        }
-    }
-
-    cbSalesOrderID.setModel(salesOrderModel);
-}
-   
-    public void updateTable(String quotationID) {
-    // Update the table display to show only sales orders with "Approve" or "Pending" status
-    DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
-    model.setRowCount(0); // Clear existing data in the table
-    
-    totalPrice = 0.0;
-    for (SalesOrder sales : SalesOrder.salesOrders) {
-        if (sales.getquotation().equals(quotationID) && ("Approve".equals(sales.getStatus()) || "Pending".equals(sales.getStatus()))) {
-            // Retrieve the furniture object associated with the furniture ID
-            Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
-
-            if (matchingFurniture != null) {
-                // Add details to the table, including the unit price
-                Object[] rowData = {
-                        sales.getId(),
-                        sales.getFurniture(),
-                        sales.getQuantity(),
-                        matchingFurniture.getPrice(), // Display unit price
-                        sales.getTotal(),
-                        sales.getCustomer(),
-                        sales.getStatus()
-                };
-                model.addRow(rowData);
-                // Update total price
-                totalPrice += sales.getTotal();
+        for (SalesOrder salesOrder : SalesOrder.salesOrders) {
+            if (salesOrder.getQuotation().equals(quotationID) && ("Pending".equalsIgnoreCase(salesOrder.getStatus()) || "Approve".equalsIgnoreCase(salesOrder.getStatus()))) {
+                salesOrderModel.addElement(salesOrder.getId());
             }
         }
-    }
 
-    // If no records found for the given quotation ID and status
-    if (model.getRowCount() == 0) {
-        JOptionPane.showMessageDialog(this, "No records found for the given quotation ID and status", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+        cbSalesOrderID.setModel(salesOrderModel);
     }
-    tfTotalPrice.setText(String.valueOf(totalPrice));
-}
+   
+    public void updateTable(String quotationID) {
+        // Update the table display to show only sales orders with "Approve" or "Pending" status
+        DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
+        model.setRowCount(0); // Clear existing data in the table
+
+        totalPrice = 0.0;
+        for (SalesOrder sales : SalesOrder.salesOrders) {
+            if (sales.getQuotation().equals(quotationID) && ("Approve".equals(sales.getStatus()) || "Pending".equals(sales.getStatus()))) {
+                // Retrieve the furniture object associated with the furniture ID
+                Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
+
+                if (matchingFurniture != null) {
+                    // Add details to the table, including the unit price
+                    Object[] rowData = {
+                            sales.getId(),
+                            sales.getFurniture(),
+                            sales.getQuantity(),
+                            matchingFurniture.getPrice(), // Display unit price
+                            sales.getTotal(),
+                            sales.getCustomer(),
+                            sales.getStatus()
+                    };
+                    model.addRow(rowData);
+                    // Update total price
+                    totalPrice += sales.getTotal();
+                }
+            }
+        }
+
+        // If no records found for the given quotation ID and status
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No records found for the given quotation ID and status", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+        }
+        tfTotalPrice.setText(String.valueOf(totalPrice));
+    }
     
     
     private Furniture findFurnitureById(String furnitureId) {
-    // Iterate through the list of furniture objects
-    for (Furniture furniture : Furniture.list) {
-        // Check if the current furniture object's ID matches the specified ID
-        if (furniture.getId().equals(furnitureId)) {
-            // Return the matching furniture object
-            return furniture;
+        // Iterate through the list of furniture objects
+        for (Furniture furniture : Furniture.list) {
+            // Check if the current furniture object's ID matches the specified ID
+            if (furniture.getId().equals(furnitureId)) {
+                // Return the matching furniture object
+                return furniture;
+            }
+        }
+        // Return null if no matching furniture is found
+        return null;
+    }
+    
+    private void updateSelectedOrder() {
+        if (selectedOrder != null) {
+            // Retrieve modified data
+            String furniture = tfFurnitureID.getText();
+            int quantity = (int) tfQuantity.getValue();
+            double total = Double.parseDouble(tfTotal.getText());
+
+            // Update the selected order details
+            selectedOrder.setFurniture(furniture);
+            selectedOrder.setQuantity(quantity);
+            selectedOrder.setTotal(total);
+            selectedOrder.setStatus("Pending");
         }
     }
-    // Return null if no matching furniture is found
-    return null;
-}
+    
+    private void calculateTotal(){
+        tfTotal.setText(Double.toString(price*quantity));
+    }
+     
+    private boolean validateInput() {
+        try {
+            double total = Double.parseDouble(tfTotal.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    private SalesOrder getSelectedSalesOrder(String selectedSalesOrderID) {
+        for (SalesOrder salesOrder : SalesOrder.salesOrders) {
+            if (salesOrder.getId().equals(selectedSalesOrderID)) {
+                return salesOrder;
+            }
+        }
+        return null;
+    }
+
+    private void displaySalesOrderDetails(SalesOrder salesOrder) {
+        tfFurnitureID.setText(salesOrder.getFurniture());
+        tfQuantity.setValue(salesOrder.getQuantity());
+        tfTotal.setText(Double.toString(salesOrder.getTotal()));
+        Furniture matchingFurniture = findFurnitureById(salesOrder.getFurniture());
+        if (matchingFurniture != null) {
+            price = matchingFurniture.getPrice();
+        }
+        calculateTotal();
+    }
+
+    private void clearOrderDetails() {
+        tfFurnitureID.setText("");
+        tfQuantity.setValue(0);
+        tfTotal.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -297,42 +349,29 @@ public class ModifySalesOrder extends javax.swing.JPanel {
        quantity = (int)tfQuantity.getValue();
        calculateTotal();
     }//GEN-LAST:event_tfQuantityStateChanged
-private void updateSelectedOrder() {
-    if (selectedOrder != null) {
-        // Retrieve modified data
-        String furniture = tfFurnitureID.getText();
-        int quantity = (int) tfQuantity.getValue();
-        double total = Double.parseDouble(tfTotal.getText());
 
-        // Update the selected order details
-        selectedOrder.setFurniture(furniture);
-        selectedOrder.setQuantity(quantity);
-        selectedOrder.setTotal(total);
-        selectedOrder.setStatus("Pending");
-    }
-}
     private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
         if (selectedOrder == null) {
-        JOptionPane.showMessageDialog(this, "Please select a sales order to modify", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+            JOptionPane.showMessageDialog(this, "Please select a sales order to modify", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    // Validate input
-    if (!validateInput()) {
-        JOptionPane.showMessageDialog(this, "Please enter valid data for quantity and total.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        // Validate input
+        if (!validateInput()) {
+            JOptionPane.showMessageDialog(this, "Please enter valid data for quantity and total.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-   //update the selected order
-   updateSelectedOrder();
-    // Save the changes to file
-    File.write("salesOrder", SalesOrder.salesOrders);
+       //update the selected order
+       updateSelectedOrder();
+        // Save the changes to file
+        File.write("salesOrder", SalesOrder.salesOrders);
 
-    JOptionPane.showMessageDialog(this, "Changes saved successfully!");
+        JOptionPane.showMessageDialog(this, "Changes saved successfully!");
 
-    // Reload the table to reflect the changes
-    loadSalesOrders(quotationID);
-    updateTable(cbQuotationID.getSelectedItem().toString());
+        // Reload the table to reflect the changes
+        loadSalesOrders(quotationID);
+        updateTable(cbQuotationID.getSelectedItem().toString());
     
     }//GEN-LAST:event_btnSaveChangesActionPerformed
 
@@ -365,45 +404,6 @@ private void updateSelectedOrder() {
     private void tfFurnitureIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFurnitureIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfFurnitureIDActionPerformed
-    
-     private void calculateTotal(){
-     tfTotal.setText(Double.toString(price*quantity));
-    }
-     
-private boolean validateInput() {
-    try {
-        double total = Double.parseDouble(tfTotal.getText());
-        return true;
-    } catch (NumberFormatException e) {
-        return false;
-    }
-}
-private SalesOrder getSelectedSalesOrder(String selectedSalesOrderID) {
-        for (SalesOrder salesOrder : SalesOrder.salesOrders) {
-            if (salesOrder.getId().equals(selectedSalesOrderID)) {
-                return salesOrder;
-            }
-        }
-        return null;
-    }
-
-    private void displaySalesOrderDetails(SalesOrder salesOrder) {
-        tfFurnitureID.setText(salesOrder.getFurniture());
-        tfQuantity.setValue(salesOrder.getQuantity());
-        tfTotal.setText(Double.toString(salesOrder.getTotal()));
-         Furniture matchingFurniture = findFurnitureById(salesOrder.getFurniture());
-    if (matchingFurniture != null) {
-        price = matchingFurniture.getPrice();
-    }
-    calculateTotal();
-    }
-
-    private void clearOrderDetails() {
-        tfFurnitureID.setText("");
-        tfQuantity.setValue(0);
-        tfTotal.setText("");
-    }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

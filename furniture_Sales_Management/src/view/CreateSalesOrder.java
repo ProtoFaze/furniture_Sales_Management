@@ -71,7 +71,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         // Iterate through the list of sales orders
         for (SalesOrder order : SalesOrder.salesOrders) {
             // Check if the current sales order's quotation ID matches the specified ID
-            if (order.getquotation() != null && order.getquotation().equals(quotationID)) {
+            if (order.getQuotation() != null && order.getQuotation().equals(quotationID)) {
                 return true; // Quotation ID exists
             }
         }
@@ -81,7 +81,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         // Iterate through the list of sales orders
         for (SalesOrder order : SalesOrder.salesOrders) {
             // Check if the current sales order's quotation ID matches the specified ID
-            if (order.getquotation() != null && order.getquotation().equals(quotationID)) {
+            if (order.getQuotation() != null && order.getQuotation().equals(quotationID)) {
                 // Check if the customer ID matches
                 if (!order.getCustomer().equals(customerID)) {
                     return false; // Customer ID does not match for the same quotation number
@@ -123,7 +123,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         // Iterate through the list of sales orders
         for (SalesOrder order : SalesOrder.salesOrders) {
             // Check if the current sales order's quotation ID matches the specified ID
-            if (order.getquotation() != null && order.getquotation().equals(quotationID)) {
+            if (order.getQuotation() != null && order.getQuotation().equals(quotationID)) {
                 // Return the customer ID associated with the quotation number
                 return order.getCustomer();
             }
@@ -147,14 +147,14 @@ public class CreateSalesOrder extends javax.swing.JPanel {
             model.setRowCount(0);
             for (SalesOrder record: SalesOrder.salesOrders){
                 String[] row = new String[7];
-                if(record.getquotation().equals(quotationID))
+                if(record.getQuotation().equals(quotationID))
                     model.addRow(new Object[]{  record.getId(),
                                                 record.getFurniture(), 
                                                 record.getQuantity(),
                                                 record.getTotal(),
                                                 record.getCustomer(), 
                                                 record.getStatus(), 
-                                                record.getquotation()});
+                                                record.getQuotation()});
             }
         } else {
         // Enable the tfCustomer field if the quotation number doesn't exist
@@ -417,7 +417,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
     //  newSalesOrder.createSalesOrder(id, furniture, amount, total, "", customer, status);
         JOptionPane.showMessageDialog(this, "Sales Order Created!");
         model.addRow(new Object[]{record.getId(), record.getFurniture(), record.getQuantity(), 
-        record.getTotal(),record.getCustomer(), record.getStatus(), record.getquotation()}); 
+        record.getTotal(),record.getCustomer(), record.getStatus(), record.getQuotation()}); 
         parent.changeTab(7);
     }//GEN-LAST:event_btnCreateActionPerformed
     

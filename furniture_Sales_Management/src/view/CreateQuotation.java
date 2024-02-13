@@ -1,46 +1,95 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package view;
 
+import Classes.File;
 import Classes.Furniture;
+import Classes.Invoice;
+import Classes.SalesOrder;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Liang
+ * @author Aryssa
  */
-public class CreateQuotation extends javax.swing.JFrame {
-    
-    private static List<String> nameList;
-    private static List<String> idList;
+public class CreateQuotation extends javax.swing.JPanel {
+    double price;
+    double grandTotal = 0.0;
+    MainPage parent;
+    private DefaultTableModel temp; 
     /**
-     * Creates new form CreateQuotation
+     * Creates new form CreateQuotation1
      */
     public CreateQuotation() {
-        initComponents();    
-        LoadData();
-    } 
-    
-    private void LoadData(){
-        nameList = new ArrayList<>();
-        idList = new ArrayList<>();
-        for (Furniture furniture: Furniture.list){
-            nameList.add(furniture.getName());
-        }
-        
-        for (Furniture furniture: Furniture.list){
-            idList.add(furniture.getId());
-        }
-        
-        for (String names : nameList){
-            NameBox.addItem(names);
-        }
-        NameBox.setSelectedItem(0);
+        initComponents();
     }
-    
+    public CreateQuotation(MainPage parent) {
+        initComponents();
+        this.parent = parent;
+        tfTotalPrice.setEnabled(false);
+        tfQuotationID.setEnabled(false);
+        LoadData();
+    }
+// Update the combo box model
+    private void updateComboBox(){
+        LoadData();
+    }
+    void LoadData() {
+        List<String> idList = new ArrayList<>();
+        for (SalesOrder salesOrder : SalesOrder.salesOrders) {
+            String quotationID = salesOrder.getQuotation();
+            if (quotationID != null && !idList.contains(quotationID)) {
+                idList.add(quotationID);
+            }
+        }
+        DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String[0]));
+        cbQuotationID.setModel(data);
+//        updateTable();
+    }
+    void updateTable(String quotationID) {
+        DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
+        model.setRowCount(0); // Clear existing data in the table
+
+        grandTotal = 0.0;
+        for (SalesOrder sales : SalesOrder.salesOrders) {
+            if ("Approve".equalsIgnoreCase(sales.getStatus()) && sales.getQuotation().equals(quotationID)) {
+                // Retrieve the furniture object associated with the furniture ID
+                Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
+
+                if (matchingFurniture != null) {
+                    // Add details to the table, including the unit price
+                    Object[] rowData = {
+                            sales.getId(),
+                            sales.getFurniture(),
+                            sales.getQuantity(),
+                            matchingFurniture.getPrice(), // Display unit price
+                            sales.getTotal(),
+                            sales.getCustomer(),
+                    };
+                    model.addRow(rowData);
+                    //Update total price
+                    grandTotal += sales.getTotal();
+                }                
+            }
+        }
+
+        // If no records found for the given quotation ID
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No records found for the given quotation ID", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+            btnCreate.setEnabled(false);
+        }
+        tfTotalPrice.setText(String.valueOf(grandTotal));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,87 +99,174 @@ public class CreateQuotation extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        NameBox = new javax.swing.JComboBox<>();
-        idLabel = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblQuotation = new javax.swing.JTable();
+        tfTotalPrice = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        btnCreate = new javax.swing.JButton();
+        cbQuotationID = new javax.swing.JComboBox<>();
+        tfQuotationID = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setOpaque(false);
 
-        NameBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name" }));
-        NameBox.addActionListener(new java.awt.event.ActionListener() {
+        lblTitle.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("QUOTATION");
+
+        tblQuotation.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID"
+            }
+        ));
+        jScrollPane1.setViewportView(tblQuotation);
+        if (tblQuotation.getColumnModel().getColumnCount() > 0) {
+            tblQuotation.getColumnModel().getColumn(0).setResizable(false);
+            tblQuotation.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        tfTotalPrice.setEnabled(false);
+        tfTotalPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NameBoxActionPerformed(evt);
+                tfTotalPriceActionPerformed(evt);
             }
         });
 
-        idLabel.setText("jLabel1");
+        jLabel2.setText("TOTAL PRICE");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
+
+        cbQuotationID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbQuotationID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbQuotationIDActionPerformed(evt);
+            }
+        });
+
+        tfQuotationID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfQuotationIDActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("QUOTATION ID");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(288, 288, 288)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(NameBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(idLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(376, Short.MAX_VALUE))
+                .addComponent(btnCreate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(29, 29, 29)
+                .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(idLabel)
-                .addGap(36, 36, 36)
-                .addComponent(NameBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(248, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(lblTitle)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(btnCreate)))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void NameBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameBoxActionPerformed
-        // TODO add your handling code here:
-        int index = NameBox.getSelectedIndex();
-        idLabel.setText(idList.get(index));
-    }//GEN-LAST:event_NameBoxActionPerformed
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+           // TODO add your handling code here:
+    String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+        // Check if the selectedQuotationID is not empty
+        if (!selectedQuotationID.isEmpty()) {
+            boolean invoiceExist = false;
+            for (Invoice invoice: Invoice.list){
+                if (invoice.getId().equals(selectedQuotationID)){
+                    invoiceExist = true;
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreateQuotation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreateQuotation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreateQuotation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateQuotation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateQuotation().setVisible(true);
+            
+            if (!invoiceExist){
+                Invoice.list.add(new Invoice(selectedQuotationID, grandTotal));
+                parent.updateData();
+                JOptionPane.showMessageDialog(this, "Quotation Created!");
             }
-        });
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a Quotation ID", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void cbQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbQuotationIDActionPerformed
+    String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
+    tfQuotationID.setText(selectedQuotationID);
+    btnCreate.setEnabled(true);
+    updateTable(selectedQuotationID);
+
+    
+    }//GEN-LAST:event_cbQuotationIDActionPerformed
+
+    private void tfTotalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTotalPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTotalPriceActionPerformed
+
+    private void tfQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQuotationIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfQuotationIDActionPerformed
+
+private Furniture findFurnitureById(String furnitureId) {
+    // Iterate through the list of furniture objects
+    for (Furniture furniture : Furniture.list) {
+        // Check if the current furniture object's ID matches the specified ID
+        if (furniture.getId().equals(furnitureId)) {
+            // Return the matching furniture object
+            return furniture;
+        }
     }
+    // Return null if no matching furniture is found
+    return null;
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> NameBox;
-    private javax.swing.JLabel idLabel;
+    private javax.swing.JButton btnCreate;
+    javax.swing.JComboBox<String> cbQuotationID;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable tblQuotation;
+    private javax.swing.JTextField tfQuotationID;
+    private javax.swing.JTextField tfTotalPrice;
     // End of variables declaration//GEN-END:variables
 }

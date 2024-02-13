@@ -99,11 +99,11 @@ public class SalesOrder {
     public void setStatus(String status) {
         this.status = status;
     }
-    public String getquotation() {
+    public String getQuotation() {
         return quotationID;
     }
 
-    public void setquotation(String quotationID) {
+    public void setQuotation(String quotationID) {
         this.quotationID = quotationID;
     }
   
@@ -207,7 +207,7 @@ public class SalesOrder {
                 case "status" -> recordValue = sales.getStatus();
                 case "generatedby" -> recordValue = sales.getGeneratedBy();
                 case "approvedby" -> recordValue = sales.getApprovedBy();
-                case "quotationid" -> recordValue = sales.getquotation();
+                case "quotationid" -> recordValue = sales.getQuotation();
                 default -> {
                     System.out.println("Invalid search attribute");
                     return null;

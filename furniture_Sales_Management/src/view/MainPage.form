@@ -253,7 +253,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="view.OfficerApproval" name="officerApproval2">
+            <Component class="view.OfficerApproval" name="officerApproval">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Quotation List">
@@ -262,51 +262,51 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="view.FurnitureList" name="furnitureList1">
+            <Component class="view.FurnitureList" name="furnitureList">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.FurnitureList(this)"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="tab9">
-                    <Property name="tabTitle" type="java.lang.String" value="tab9"/>
+                  <JTabbedPaneConstraints tabName="Furniture List">
+                    <Property name="tabTitle" type="java.lang.String" value="Furniture List"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="view.CreateQuotation1" name="createQuotation11">
+            <Component class="view.CreateQuotation" name="createQuotation">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.CreateQuotation1(this)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.CreateQuotation(this)"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="tab10">
-                    <Property name="tabTitle" type="java.lang.String" value="tab10"/>
+                  <JTabbedPaneConstraints tabName="Create Quotation">
+                    <Property name="tabTitle" type="java.lang.String" value="Create Quotation"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="view.SearchQuotation" name="searchQuotation1">
+            <Component class="view.SearchQuotation" name="searchQuotation">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.SearchQuotation(this)"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="tab11">
-                    <Property name="tabTitle" type="java.lang.String" value="tab11"/>
+                  <JTabbedPaneConstraints tabName="Search Quotation">
+                    <Property name="tabTitle" type="java.lang.String" value="Search Quotation"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="view.DeleteQuotation" name="deleteQuotation1">
+            <Component class="view.DeleteQuotation" name="deleteQuotation">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.DeleteQuotation(this)"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="tab12">
-                    <Property name="tabTitle" type="java.lang.String" value="tab12"/>
+                  <JTabbedPaneConstraints tabName="Delete Quotation">
+                    <Property name="tabTitle" type="java.lang.String" value="Delete Quotation"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>

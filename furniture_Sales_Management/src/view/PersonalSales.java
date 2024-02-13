@@ -27,6 +27,7 @@ public class PersonalSales extends javax.swing.JPanel {
         initComponents();
         this.parent = parent;
         salesPersonId = parent.user.getId();
+        showSalesForSalesPerson();
     }
 
     private void showSalesForSalesPerson() {
@@ -35,7 +36,7 @@ public class PersonalSales extends javax.swing.JPanel {
 
     // Iterate through the salesOrders list and add rows for matching salesperson ID
     for (SalesOrder order : SalesOrder.salesOrders) {
-        System.out.println("ID: " + salesPersonId + "Sales Person : " + order.getGeneratedBy());
+//        System.out.println("ID: " + salesPersonId + "Sales Person : " + order.getGeneratedBy());
         // Add a null check for getSalesPersonId()
         String orderSalesPersonId = order.getGeneratedBy();
         if (orderSalesPersonId != null && orderSalesPersonId.equals(salesPersonId)) {

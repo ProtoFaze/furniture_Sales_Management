@@ -44,7 +44,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
                 Object row[] = new Object[7];
                 for (SalesOrder sales : SalesOrder.salesOrders) {
                     // Filter sales orders based on the logged-in salesperson's ID
-                        row[0] = sales.getquotation();
+                        row[0] = sales.getQuotation();
                         row[1] = sales.getId();
                         row[2] = sales.getFurniture();
                         row[3] = sales.getQuantity();
@@ -164,7 +164,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
     private void deleteQuotation(String selectedQuotationID) {
         SalesOrder selectedOrder = null;
         for (SalesOrder sales : SalesOrder.salesOrders) {
-            if (sales.getquotation().equals(selectedQuotationID)) {
+            if (sales.getQuotation().equals(selectedQuotationID)) {
                 selectedOrder = sales;
                 break;
             }

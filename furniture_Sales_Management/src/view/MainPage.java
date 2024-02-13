@@ -95,9 +95,9 @@ public class MainPage extends javax.swing.JFrame {
                 jobMainbtn3.setText(Tabs.getTitleAt(3));
                 jobMainbtn4.setText(Tabs.getTitleAt(4));
                 jobMainbtn5.setText(Tabs.getTitleAt(5));
-                Tabs.remove(officerApproval2);
+                Tabs.remove(officerApproval);
                 Tabs.remove(generateReport);
-                officerApproval2 = null;
+                officerApproval = null;
                 generateReport = null; 
             }
             default -> {
@@ -131,10 +131,10 @@ public class MainPage extends javax.swing.JFrame {
             case "officer":{}
             case "sales person":{
                 modifySalesOrder.LoadData();
-                createQuotation11.LoadData();// Update the combo box with the latest quotation IDs 
-                createQuotation11.updateTable(createQuotation11.cbQuotationID.getSelectedItem().toString()); // Update the table with the details
-                searchQuotation1.populateTable();
-                deleteQuotation1.populateTable();
+                createQuotation.LoadData();// Update the combo box with the latest quotation IDs 
+                createQuotation.updateTable(createQuotation.cbQuotationID.getSelectedItem().toString()); // Update the table with the details
+                searchQuotation.populateTable();
+                deleteQuotation.populateTable();
             }
         }
         
@@ -173,11 +173,11 @@ public class MainPage extends javax.swing.JFrame {
         deleteSalesOrder = new view.DeleteSalesOrder(this);
         PeopleList = new view.PersonList(this);
         generateReport = new view.GenerateDocument(this);
-        officerApproval2 = new view.OfficerApproval();
-        furnitureList1 = new view.FurnitureList(this);
-        createQuotation11 = new view.CreateQuotation1(this);
-        searchQuotation1 = new view.SearchQuotation(this);
-        deleteQuotation1 = new view.DeleteQuotation(this);
+        officerApproval = new view.OfficerApproval();
+        furnitureList = new view.FurnitureList(this);
+        createQuotation = new view.CreateQuotation(this);
+        searchQuotation = new view.SearchQuotation(this);
+        deleteQuotation = new view.DeleteQuotation(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
@@ -222,11 +222,11 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.addTab("Delete Sales", deleteSalesOrder);
         Tabs.addTab("Staff List", PeopleList);
         Tabs.addTab("Generate Report", generateReport);
-        Tabs.addTab("Quotation List", officerApproval2);
-        Tabs.addTab("tab9", furnitureList1);
-        Tabs.addTab("tab10", createQuotation11);
-        Tabs.addTab("tab11", searchQuotation1);
-        Tabs.addTab("tab12", deleteQuotation1);
+        Tabs.addTab("Quotation List", officerApproval);
+        Tabs.addTab("Furniture List", furnitureList);
+        Tabs.addTab("Create Quotation", createQuotation);
+        Tabs.addTab("Search Quotation", searchQuotation);
+        Tabs.addTab("Delete Quotation", deleteQuotation);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -441,11 +441,11 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton ProfileBtn;
     private javax.swing.JTabbedPane Tabs;
     private javax.swing.JPanel bgPanel;
-    view.CreateQuotation1 createQuotation11;
+    view.CreateQuotation createQuotation;
     view.CreateSalesOrder createSalesOrder;
-    private view.DeleteQuotation deleteQuotation1;
+    private view.DeleteQuotation deleteQuotation;
     private view.DeleteSalesOrder deleteSalesOrder;
-    private view.FurnitureList furnitureList1;
+    private view.FurnitureList furnitureList;
     private view.GenerateDocument generateReport;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbtn1;
@@ -455,11 +455,11 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jobMainbtn5;
     private javax.swing.JLabel lblTitle;
     private view.ModifySalesOrder modifySalesOrder;
+    private view.OfficerApproval officerApproval;
     private view.OfficerApproval officerApproval1;
-    private view.OfficerApproval officerApproval2;
     private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
-    private view.SearchQuotation searchQuotation1;
+    private view.SearchQuotation searchQuotation;
     private view.SearchSalesOrder searchSalesOrder;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
