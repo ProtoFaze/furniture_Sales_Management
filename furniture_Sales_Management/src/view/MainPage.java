@@ -115,6 +115,7 @@ public class MainPage extends javax.swing.JFrame {
     public void changeTab(int index){
         Tabs.setSelectedIndex(index);
     }
+    
     public void updateData(){
         File.write("user", User.list);
         User.populateList();
@@ -128,7 +129,12 @@ public class MainPage extends javax.swing.JFrame {
         }
         switch (user.getRole()){
             case "admin": {}
-            case "officer":{}
+            case "officer":{
+                officerApproval.LoadData();
+                modifySalesOrder.LoadData();
+                searchQuotation.populateTable();
+                deleteQuotation.populateTable();
+            }
             case "sales person":{
                 modifySalesOrder.LoadData();
                 createQuotation.LoadData();// Update the combo box with the latest quotation IDs 

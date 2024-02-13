@@ -4,10 +4,8 @@
  */
 package view;
 
-import Classes.File;
 import Classes.SalesOrder;
-import Classes.User;
-import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,31 +14,29 @@ import javax.swing.table.DefaultTableModel;
  */
 public class OfficerApproval extends javax.swing.JPanel {
     MainPage parent;
+    private DefaultTableModel model;
     /**
      * Creates new form OfficerApproval
      */
     public OfficerApproval() {
         initComponents();
+        model = (DefaultTableModel) QuotationList.getModel();
+        showQuotations(String.valueOf(FilterCmb.getSelectedItem()));
     }
     
     public OfficerApproval(MainPage parent) {
-        showQuotations(String.valueOf(FilterCmb.getSelectedItem()));
         initComponents();
         this.parent = parent;
     }
 
     private void showQuotations(String filter) {
-        DefaultTableModel model = (DefaultTableModel) QuotationList.getModel();
         model.setRowCount(0); // Clear existing rows
-        String status;
 
         // Iterate through the salesOrders list and add rows for matching salesperson ID
         for (SalesOrder order : SalesOrder.salesOrders) {
             String orderStatus = order.getStatus();
-            if (orderStatus != null && filter.equals("Show all")) {
-                // Create a new array with the expected size for the table model
-                Object[] row = new Object[model.getColumnCount()];
-
+            Object[] row = new Object[model.getColumnCount()];
+            if (orderStatus != null && filter.equals("Show all")) {            
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();
                 row[1] = order.getFurniture();
@@ -49,11 +45,8 @@ public class OfficerApproval extends javax.swing.JPanel {
                 row[4] = order.getStatus();
                 row[5] = order.getQuotation();
 
-                // Add the row to the table model
-                model.addRow(row);
                 // Add a null check for getSalesPersonId()
             } else if (orderStatus != null && orderStatus.equals(filter)) {
-                Object[] row = new Object[model.getColumnCount()];
 
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();
@@ -64,8 +57,26 @@ public class OfficerApproval extends javax.swing.JPanel {
                 row[5] = order.getQuotation();
 
                 // Add the row to the table model
-                model.addRow(row);
             }
+            model.addRow(row);
+        }
+    }
+    
+    public void LoadData() {
+        model.setRowCount(0); // Clear existing rows
+        for (SalesOrder order : SalesOrder.salesOrders) {
+            Object[] row = new Object[model.getColumnCount()];
+
+            // Fill in the values from the SalesOrder object
+            row[0] = order.getId();
+            row[1] = order.getFurniture();
+            row[2] = order.getQuantity();
+            row[3] = order.getTotal();
+            row[4] = order.getStatus();
+            row[5] = order.getQuotation();
+
+            // Add the row to the table model
+            model.addRow(row);
         }
     }
 
@@ -106,13 +117,33 @@ public class OfficerApproval extends javax.swing.JPanel {
         jLabel1.setText("Quotation List");
 
         FilterCmb.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        FilterCmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Pending", "Approved" }));
+        FilterCmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Pending", "Approved", "Rejected" }));
+        FilterCmb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FilterCmbActionPerformed(evt);
+            }
+        });
 
         ApproveBtn.setText("Approve");
+        ApproveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ApproveBtnActionPerformed(evt);
+            }
+        });
 
         RejectBtn.setText("Reject");
+        RejectBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RejectBtnActionPerformed(evt);
+            }
+        });
 
         RefreshBtn.setText("Refresh");
+        RefreshBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RefreshBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -121,14 +152,14 @@ public class OfficerApproval extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(RefreshBtn)
                                 .addGap(18, 18, 18)
                                 .addComponent(RejectBtn)
@@ -151,10 +182,46 @@ public class OfficerApproval extends javax.swing.JPanel {
                     .addComponent(RefreshBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void RefreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshBtnActionPerformed
+        showQuotations("Show all");
+    }//GEN-LAST:event_RefreshBtnActionPerformed
+
+    private void FilterCmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FilterCmbActionPerformed
+        showQuotations(String.valueOf(FilterCmb.getSelectedItem()));
+    }//GEN-LAST:event_FilterCmbActionPerformed
+
+    private void RejectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RejectBtnActionPerformed
+        // TODO add your handling code here:
+        if (QuotationList.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Please Select a Row", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            saveChanges(String.valueOf(QuotationList.getValueAt(QuotationList.getSelectedRow(), 0)), "Rejected");
+        }
+    }//GEN-LAST:event_RejectBtnActionPerformed
+
+    private void ApproveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApproveBtnActionPerformed
+        // TODO add your handling code here:
+        if (QuotationList.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Please Select a Row", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            saveChanges(String.valueOf(QuotationList.getValueAt(QuotationList.getSelectedRow(), 0)), "Approved");
+        }
+    }//GEN-LAST:event_ApproveBtnActionPerformed
+
+    private void saveChanges(String ID, String Status){
+        for (SalesOrder record:SalesOrder.salesOrders){
+            if(ID.equals(record.getId())){
+                record.setStatus(Status);
+                record.setApprovedBy(parent.user.getId());
+            }
+        }
+        parent.updateData();
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ApproveBtn;

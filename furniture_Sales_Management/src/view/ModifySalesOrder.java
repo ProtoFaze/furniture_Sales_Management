@@ -51,6 +51,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String [0]));
         cbQuotationID.setModel(data);   
     }
+    
     private void loadSalesOrders(String quotationID) {
         DefaultComboBoxModel<String> salesOrderModel = new DefaultComboBoxModel<>();
 
@@ -362,8 +363,8 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             return;
         }
 
-       //update the selected order
-       updateSelectedOrder();
+        //update the selected order
+        updateSelectedOrder();
         // Save the changes to file
         File.write("salesOrder", SalesOrder.salesOrders);
 
