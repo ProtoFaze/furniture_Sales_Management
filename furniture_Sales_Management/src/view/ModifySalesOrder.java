@@ -56,7 +56,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     DefaultComboBoxModel<String> salesOrderModel = new DefaultComboBoxModel<>();
 
     for (SalesOrder salesOrder : SalesOrder.salesOrders) {
-        if (salesOrder.getquotation().equals(quotationID)) {
+        if (salesOrder.getquotation().equals(quotationID) && ("Pending".equalsIgnoreCase(salesOrder.getStatus()) || "Approve".equalsIgnoreCase(salesOrder.getStatus()))) {
             salesOrderModel.addElement(salesOrder.getId());
         }
     }
@@ -65,39 +65,42 @@ public class ModifySalesOrder extends javax.swing.JPanel {
 }
    
     public void updateTable(String quotationID) {
-    // Update the table display to show only sales orders for the specified quotation ID
-        DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
-        model.setRowCount(0); // Clear existing data in the table
-        
-        totalPrice = 0.0;
-        for (SalesOrder sales : SalesOrder.salesOrders) {
-            if (sales.getquotation().equals(quotationID)) {
-                // Retrieve the furniture object associated with the furniture ID
-                Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
+    // Update the table display to show only sales orders with "Approve" or "Pending" status
+    DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
+    model.setRowCount(0); // Clear existing data in the table
+    
+    totalPrice = 0.0;
+    for (SalesOrder sales : SalesOrder.salesOrders) {
+        if (sales.getquotation().equals(quotationID) && ("Approve".equals(sales.getStatus()) || "Pending".equals(sales.getStatus()))) {
+            // Retrieve the furniture object associated with the furniture ID
+            Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
 
-                if (matchingFurniture != null) {
-                    // Add details to the table, including the unit price
-                    Object[] rowData = {
-                            sales.getId(),
-                            sales.getFurniture(),
-                            sales.getQuantity(),
-                            matchingFurniture.getPrice(), // Display unit price
-                            sales.getTotal(),
-                            sales.getCustomer(),
-                    };
-                    model.addRow(rowData);
-                    // Update total price
-                    totalPrice += sales.getTotal();
-                }
+            if (matchingFurniture != null) {
+                // Add details to the table, including the unit price
+                Object[] rowData = {
+                        sales.getId(),
+                        sales.getFurniture(),
+                        sales.getQuantity(),
+                        matchingFurniture.getPrice(), // Display unit price
+                        sales.getTotal(),
+                        sales.getCustomer(),
+                        sales.getStatus()
+                };
+                model.addRow(rowData);
+                // Update total price
+                totalPrice += sales.getTotal();
             }
         }
+    }
 
-        // If no records found for the given quotation ID
-        if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No records found for the given quotation ID", "Not Found", JOptionPane.INFORMATION_MESSAGE);
-        }
-        tfTotalPrice.setText(String.valueOf(totalPrice));
-    }      
+    // If no records found for the given quotation ID and status
+    if (model.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(this, "No records found for the given quotation ID and status", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+    }
+    tfTotalPrice.setText(String.valueOf(totalPrice));
+}
+    
+    
     private Furniture findFurnitureById(String furnitureId) {
     // Iterate through the list of furniture objects
     for (Furniture furniture : Furniture.list) {
@@ -161,7 +164,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID"
+                "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID", "STATUS"
             }
         ));
         jScrollPane1.setViewportView(tblQuotation);
@@ -310,6 +313,7 @@ private void updateSelectedOrder() {
         selectedOrder.setFurniture(furniture);
         selectedOrder.setQuantity(quantity);
         selectedOrder.setTotal(total);
+        selectedOrder.setStatus("Pending");
     }
 }
     private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
