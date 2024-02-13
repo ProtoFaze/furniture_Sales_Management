@@ -1,0 +1,5 @@
+{"invoice":[
+    {"id":"1","generationDate":"03/04/2024","grandtotal":1035.0,"customer":"4","payment":"false","production":"false","delivery":"false"},
+    {"id":"2","generationDate":"03/04/2024","grandtotal":138.0,"customer":"4","payment":"false","production":"false","delivery":"false"},
+    {"id":"3","generationDate":"03/04/2024","grandtotal":225.0,"customer":"2","payment":"false","production":"false","delivery":"false"}
+]}
