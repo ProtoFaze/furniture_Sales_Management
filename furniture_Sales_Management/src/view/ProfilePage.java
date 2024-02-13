@@ -7,6 +7,7 @@ package view;
 import Classes.Admin;
 import Classes.File;
 import Classes.User;
+import Classes.Verify;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -285,7 +286,16 @@ public class ProfilePage extends javax.swing.JFrame {
                 Edit(true);
                 edit = true;
             } else {
-                saveChanges();
+                String errorText = 
+                        Verify.validateFullName(NameTxt.getText())+
+                        Verify.validateEmail(EmailTxt.getText())+
+                        Verify.validateEmail(UserTxt.getText())+
+                        Verify.validateEmail(String.valueOf(PassTxt.getPassword()));
+                if (errorText.isEmpty()){
+                    saveChanges();
+                }else{
+                    JOptionPane.showMessageDialog(this, errorText+"changes will not be saved", "Invalid change data", JOptionPane.ERROR_MESSAGE);
+                }
                 Edit(false);
                 edit = false;
             }

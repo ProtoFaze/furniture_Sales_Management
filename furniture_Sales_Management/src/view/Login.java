@@ -9,12 +9,9 @@ import Classes.File;
 import Classes.Officer;
 import Classes.SalesPerson;
 import Classes.User;
+import Classes.Verify;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -169,7 +166,8 @@ public class Login extends javax.swing.JFrame {
         pass = String.valueOf(PassTxt.getPassword());
 
         //run validation
-        if(validUName == null && validPass == null){
+        String errorText = Verify.isValidUsername(usr)+Verify.isStrongPassword(pass);
+        if(errorText.isEmpty()){
             //login
             login(usr, pass);
             //Record not found 
@@ -196,7 +194,7 @@ public class Login extends javax.swing.JFrame {
             }
         } else {
             //assign error text
-            JOptionPane.showMessageDialog(null, validUName+validPass, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, errorText, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_LoginBtnActionPerformed
 
