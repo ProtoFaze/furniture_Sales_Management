@@ -20,7 +20,7 @@ public abstract class User extends Person {
     
     static{
         populateList();
-        latestId = list.size()+1;
+        latestId = Integer.parseInt(list.getLast().getId())+1;
     }
     //constructor for registration
     public User(String userName, String fullName, String emailAddress, char gender, String dob, String passWord) {

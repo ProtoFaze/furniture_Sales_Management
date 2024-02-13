@@ -87,7 +87,7 @@ public class File {
                 return null;
             }
         } catch (JsonSyntaxException e) {
-            System.out.println("Failed to read File"+e.toString());
+            System.out.println("Failed to read File "+e.toString());
             return null;
         }
     }

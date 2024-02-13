@@ -27,7 +27,7 @@ public class SalesOrder {
 
     static {
         populateList();
-        latestId  = salesOrders.size()+1;
+        latestId  = Integer.parseInt(salesOrders.getLast().getId())+1;
     }
 
     public SalesOrder() {
