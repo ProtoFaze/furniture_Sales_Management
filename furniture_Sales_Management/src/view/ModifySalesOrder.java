@@ -310,6 +310,7 @@ private void updateSelectedOrder() {
         selectedOrder.setFurniture(furniture);
         selectedOrder.setQuantity(quantity);
         selectedOrder.setTotal(total);
+        selectedOrder.setStatus("Pending");
     }
 }
     private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
