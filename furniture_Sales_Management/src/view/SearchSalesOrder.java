@@ -185,26 +185,6 @@ public class SearchSalesOrder extends javax.swing.JPanel {
         // TODO add your handling code here:
         String orderIDsearch = tfOrderIDsearch.getText();
     }//GEN-LAST:event_tfOrderIDsearchActionPerformed
-  private String searchOrderIDinFile(String orderIDsearch) {
-     try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                String orderIDFromFile = parts[0].trim(); // Assuming order ID is the first value in each line
-                if (orderIDFromFile.equals(orderIDsearch)) {
-                    System.out.println("Sales Order found:\n" + line);
-                    return line; // Return the details of the sales order
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception according to your needs
-        }
-
-        System.out.println("Sales Order with ID " + orderIDsearch + " not found!!");
-        return null; // Order ID not found in the file or an error occurred
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

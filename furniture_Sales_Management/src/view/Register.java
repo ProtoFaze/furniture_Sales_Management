@@ -130,7 +130,7 @@ public class Register extends javax.swing.JFrame {
                 SalesOrder.populateList();
                 parent.changeTab(4);
                 parent.createSalesOrder.tfCustomer.setText(customer.getId());
-                parent.PeopleList.populateTable();
+                parent.PeopleList.loadData();
                 this.setVisible(false);
             }else{
                 JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);

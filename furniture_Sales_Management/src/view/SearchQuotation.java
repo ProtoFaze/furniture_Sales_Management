@@ -78,39 +78,39 @@ public class SearchQuotation extends javax.swing.JPanel {
         return null;
     }
     private void updateTable(List<SalesOrder> data) {
-    temp.setRowCount(0);
-    double totalQuotationPrice = 0.0;
-    
-    for (SalesOrder sales : data) {
-        // Check if the status is "Pending" or "Approve"
-       if ("Pending".equals(sales.getStatus()) || "Approve".equals(sales.getStatus())) {
-            Object[] row = new Object[8];
-            row[0] = sales.getId();
-            row[1] = sales.getFurniture();
-            row[2] = sales.getQuantity();
+        temp.setRowCount(0);
+        double totalQuotationPrice = 0.0;
 
-            Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
+        for (SalesOrder sales : data) {
+            // Check if the status is "Pending" or "Approve"
+           if ("Pending".equals(sales.getStatus()) || "Approve".equals(sales.getStatus())) {
+                Object[] row = new Object[8];
+                row[0] = sales.getId();
+                row[1] = sales.getFurniture();
+                row[2] = sales.getQuantity();
 
-            if (matchingFurniture != null) {
-                row[3] = matchingFurniture.getPrice();
-            } else {
-                row[3] = ""; // Set as empty if furniture is not found
+                Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
+
+                if (matchingFurniture != null) {
+                    row[3] = matchingFurniture.getPrice();
+                } else {
+                    row[3] = ""; // Set as empty if furniture is not found
+                }
+
+                row[4] = sales.getTotal();
+                row[5] = sales.getCustomer();
+                row[6] = sales.getquotation();
+                row[7] = sales.getStatus();
+
+                temp.addRow(row);
+                // Add the total price
+                totalQuotationPrice += sales.getTotal();
             }
-
-            row[4] = sales.getTotal();
-            row[5] = sales.getCustomer();
-            row[6] = sales.getquotation();
-            row[7] = sales.getStatus();
-
-            temp.addRow(row);
-            // Add the total price
-            totalQuotationPrice += sales.getTotal();
         }
-    }
 
-    // Set tfTotalPrice to totalQuotationPrice
-    tfTotalPrice.setText(String.valueOf(totalQuotationPrice));
-}
+        // Set tfTotalPrice to totalQuotationPrice
+        tfTotalPrice.setText(String.valueOf(totalQuotationPrice));
+    }
 
 
     /**
@@ -132,6 +132,7 @@ public class SearchQuotation extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("SEARCH QUOTATION");
 
         jLabel2.setText("QUOTATION ID");
@@ -191,38 +192,37 @@ public class SearchQuotation extends javax.swing.JPanel {
                         .addGap(66, 66, 66)
                         .addComponent(btnSearch)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1)
                 .addGap(18, 18, 18))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tfquotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(btnSearch)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 13, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(tfquotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addComponent(btnSearch)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String quotationIDsearch = tfquotationID.getText();
-        List searchQuotationDetails = SalesOrder.searchOrders(quotationIDsearch,"quotationID");
+        List<SalesOrder> searchQuotationDetails = SalesOrder.searchOrders(quotationIDsearch,"quotationID");
         
         if(searchQuotationDetails != null){
             JOptionPane.showMessageDialog(this, "Quotation Found!");

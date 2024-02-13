@@ -6,6 +6,7 @@ package view;
 
 import Classes.File;
 import Classes.Furniture;
+import Classes.Invoice;
 import Classes.SalesOrder;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -23,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CreateQuotation1 extends javax.swing.JPanel {
     double price;
-    double totalPrice = 0.0;
+    double grandTotal = 0.0;
     MainPage parent;
     private DefaultTableModel temp; 
     /**
@@ -39,7 +40,55 @@ public class CreateQuotation1 extends javax.swing.JPanel {
         tfQuotationID.setEnabled(false);
         LoadData();
     }
+// Update the combo box model
+    private void updateComboBox(){
+        LoadData();
+    }
+    void LoadData() {
+        List<String> idList = new ArrayList<>();
+        for (SalesOrder salesOrder : SalesOrder.salesOrders) {
+            String quotationID = salesOrder.getquotation();
+            if (quotationID != null && !idList.contains(quotationID)) {
+                idList.add(quotationID);
+            }
+        }
+        DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String[0]));
+        cbQuotationID.setModel(data);
+//        updateTable();
+    }
+    void updateTable(String quotationID) {
+        DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
+        model.setRowCount(0); // Clear existing data in the table
 
+        grandTotal = 0.0;
+        for (SalesOrder sales : SalesOrder.salesOrders) {
+            if (sales.getquotation().equals(quotationID)) {
+                // Retrieve the furniture object associated with the furniture ID
+                Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
+
+                if (matchingFurniture != null) {
+                    // Add details to the table, including the unit price
+                    Object[] rowData = {
+                            sales.getId(),
+                            sales.getFurniture(),
+                            sales.getQuantity(),
+                            matchingFurniture.getPrice(), // Display unit price
+                            sales.getTotal(),
+                            sales.getCustomer(),
+                    };
+                    model.addRow(rowData);
+                    //Update total price
+                    grandTotal += sales.getTotal();
+                }                
+            }
+        }
+
+        // If no records found for the given quotation ID
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No records found for the given quotation ID", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+        }
+        tfTotalPrice.setText(String.valueOf(grandTotal));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,7 +98,7 @@ public class CreateQuotation1 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblQuotation = new javax.swing.JTable();
         tfTotalPrice = new javax.swing.JTextField();
@@ -61,8 +110,9 @@ public class CreateQuotation1 extends javax.swing.JPanel {
 
         setOpaque(false);
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLabel1.setText("QUOTATION");
+        lblTitle.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("QUOTATION");
 
         tblQuotation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,6 +131,7 @@ public class CreateQuotation1 extends javax.swing.JPanel {
             tblQuotation.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        tfTotalPrice.setEnabled(false);
         tfTotalPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfTotalPriceActionPerformed(evt);
@@ -115,114 +166,64 @@ public class CreateQuotation1 extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnCreate)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2)
-                            .addGap(29, 29, 29)
-                            .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(66, 66, 66))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(280, 280, 280)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnCreate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(29, 29, 29)
+                .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(11, 11, 11)
+                .addGap(30, 30, 30)
+                .addComponent(lblTitle)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(btnCreate))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addComponent(btnCreate)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-
-// Update the combo box model
-private void updateComboBox(){
-    LoadData();
-}
-private void LoadData() {
-    List<String> idList = new ArrayList<>();
-    for (SalesOrder salesOrder : SalesOrder.salesOrders) {
-        String quotationID = salesOrder.getquotation();
-        if (quotationID != null && !idList.contains(quotationID)) {
-            idList.add(quotationID);
-        }
-    }
-    DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String[0]));
-    cbQuotationID.setModel(data);
-    
-}
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
            // TODO add your handling code here:
     String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
 
         // Check if the selectedQuotationID is not empty
         if (!selectedQuotationID.isEmpty()) {
+            boolean invoiceExist = false;
+            for (Invoice invoice: Invoice.list){
+                if (invoice.getId().equals(selectedQuotationID)){
+                    invoiceExist = true;
+                    break;
+                }
+            }
+            
+            if (!invoiceExist){
+                Invoice.list.add(new Invoice(selectedQuotationID, grandTotal));
+            }
+            parent.updateData();
             JOptionPane.showMessageDialog(this, "Quotation Created!");
-            LoadData(); // Update the combo box with the latest quotation IDs
-            updateTable(selectedQuotationID); // Update the table with the details
         } else {
             JOptionPane.showMessageDialog(this, "Please select a Quotation ID", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-public void updateTable(String quotationID) {
-    DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
-    model.setRowCount(0); // Clear existing data in the table
 
-    totalPrice = 0.0;
-    for (SalesOrder sales : SalesOrder.salesOrders) {
-        // Check if the status is "Approve" and the quotation ID matches
-        if ("Approve".equalsIgnoreCase(sales.getStatus()) && sales.getquotation().equals(quotationID)) {
-            // Retrieve the furniture object associated with the furniture ID
-            Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
-
-            if (matchingFurniture != null) {
-                // Add details to the table, including the unit price
-                Object[] rowData = {
-                        sales.getId(),
-                        sales.getFurniture(),
-                        sales.getQuantity(),
-                        matchingFurniture.getPrice(), // Display unit price
-                        sales.getTotal(),
-                        sales.getCustomer(),
-                };
-                model.addRow(rowData);
-                // Update total price
-                totalPrice += sales.getTotal();
-            }
-        }
-    }
-
-    // If no records found for the given quotation ID
-    if (model.getRowCount() == 0) {
-        JOptionPane.showMessageDialog(this, "No records found for the given quotation ID", "Not Found", JOptionPane.INFORMATION_MESSAGE);
-        btnCreate.setEnabled(false);
-    }
-    tfTotalPrice.setText(String.valueOf(totalPrice));
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void cbQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbQuotationIDActionPerformed
@@ -257,11 +258,11 @@ private Furniture findFurnitureById(String furnitureId) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
-    private javax.swing.JComboBox<String> cbQuotationID;
-    private javax.swing.JLabel jLabel1;
+    javax.swing.JComboBox<String> cbQuotationID;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblQuotation;
     private javax.swing.JTextField tfQuotationID;
     private javax.swing.JTextField tfTotalPrice;

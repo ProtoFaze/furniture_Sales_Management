@@ -139,14 +139,12 @@ public class DeleteSalesOrder extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfOrderID1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfOrderID1KeyTyped
-        // TODO add your handling code here:
         if((int)evt.getKeyChar()== 10){
              displayOrderDetails(tfOrderID1.getText());
         }
     }//GEN-LAST:event_tfOrderID1KeyTyped
 
     private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
-        // TODO add your handling code here:
         deleteOrder(tfOrderID1.getText());
     }//GEN-LAST:event_btnSaveChangesActionPerformed
     

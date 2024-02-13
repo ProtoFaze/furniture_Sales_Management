@@ -68,7 +68,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblQuotation = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         tfQuotationID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnSaveChanges = new javax.swing.JButton();
@@ -89,7 +89,9 @@ public class DeleteQuotation extends javax.swing.JPanel {
             tblQuotation.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        jLabel1.setText("DELETE QUOTATION");
+        lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("DELETE QUOTATION");
 
         tfQuotationID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,34 +113,26 @@ public class DeleteQuotation extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(250, 250, 250)
-                .addComponent(jLabel1)
-                .addContainerGap(267, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSaveChanges))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(75, 75, 75))
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSaveChanges))
+            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 765, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addComponent(lblTitle)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
                     .addComponent(btnSaveChanges)
-                    .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -168,37 +162,36 @@ public class DeleteQuotation extends javax.swing.JPanel {
     }
     
     private void deleteQuotation(String selectedQuotationID) {
-    SalesOrder selectedOrder = null;
-    for (SalesOrder sales : SalesOrder.salesOrders) {
-        if (sales.getquotation().equals(selectedQuotationID)) {
-            selectedOrder = sales;
-            break;
+        SalesOrder selectedOrder = null;
+        for (SalesOrder sales : SalesOrder.salesOrders) {
+            if (sales.getquotation().equals(selectedQuotationID)) {
+                selectedOrder = sales;
+                break;
+            }
+        }
+
+        // If the order is found, remove it from the list
+        if (selectedOrder != null) {
+            SalesOrder.salesOrders.remove(selectedOrder);
+
+            // Save the updated data to the file
+            File.write("salesOrder", SalesOrder.salesOrders);
+
+            //Display table again after delete
+            parent.updateData();
+            // Display a message indicating that the order is deleted
+            JOptionPane.showMessageDialog(this, "Quotation deleted successfully!");
+        } else {
+            // If the order is not found, display an error message
+            JOptionPane.showMessageDialog(this, "Quotation not found", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    // If the order is found, remove it from the list
-    if (selectedOrder != null) {
-        SalesOrder.salesOrders.remove(selectedOrder);
-
-        // Save the updated data to the file
-        File.write("salesOrder", SalesOrder.salesOrders);
-
-        //Display table again after delete
-        populateTable();
-
-        // Display a message indicating that the order is deleted
-        JOptionPane.showMessageDialog(this, "Quotation deleted successfully!");
-    } else {
-        // If the order is not found, display an error message
-        JOptionPane.showMessageDialog(this, "Quotation not found", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSaveChanges;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblQuotation;
     private javax.swing.JTextField tfQuotationID;
     // End of variables declaration//GEN-END:variables

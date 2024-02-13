@@ -1,6 +1,9 @@
 package view;
 
 import Classes.Admin;
+import Classes.Customer;
+import Classes.File;
+import Classes.Invoice;
 import Classes.SalesOrder;
 import Classes.User;
 import java.awt.Color;
@@ -24,7 +27,8 @@ public class MainPage extends javax.swing.JFrame {
     private static List<User> users;
     private static List<Admin> admins;
     private static List<SalesOrder> salesOrders;
-    
+    private static List<Customer> customers;
+    private static List<Invoice> invoices;
     /**
      * Creates new form MainPage
      * @param user
@@ -68,18 +72,23 @@ public class MainPage extends javax.swing.JFrame {
         switch (this.user.getRole()){
             case "admin" -> {
                 users = User.list;
+                invoices = null;
+                customers = null;
+                salesOrders = null;
                 jobMainbtn1.setText(Tabs.getTitleAt(1));
             }
             case "officer" -> {
+                invoices = Invoice.list;
                 jobMainbtn1.setText(Tabs.getTitleAt(1));
                 jobMainbtn2.setText(Tabs.getTitleAt(2));
                 jobMainbtn3.setText(Tabs.getTitleAt(3));
                 jobMainbtn4.setText(Tabs.getTitleAt(4));
                 jobMainbtn5.setText(Tabs.getTitleAt(5));
-
             }
             case "sales person" -> {
-               salesOrders = SalesOrder.salesOrders;
+                salesOrders = SalesOrder.salesOrders;
+                customers = Customer.list;
+                invoices = Invoice.list;
                 Tabs.setTitleAt(5, "Customer List");
                 jobMainbtn1.setText(Tabs.getTitleAt(1));
                 jobMainbtn2.setText(Tabs.getTitleAt(2));
@@ -89,14 +98,14 @@ public class MainPage extends javax.swing.JFrame {
                 Tabs.remove(officerApproval2);
                 Tabs.remove(generateReport);
                 officerApproval2 = null;
-                generateReport = null;
-
-
+                generateReport = null; 
             }
             default -> {
                 users = null;
                 admins = null;
                 salesOrders = null;
+                customers = null;
+                invoices = null;
                 Tabs = null;
             }
         }
@@ -105,6 +114,30 @@ public class MainPage extends javax.swing.JFrame {
     
     public void changeTab(int index){
         Tabs.setSelectedIndex(index);
+    }
+    public void updateData(){
+        File.write("user", User.list);
+        User.populateList();
+        if(!user.getRole().equals("admin")){
+            File.write("customer",Customer.list);
+            Customer.populateList();
+            File.write("salesOrder", SalesOrder.salesOrders);
+            SalesOrder.populateList();
+            File.write("invoice", Invoice.list);
+            Invoice.populateList();
+        }
+        switch (user.getRole()){
+            case "admin": {}
+            case "officer":{}
+            case "sales person":{
+                modifySalesOrder.LoadData();
+                createQuotation11.LoadData();// Update the combo box with the latest quotation IDs 
+                createQuotation11.updateTable(createQuotation11.cbQuotationID.getSelectedItem().toString()); // Update the table with the details
+                searchQuotation1.populateTable();
+                deleteQuotation1.populateTable();
+            }
+        }
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
