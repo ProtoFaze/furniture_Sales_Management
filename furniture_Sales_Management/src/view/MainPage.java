@@ -143,6 +143,7 @@ public class MainPage extends javax.swing.JFrame {
         officerApproval2 = new view.OfficerApproval();
         furnitureList1 = new view.FurnitureList(this);
         createQuotation11 = new view.CreateQuotation1(this);
+        searchQuotation1 = new view.SearchQuotation(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
@@ -190,6 +191,7 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.addTab("Quotation List", officerApproval2);
         Tabs.addTab("tab9", furnitureList1);
         Tabs.addTab("tab10", createQuotation11);
+        Tabs.addTab("tab11", searchQuotation1);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -421,6 +423,7 @@ public class MainPage extends javax.swing.JFrame {
     private view.OfficerApproval officerApproval2;
     private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
+    private view.SearchQuotation searchQuotation1;
     private view.SearchSalesOrder searchSalesOrder;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
