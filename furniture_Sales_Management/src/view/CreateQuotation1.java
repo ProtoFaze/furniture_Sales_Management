@@ -62,7 +62,7 @@ public class CreateQuotation1 extends javax.swing.JPanel {
 
         grandTotal = 0.0;
         for (SalesOrder sales : SalesOrder.salesOrders) {
-            if (sales.getquotation().equals(quotationID)) {
+            if ("Approve".equalsIgnoreCase(sales.getStatus()) && sales.getquotation().equals(quotationID)) {
                 // Retrieve the furniture object associated with the furniture ID
                 Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
 
@@ -86,6 +86,7 @@ public class CreateQuotation1 extends javax.swing.JPanel {
         // If no records found for the given quotation ID
         if (model.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "No records found for the given quotation ID", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+            btnCreate.setEnabled(false);
         }
         tfTotalPrice.setText(String.valueOf(grandTotal));
     }
@@ -167,11 +168,12 @@ public class CreateQuotation1 extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(btnCreate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -217,9 +219,9 @@ public class CreateQuotation1 extends javax.swing.JPanel {
             
             if (!invoiceExist){
                 Invoice.list.add(new Invoice(selectedQuotationID, grandTotal));
+                parent.updateData();
+                JOptionPane.showMessageDialog(this, "Quotation Created!");
             }
-            parent.updateData();
-            JOptionPane.showMessageDialog(this, "Quotation Created!");
         } else {
             JOptionPane.showMessageDialog(this, "Please select a Quotation ID", "Error", JOptionPane.ERROR_MESSAGE);
         }
