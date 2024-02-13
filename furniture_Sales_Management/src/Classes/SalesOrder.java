@@ -9,15 +9,8 @@ package Classes;
  * @author Aryssa
  */
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.List;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
-
 
 public class SalesOrder {
     private String orderID;
@@ -200,86 +193,42 @@ public class SalesOrder {
         System.out.println("Sales Order with ID " + orderId + " not found!!");
     }
 
-    public void searchSalesOrder(String orderId) {
-    try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
-        String line;
-
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split(",");
-            String orderIDFromFile = parts[0].trim(); 
-
-            if (orderIDFromFile.equals(orderId)) {
-                System.out.println("Sales Order found:\n" + line);
-                return;
-            }
-        }
-
-    } catch (IOException e) {
-        e.printStackTrace(); // Handle the exception according to your needs
-    }
-
-    System.out.println("Sales Order with ID " + orderId + " not found!!");
-}
-
-       // for (SalesOrder order : salesOrders) {
-        //    if (order.getId().equals(orderId)) {
-          //      System.out.println("Sales Order found:\n" + order);
-
     //return list of salesorder with matching criteria
-    public static List<SalesOrder> searchOrderIDinFile(String orderIDsearch) {
+    public static List<SalesOrder> searchOrders(String searchString, String byAttribute) {
         List<SalesOrder> returnRecord = new ArrayList<>();
         for(SalesOrder sales:salesOrders){
-            if (sales.getId().equals(orderIDsearch))
+            String recordValue;
+            switch(byAttribute.toLowerCase()){
+                case "orderid" -> recordValue = sales.getId();
+                case "furniture" -> recordValue = sales.getFurniture();
+                case "quantity" -> recordValue = String.valueOf(sales.getQuantity());
+                case "total" -> recordValue = String.valueOf(sales.getTotal());
+                case "customer" -> recordValue = sales.getCustomer();
+                case "status" -> recordValue = sales.getStatus();
+                case "generatedby" -> recordValue = sales.getGeneratedBy();
+                case "approvedby" -> recordValue = sales.getApprovedBy();
+                case "quotationid" -> recordValue = sales.getquotation();
+                default -> {
+                    System.out.println("Invalid search attribute");
+                    return null;
+                }
+            }
+            if (recordValue.equals(searchString))
                 returnRecord.add(sales);
         }
         if(returnRecord.isEmpty()){
-            System.out.println("Sales Order with ID " + orderIDsearch + " not found!!");
+            System.out.println("Sales Order with "+byAttribute+" " + searchString + " not found!!");
             return null;
         }else{
             return returnRecord;
         }
-//    try (BufferedReader br = new BufferedReader(new FileReader("salesOrder.txt"))) {
-//        String line;
-//
-//        while ((line = br.readLine()) != null) {
-//            String[] parts = line.split(",");
-//            String orderIDFromFile = parts[0].trim(); // Assuming order ID is the first value in each line
-//            if (orderIDFromFile.equals(orderIDsearch)) {
-//                System.out.println("Sales Order found:\n" + line);
-//                return line; // Return the details of the sales order
-//            }
-//        }
-//
-//    } catch (IOException e) {
-//        e.printStackTrace(); // Handle the exception according to your needs
-//    }
-//
-//    System.out.println("Sales Order with ID " + orderIDsearch + " not found!!");
-//    return null; // Order ID not found in the file or an error occurred
-}
-
-
-      //  System.out.println("Sales Order with ID " + orderId + " not found!!");
-    //}
+    }
 
     public void deleteSalesOrder(String orderId) {
         salesOrders.removeIf(order -> order.getId().equals(orderId));
         System.out.println("Sales Order with ID " + orderId + " deleted successfully!");
-        saveSalesOrdersToFile(); // Save the updated list to the file
-    }
-
-    private static void saveSalesOrdersToFile() {
-        String filePath = "salesOrder.txt";
-
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
-            for (SalesOrder order : salesOrders) {
-                writer.println(order.getId() + "," + order.getFurniture() + "," + order.getQuantity() +
-                        "," + order.getTotal() + "," + order.getCustomer() + "," + order.getStatus() +
-                        "," + order.getGeneratedBy() + "," + order.getApprovedBy());
-            }
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception according to your needs
-        }
+        File.write("salesOrder", salesOrders);
+        populateList();
     }
 
     public static void populateList() {
