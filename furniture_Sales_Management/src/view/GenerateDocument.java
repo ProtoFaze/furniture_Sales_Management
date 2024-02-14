@@ -118,7 +118,6 @@ public class GenerateDocument extends javax.swing.JPanel {
         Document document = new Document();
 
         try {
-
             // Create a PdfWriter with an event handler for custom layout
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(outputFilePath));
             CustomLayoutPageEvent event = new CustomLayoutPageEvent();
