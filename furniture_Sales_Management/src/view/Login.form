@@ -24,12 +24,12 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace pref="123" max="32767" attributes="0"/>
+              <EmptySpace pref="125" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="UserLbl" min="-2" max="-2" attributes="0"/>
-                          <Component id="PassLbl" min="-2" pref="74" max="-2" attributes="0"/>
+                          <Component id="PassLbl" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -53,9 +53,9 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace pref="68" max="32767" attributes="0"/>
               <Component id="LoginLbl" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="UserLbl" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="UserTxt" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -65,13 +65,13 @@
                   <Component id="PassTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="PassLbl" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ExitBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LoginBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="RegisterBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

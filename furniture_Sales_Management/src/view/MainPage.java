@@ -115,7 +115,6 @@ public class MainPage extends javax.swing.JFrame {
     public void changeTab(int index){
         Tabs.setSelectedIndex(index);
     }
-    
     public void updateData(){
         File.write("user", User.list);
         User.populateList();
@@ -129,12 +128,9 @@ public class MainPage extends javax.swing.JFrame {
         }
         switch (user.getRole()){
             case "admin": {}
-            case "officer":{
+            case "officer":{}
                 officerApproval.LoadData();
-                modifySalesOrder.LoadData();
-                searchQuotation.populateTable();
-                deleteQuotation.populateTable();
-            }
+                generateDocument.LoadData();
             case "sales person":{
                 modifySalesOrder.LoadData();
                 createQuotation.LoadData();// Update the combo box with the latest quotation IDs 
@@ -143,7 +139,7 @@ public class MainPage extends javax.swing.JFrame {
                 deleteQuotation.populateTable();
             }
         }
-        
+
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -179,11 +175,12 @@ public class MainPage extends javax.swing.JFrame {
         deleteSalesOrder = new view.DeleteSalesOrder(this);
         PeopleList = new view.PersonList(this);
         generateReport = new view.GenerateDocument(this);
-        officerApproval = new view.OfficerApproval();
+        officerApproval = new view.OfficerApproval(this);
         furnitureList = new view.FurnitureList(this);
         createQuotation = new view.CreateQuotation(this);
         searchQuotation = new view.SearchQuotation(this);
         deleteQuotation = new view.DeleteQuotation(this);
+        generateDocument = new view.GenerateDocument(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
@@ -233,6 +230,7 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.addTab("Create Quotation", createQuotation);
         Tabs.addTab("Search Quotation", searchQuotation);
         Tabs.addTab("Delete Quotation", deleteQuotation);
+        Tabs.addTab("Generate Document", generateDocument);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -452,6 +450,7 @@ public class MainPage extends javax.swing.JFrame {
     private view.DeleteQuotation deleteQuotation;
     private view.DeleteSalesOrder deleteSalesOrder;
     private view.FurnitureList furnitureList;
+    private view.GenerateDocument generateDocument;
     private view.GenerateDocument generateReport;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbtn1;
