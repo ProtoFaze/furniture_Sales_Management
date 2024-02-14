@@ -14,8 +14,17 @@ import Classes.SalesOrder;
 import Classes.SalesPerson;
 import Classes.Verify;
 import java.awt.Graphics2D;
-import java.time.LocalDate;
 import java.util.List;
+import java.security.SecureRandom;
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
 /**
@@ -80,7 +89,6 @@ public class Register extends javax.swing.JFrame {
                 role=radSalesPerson.getText();
             role = role.toLowerCase();
             validRole = "";
-            System.out.println("valid role is still empty");
         }else{
             validRole = "Role not selected.\n";
         }
@@ -88,31 +96,37 @@ public class Register extends javax.swing.JFrame {
         validPass = passWord.equals(String.valueOf(txtPasswordRetype.getPassword())) ? Verify.isStrongPassword(passWord) : "password and retyped password is different";
         String errors = validName+validEmail+validDate+validGender+validUName+validRole+validPass;
         if((errors.isEmpty())){
-            User applicant;
-            switch (role.toLowerCase()) {
-                case "admin" ->{
-                        applicant = new Admin(userName, fullName, emailAddress, gndr, dob, passWord);
+            String otp = sendEmail();
+            String userInput = JOptionPane.showInputDialog(rootPane, "Please provide the OTP sent to your email");
+            if(otp.equals(userInput)){
+                User applicant;
+                switch (role.toLowerCase()) {
+                    case "admin" ->{
+                            applicant = new Admin(userName, fullName, emailAddress, gndr, dob, passWord);
+                        }
+                    case "officer" ->{
+                            applicant = new Officer(userName, fullName, emailAddress, gndr, dob, passWord);
+                        }
+                    case "sales person" ->{
+                            applicant = new SalesPerson(userName, fullName, emailAddress, gndr, dob, passWord);
+                        }
+                    default -> {
+                        applicant = null;
                     }
-                case "officer" ->{
-                        applicant = new Officer(userName, fullName, emailAddress, gndr, dob, passWord);
-                    }
-                case "sales person" ->{
-                        applicant = new SalesPerson(userName, fullName, emailAddress, gndr, dob, passWord);
-                    }
-                default -> {
-                    applicant = null;
                 }
+                users.add(applicant);
+                String res=File.write("user", users);
+                if("Success".equals(res)){
+                    JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.PLAIN_MESSAGE);
+                }else{          
+                    JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
+                }
+                MainPage page  = new MainPage(applicant);
+                page.setVisible(true);
+                this.setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(null,"It seems that the one time password you gave us is wrong, please try again with a different email, preferrably gmail.","OTP mismatch",JOptionPane.ERROR_MESSAGE);
             }
-            users.add(applicant);
-            String res=File.write("user", users);
-            if("Success".equals(res)){
-                JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.PLAIN_MESSAGE);
-            }else{          
-                JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
-            }
-            MainPage page  = new MainPage(applicant);
-            page.setVisible(true);
-            this.setVisible(false);
         }else{
             JOptionPane.showMessageDialog(null,errors,"Invalid Information",JOptionPane.ERROR_MESSAGE);
         }
@@ -138,6 +152,48 @@ public class Register extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null,error,"Invalid Information",JOptionPane.ERROR_MESSAGE);
         }
+    }
+    public String sendEmail(){
+        // Generate a random 6-digit OTP
+        String oneTimePass = newOTP(), sender = "yoyosaleshelper@gmail.com", appPassword = "tsms fozl uvlo flie";
+
+        // Email configuration
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        
+        // Create a session with the email server
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(sender, appPassword);
+            }
+        });
+        try {
+            // Create a MimeMessage object
+            MimeMessage message = new MimeMessage(session);
+
+            // Set the sender's and recipient's email addresses
+            message.setFrom(new InternetAddress(sender));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailAddress));
+
+            // Set the email subject and body
+            message.setSubject("OTP");
+            message.setText("Hi new user, this is an automated mail from YOYO Sales Helper,\n please use the one time password below to complete your registration :\n "+oneTimePass);
+
+            // Send the message
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        return oneTimePass;
+    }
+    private static String newOTP() {
+        SecureRandom secureRandom = new SecureRandom();
+        int otp = 100000 + secureRandom.nextInt(900000);
+        return String.valueOf(otp);
     }
     /**
      * This method is called from within the constructor to initialize the form.

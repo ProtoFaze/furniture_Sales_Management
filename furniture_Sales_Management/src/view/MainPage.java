@@ -151,7 +151,6 @@ public class MainPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        officerApproval1 = new view.OfficerApproval();
         bgPanel =  new javax.swing.JPanel() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
@@ -461,7 +460,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private view.ModifySalesOrder modifySalesOrder;
     private view.OfficerApproval officerApproval;
-    private view.OfficerApproval officerApproval1;
     private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
     private view.SearchQuotation searchQuotation;

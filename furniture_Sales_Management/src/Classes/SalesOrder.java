@@ -137,21 +137,21 @@ public class SalesOrder {
 
     
     public void createSalesOrder(String orderID, String furniture, int quantity, double total, String customer, String status, String generatedBy, String approvedBy) {
-    setId(orderID);
-    setFurniture(furniture);
-    setQuantity(quantity);
-    setTotal(total);
-    setCustomer(customer);
-    setStatus(status);  // Use the value passed as an argument
-    setGeneratedBy(generatedBy);  // Use the value passed as an argument
-    setApprovedBy(approvedBy);  // Use the value passed as an argument
-    
+        setId(orderID);
+        setFurniture(furniture);
+        setQuantity(quantity);
+        setTotal(total);
+        setCustomer(customer);
+        setStatus(status);  // Use the value passed as an argument
+        setGeneratedBy(generatedBy);  // Use the value passed as an argument
+        setApprovedBy(approvedBy);  // Use the value passed as an argument
 
-    salesOrders.add(this);
-    System.out.println("Sales Order created successfully!");
 
-    printSalesOrders();
-}
+        salesOrders.add(this);
+        System.out.println("Sales Order created successfully!");
+
+        printSalesOrders();
+    }
 
     
     
