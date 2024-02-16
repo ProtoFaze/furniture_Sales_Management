@@ -46,7 +46,9 @@ public class PDFTest extends javax.swing.JFrame {
             document.open();
 
             document.add(new Paragraph("Table Data"));
-
+            document.add(new Paragraph("\n"));
+            document.add(new Paragraph("\n"));
+            
             PdfPTable pdfTable = new PdfPTable(jTable1.getColumnCount());
 
 
