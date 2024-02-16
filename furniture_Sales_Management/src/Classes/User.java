@@ -14,10 +14,6 @@ public abstract class User extends Person {
     protected String userName, passWord, role;
     public static List<User> list;
     public static int latestId;
-    
-//    private static List<ListUpdateListener<User>> listeners = new ArrayList<>();
-
-    
     static{
         populateList();
         latestId = Integer.parseInt(list.getLast().getId())+1;
@@ -37,7 +33,6 @@ public abstract class User extends Person {
         this.passWord = passWord;
         this.role = "";
     }
-    
     //SETTERS
     public void setUserName(String userName){
         this.userName = userName;
@@ -48,8 +43,6 @@ public abstract class User extends Person {
     public void setRole(String role) {
         this.role = role;
     }
-    
-    
     //GETTERS
     public String getUserName(){
         return this.userName;
@@ -78,24 +71,9 @@ public abstract class User extends Person {
         SalesPerson.subsetUsers();
         // notify(list);
     }
-
-//    private static void notify(List<User> newUserList) {
-//        for (ListUpdateListener listener : listeners) {
-//            listener.onListUpdated(newUserList);
-//        }
-//    }
-//    //autoUpdate all subLists
-//    public static void addUserListListener(ListUpdateListener listener) {
-//        listeners.add(listener);
-//    }
-
     /**
-     * used for each role's main function, 
-     * salesperson create sales order, 
-     * officer approve sales order//create invoice
-     * Admin edits staff records
+     * used for each role's main function, salesperson create sales order, officer approve sales order//create invoiceAdmin edits staff records
      * @return status of role-specific main function's wrote operation
      */
     abstract String writeToFile();
-            
 }
