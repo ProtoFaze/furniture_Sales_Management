@@ -9,6 +9,7 @@ import Classes.SalesOrder;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -32,6 +33,7 @@ public class SearchQuotation extends javax.swing.JPanel {
         initComponents();
         this.parent = parent;
         loadData();
+        tfTotalPrice.setEnabled(false);
     }
     
     private void loadData(){
@@ -45,23 +47,23 @@ public class SearchQuotation extends javax.swing.JPanel {
                 temp.setRowCount(0);
                 Object row[] = new Object[8]; 
                 for (SalesOrder sales : SalesOrder.salesOrders) {
-                    if ("Pending".equals(sales.getStatus()) || "Approve".equals(sales.getStatus())) {
+                    if ("Approved".equals(sales.getStatus())) {
                     //add to new temp table if room is available
                     row[0] = sales.getId();
-                    row[1] = sales.getFurniture();
-                    row[2] = sales.getQuantity();
+                    row[1] = sales.getQuotation();
+                    row[2] = sales.getFurniture();
+                    row[3] = sales.getQuantity();
                     // Find the Furniture object using the furniture ID
                 Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
 
                 if (matchingFurniture != null) {
                     // Display unit price
-                    row[3] = matchingFurniture.getPrice();
+                    row[4] = matchingFurniture.getPrice();
                 } else {
-                    row[3] = ""; // Set as empty if furniture is not found
+                    row[4] = ""; // Set as empty if furniture is not found
                 }
-                    row[4] = sales.getTotal();
-                    row[5] = sales.getCustomer();
-                    row[6] = sales.getQuotation();
+                    row[5] = sales.getTotal();
+                    row[6] = sales.getCustomer();
                     row[7] = sales.getStatus();
                     temp.addRow(row);
                 }
@@ -158,7 +160,7 @@ public class SearchQuotation extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID", "QUOTATION ID", "STATUS"
+                "ORDER ID", "QUOTATION ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID", "STATUS"
             }
         ));
         jScrollPane1.setViewportView(tblQuotation);
@@ -219,20 +221,47 @@ public class SearchQuotation extends javax.swing.JPanel {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
     }// </editor-fold>//GEN-END:initComponents
-    
+    private boolean validateInput(){
+    // Validate QuotationID text field
+    String quotationIDText = tfquotationID.getText().trim();
+    if (quotationIDText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Quotation ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+        return true;
+}
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+       if (!validateInput()) {
+            JOptionPane.showMessageDialog(this, "Please enter a Quotation ID!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }  
         String quotationIDsearch = tfquotationID.getText();
         List<SalesOrder> searchQuotationDetails = SalesOrder.searchOrders(quotationIDsearch,"quotationID");
         
-        if(searchQuotationDetails != null){
-            JOptionPane.showMessageDialog(this, "Quotation Found!");
-            updateTable(searchQuotationDetails);
-        }
-        else{
+        if (searchQuotationDetails != null) {
+        List<SalesOrder> approvedOrders = filterApprovedOrders(searchQuotationDetails);
+        if (!approvedOrders.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Quotation with 'Approved' status Found!");
+            updateTable(approvedOrders);
+        } else {
             JOptionPane.showMessageDialog(this, "Quotation Not Found!");
         }
-    }//GEN-LAST:event_btnSearchActionPerformed
+    } else {
+        JOptionPane.showMessageDialog(this, "Quotation Not Found!");
+    }
+}
 
+private List<SalesOrder> filterApprovedOrders(List<SalesOrder> orders) {
+    // Filter the orders to only include those with 'Approved' status
+    List<SalesOrder> approvedOrders = new ArrayList<>();
+    for (SalesOrder order : orders) {
+        if ("Approved".equals(order.getStatus())) {
+            approvedOrders.add(order);
+        }
+    }
+    return approvedOrders;
+    }//GEN-LAST:event_btnSearchActionPerformed
+    
     private void tfquotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfquotationIDActionPerformed
         // TODO add your handling code here:
         String quotationIDsearch = tfquotationID.getText();
