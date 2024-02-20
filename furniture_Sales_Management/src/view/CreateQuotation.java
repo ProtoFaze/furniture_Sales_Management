@@ -48,7 +48,7 @@ public class CreateQuotation extends javax.swing.JPanel {
         List<String> idList = new ArrayList<>();
         for (SalesOrder salesOrder : SalesOrder.salesOrders) {
             String quotationID = salesOrder.getQuotation();
-            if (quotationID != null && !idList.contains(quotationID)) {
+            if (quotationID != null && salesOrder.getStatus().equals("Approved") &&  !idList.contains(quotationID)) {
                 idList.add(quotationID);
             }
         }
@@ -62,7 +62,7 @@ public class CreateQuotation extends javax.swing.JPanel {
 
         grandTotal = 0.0;
         for (SalesOrder sales : SalesOrder.salesOrders) {
-            if ("Approve".equalsIgnoreCase(sales.getStatus()) && sales.getQuotation().equals(quotationID)) {
+            if ("Approved".equalsIgnoreCase(sales.getStatus()) && sales.getQuotation().equals(quotationID)) {
                 // Retrieve the furniture object associated with the furniture ID
                 Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
 
@@ -233,7 +233,6 @@ public class CreateQuotation extends javax.swing.JPanel {
     tfQuotationID.setText(selectedQuotationID);
     btnCreate.setEnabled(true);
     updateTable(selectedQuotationID);
-
     
     }//GEN-LAST:event_cbQuotationIDActionPerformed
 
