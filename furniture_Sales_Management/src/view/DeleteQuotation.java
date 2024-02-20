@@ -140,9 +140,21 @@ public class DeleteQuotation extends javax.swing.JPanel {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_tfQuotationIDActionPerformed
-
+private boolean validateInput(){
+    // Validate QuotationID text field
+    String quotationIDText = tfQuotationID.getText().trim();
+    if (quotationIDText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Quotation ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+        return true;
+}
     private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
         // TODO add your handling code here:
+    if (!validateInput()) {
+            JOptionPane.showMessageDialog(this, "Please enter a Quotation ID!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }    
         deleteQuotation(tfQuotationID.getText());
     }//GEN-LAST:event_btnSaveChangesActionPerformed
     private void displayQuotationDetails(String selectedQuotationID) {
