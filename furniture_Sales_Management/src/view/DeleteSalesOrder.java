@@ -143,8 +143,20 @@ public class DeleteSalesOrder extends javax.swing.JPanel {
              displayOrderDetails(tfOrderID1.getText());
         }
     }//GEN-LAST:event_tfOrderID1KeyTyped
-
+    private boolean validateInput(){
+    // Validate OrderID text field
+    String quotationIDText = tfOrderID1.getText().trim();
+    if (quotationIDText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Order ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+        return true;
+}
     private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
+        if (!validateInput()) {
+            JOptionPane.showMessageDialog(this, "Please enter an Order ID!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         deleteOrder(tfOrderID1.getText());
     }//GEN-LAST:event_btnSaveChangesActionPerformed
     
