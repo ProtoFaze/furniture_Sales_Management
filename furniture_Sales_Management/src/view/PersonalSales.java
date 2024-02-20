@@ -27,19 +27,23 @@ public class PersonalSales extends javax.swing.JPanel {
         initComponents();
         this.parent = parent;
         salesPersonId = parent.user.getId();
-        showSalesForSalesPerson();
+        filterStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Pending", "Approved", "Rejected" }));
+        LoadData();
     }
-
-    private void showSalesForSalesPerson() {
+    public void LoadData(){
+        showSales("Show all");
+    }
+    private void showSales(String filter) {
     DefaultTableModel model = (DefaultTableModel) tblPersonalSales.getModel();
     model.setRowCount(0); // Clear existing rows
 
     // Iterate through the salesOrders list and add rows for matching salesperson ID
     for (SalesOrder order : SalesOrder.salesOrders) {
-//        System.out.println("ID: " + salesPersonId + "Sales Person : " + order.getGeneratedBy());
-        // Add a null check for getSalesPersonId()
         String orderSalesPersonId = order.getGeneratedBy();
-        if (orderSalesPersonId != null && orderSalesPersonId.equals(salesPersonId)) {
+        String orderStatus = order.getStatus();
+        if (orderSalesPersonId != null && orderSalesPersonId.equals(salesPersonId) && 
+            (filter.equals("Show all") || orderStatus.equals(filter)))  
+            {
             // Create a new array with the expected size for the table model
             Object[] row = new Object[model.getColumnCount()];
 
@@ -71,7 +75,7 @@ public class PersonalSales extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPersonalSales = new javax.swing.JTable();
         lblOrderID = new javax.swing.JLabel();
-        btnShowSales = new javax.swing.JButton();
+        filterStatus = new javax.swing.JComboBox<>();
 
         setOpaque(false);
 
@@ -92,10 +96,10 @@ public class PersonalSales extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblPersonalSales);
 
-        btnShowSales.setText("SHOW SALES");
-        btnShowSales.addActionListener(new java.awt.event.ActionListener() {
+        filterStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        filterStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowSalesActionPerformed(evt);
+                filterStatusActionPerformed(evt);
             }
         });
 
@@ -107,17 +111,20 @@ public class PersonalSales extends javax.swing.JPanel {
                 .addComponent(lblOrderID)
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblPersonalSales, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblPersonalSales, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(filterStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addComponent(jScrollPane1)))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnShowSales))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(lblPersonalSales)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPersonalSales)
+                    .addComponent(filterStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -126,19 +133,19 @@ public class PersonalSales extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnShowSales))))
+                        .addGap(29, 29, 29))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnShowSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowSalesActionPerformed
-        // TODO add your handling code here:
-        showSalesForSalesPerson();
-    }//GEN-LAST:event_btnShowSalesActionPerformed
+    private void filterStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterStatusActionPerformed
+        String selectedStatus = String.valueOf(filterStatus.getSelectedItem());
+        
+        showSales(selectedStatus);
+    }//GEN-LAST:event_filterStatusActionPerformed
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnShowSales;
+    private javax.swing.JComboBox<String> filterStatus;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblOrderID;
     private javax.swing.JLabel lblPersonalSales;
