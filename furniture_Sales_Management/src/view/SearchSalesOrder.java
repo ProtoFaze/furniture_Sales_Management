@@ -144,8 +144,20 @@ public class SearchSalesOrder extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    private boolean validateInput(){
+    // Validate QuotationID text field
+    String quotationIDText = tfOrderIDsearch.getText().trim();
+    if (quotationIDText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Order ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+        return true;
+}
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        if (!validateInput()) {
+            JOptionPane.showMessageDialog(this, "Please enter an Order ID!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }  
         //Get order ID from text field
         String orderIDsearch = tfOrderIDsearch.getText();     
         List<SalesOrder> searchQuotationDetails = SalesOrder.searchOrders(orderIDsearch,"orderID");

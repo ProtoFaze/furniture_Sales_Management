@@ -38,6 +38,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         LoadData();
         loadSalesOrders(quotationID);
         tfFurnitureID.setEnabled(false);
+        tfTotalPrice.setEnabled(false);
     }
 
     void LoadData(){
@@ -133,14 +134,6 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         tfTotal.setText(Double.toString(price*quantity));
     }
      
-    private boolean validateInput() {
-        try {
-            double total = Double.parseDouble(tfTotal.getText());
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
     private SalesOrder getSelectedSalesOrder(String selectedSalesOrderID) {
         for (SalesOrder salesOrder : SalesOrder.salesOrders) {
             if (salesOrder.getId().equals(selectedSalesOrderID)) {
@@ -346,21 +339,67 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfQuantityStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tfQuantityStateChanged
-        // TODO add your handling code here:
-       quantity = (int)tfQuantity.getValue();
-       calculateTotal();
+         quantity = (int)tfQuantity.getValue();
+        // Ensure the quantity is not negative
+        if (quantity < 1) {
+        // If negative, set the quantity to 0
+        tfQuantity.setValue(1);
+    }
+        calculateTotal();                
     }//GEN-LAST:event_tfQuantityStateChanged
+    private boolean validateInput() {
+    // Validate tfFurnitureID
+    String furnitureIDText = tfFurnitureID.getText().trim();
+    if (furnitureIDText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Furniture ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    //Validate Order ID
+    String orderID = cbSalesOrderID.getSelectedItem().toString();
+    if (orderID.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Order ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    // Validate tfQuantity
+    if (tfQuantity.getValue() == null) {
+        JOptionPane.showMessageDialog(this, "Quantity cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    int quantity = (int) tfQuantity.getValue();
+    if (quantity <= 0) {
+        JOptionPane.showMessageDialog(this, "Quantity must be a positive number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
 
+    // Validate tfTotal
+    String totalText = tfTotal.getText().trim();
+    if (totalText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Total cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    return true;
+}
+    private void clearAllFields() {
+    tfFurnitureID.setText(" ");
+    tfQuantity.setValue(1);
+    tfTotal.setText("");
+    
+}
     private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
+        if (!validateInput()) {
+            JOptionPane.showMessageDialog(this, "Please enter all fields!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (selectedOrder == null) {
             JOptionPane.showMessageDialog(this, "Please select a sales order to modify", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        // Validate input
-        if (!validateInput()) {
-            JOptionPane.showMessageDialog(this, "Please enter valid data for quantity and total.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
+        // Check if the total price matches the calculated price
+        double calculatedPrice = price * quantity;
+        double enteredTotal = Double.parseDouble(tfTotal.getText());
+        if (calculatedPrice != enteredTotal) {
+         JOptionPane.showMessageDialog(this, "Total price does not match the calculated price. Please check your entries.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
         }
 
         //update the selected order
@@ -373,7 +412,9 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         // Reload the table to reflect the changes
         loadSalesOrders(quotationID);
         updateTable(cbQuotationID.getSelectedItem().toString());
-    
+        
+        //Clear Fields
+        clearAllFields();
     }//GEN-LAST:event_btnSaveChangesActionPerformed
 
     private void tfTotalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTotalPriceActionPerformed

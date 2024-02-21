@@ -77,28 +77,52 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         }
         return false; // Quotation ID does not exist
     }
-    private boolean validateCustomerForQuotation(String customerID, String quotationID) {
-        // Iterate through the list of sales orders
-        for (SalesOrder order : SalesOrder.salesOrders) {
-            // Check if the current sales order's quotation ID matches the specified ID
-            if (order.getQuotation() != null && order.getQuotation().equals(quotationID)) {
-                // Check if the customer ID matches
-                if (!order.getCustomer().equals(customerID)) {
-                    return false; // Customer ID does not match for the same quotation number
-                }
-            }
-        }
-        return true; // Customer ID matches for the same quotation number
+private boolean validateInput() {
+  
+    // Validate tfQuotationID
+    String quotationIDText = tfQuotationID.getText().trim();
+    if (quotationIDText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Quotation ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
     }
-    private boolean validateInput() {
-        try {
-       //     int quantity = Integer.parseInt(tfQuantity.getText());
-            double total = Double.parseDouble(tfTotal.getText());
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+
+    // Check if tfQuotationID contains only numbers
+    if (!quotationIDText.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Quotation ID must contain only numeric digits.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
     }
+    // Validate cbFurniture
+    String furnitureText = cbFurniture.getText().trim();
+    if (furnitureText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Furniture ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    // Validate tfQuantity
+    if (tfQuantity.getValue() == null) {
+        JOptionPane.showMessageDialog(this, "Quantity cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    int quantity = (int) tfQuantity.getValue();
+    if (quantity <= 0) {
+        JOptionPane.showMessageDialog(this, "Quantity must be a positive number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    // Validate tfTotal
+    String totalText = tfTotal.getText().trim();
+    if (totalText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Total cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    String customerText = tfCustomer.getText().trim();
+    if (customerText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Customer ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    return true; 
+}
+  
+
     private void calculateTotal(){
        // Get the selected furniture ID
        String furnitureID = cbFurniture.getText();
@@ -390,11 +414,11 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         // TODO add your handling code here:
         double total = Double.parseDouble(tfTotal.getText());
     }//GEN-LAST:event_tfTotalActionPerformed
-
+    
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // Validate input
         if (!validateInput()) {
-            JOptionPane.showMessageDialog(this, "Please enter valid data for quantity and total.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter all fields!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         //   String id = tfOrderID.getText();
@@ -404,11 +428,14 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         String customer = tfCustomer.getText();
         String quotationID = tfQuotationID.getText();
         
-        // Check if the same customer ID is used for the same quotation number
-    if (!validateCustomerForQuotation(customer, quotationID)) {
-        JOptionPane.showMessageDialog(this, "Please enter the same customer ID for the same quotation number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        // Check if the total price matches the calculated price
+        double calculatedPrice = price * quantity;
+        double enteredTotal = Double.parseDouble(tfTotal.getText());
+        if (calculatedPrice != enteredTotal) {
+         JOptionPane.showMessageDialog(this, "Total price does not match the calculated price. Please check your entries.", "Input Error", JOptionPane.ERROR_MESSAGE);
         return;
-    }
+        }
+        
     SalesOrder record = new SalesOrder(furniture, amount, total, parent.user.getId(), customer, quotationID);
     SalesOrder.salesOrders.add(record);
     File.write("salesOrder", SalesOrder.salesOrders);
@@ -417,8 +444,9 @@ public class CreateSalesOrder extends javax.swing.JPanel {
     //  newSalesOrder.createSalesOrder(id, furniture, amount, total, "", customer, status);
         JOptionPane.showMessageDialog(this, "Sales Order Created!");
         model.addRow(new Object[]{record.getId(), record.getFurniture(), record.getQuantity(), 
-        record.getTotal(),record.getCustomer(), record.getStatus(), record.getQuotation()}); 
-        parent.changeTab(7);
+        record.getTotal(),record.getCustomer(), record.getStatus(), record.getQuotation()});
+        
+        
     }//GEN-LAST:event_btnCreateActionPerformed
     
     private void tfCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCustomerActionPerformed
@@ -428,6 +456,11 @@ public class CreateSalesOrder extends javax.swing.JPanel {
     private void tfQuantityStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tfQuantityStateChanged
         // TODO add your handling code here:
         quantity = (int)tfQuantity.getValue();
+        // Ensure the quantity is not negative
+        if (quantity < 0) {
+        // If negative, set the quantity to 0
+        tfQuantity.setValue(0);
+    }
         calculateTotal();
     }//GEN-LAST:event_tfQuantityStateChanged
 
