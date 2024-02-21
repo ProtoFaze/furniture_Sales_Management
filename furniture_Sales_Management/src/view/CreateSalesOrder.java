@@ -5,12 +5,9 @@
 package view;
 import Classes.File;
 import Classes.Furniture;
-import Classes.Invoice;
 import Classes.SalesOrder;
-import Classes.User;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.event.DocumentEvent;
@@ -77,50 +74,50 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         }
         return false; // Quotation ID does not exist
     }
-private boolean validateInput() {
-  
-    // Validate tfQuotationID
-    String quotationIDText = tfQuotationID.getText().trim();
-    if (quotationIDText.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Quotation ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
+    private boolean validateInput() {
 
-    // Check if tfQuotationID contains only numbers
-    if (!quotationIDText.matches("\\d+")) {
-        JOptionPane.showMessageDialog(this, "Quotation ID must contain only numeric digits.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
-    // Validate cbFurniture
-    String furnitureText = cbFurniture.getText().trim();
-    if (furnitureText.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Furniture ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
-    // Validate tfQuantity
-    if (tfQuantity.getValue() == null) {
-        JOptionPane.showMessageDialog(this, "Quantity cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
-    int quantity = (int) tfQuantity.getValue();
-    if (quantity <= 0) {
-        JOptionPane.showMessageDialog(this, "Quantity must be a positive number.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
-    // Validate tfTotal
-    String totalText = tfTotal.getText().trim();
-    if (totalText.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Total cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
-    String customerText = tfCustomer.getText().trim();
-    if (customerText.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Customer ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
+        // Validate tfQuotationID
+        String quotationIDText = tfQuotationID.getText().trim();
+        if (quotationIDText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Quotation ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
-    return true; 
-}
+        // Check if tfQuotationID contains only numbers
+        if (!quotationIDText.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Quotation ID must contain only numeric digits.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        // Validate cbFurniture
+        String furnitureText = cbFurniture.getText().trim();
+        if (furnitureText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Furniture ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        // Validate tfQuantity
+        if (tfQuantity.getValue() == null) {
+            JOptionPane.showMessageDialog(this, "Quantity cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        int quantity = (int) tfQuantity.getValue();
+        if (quantity <= 0) {
+            JOptionPane.showMessageDialog(this, "Quantity must be a positive number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        // Validate tfTotal
+        String totalText = tfTotal.getText().trim();
+        if (totalText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Total cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        String customerText = tfCustomer.getText().trim();
+        if (customerText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Customer ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true; 
+    }
   
 
     private void calculateTotal(){
@@ -159,35 +156,42 @@ private boolean validateInput() {
         String quotationID = tfQuotationID.getText();
         // Check if the quotation number exists in the text file
         if (quotationExists(quotationID)) {
-            String customerID = getCustomerID(quotationID);
-
-            // Display the customer ID
-            tfCustomer.setText(customerID);
+            if(SalesOrder.isMyQuotation(quotationID,parent.user.getId())){
+                String customerID = getCustomerID(quotationID);
+                // Display the customer ID
+                tfCustomer.setText(customerID);
+                model.setRowCount(0);
+                for (SalesOrder record: SalesOrder.salesOrders){
+                    String[] row = new String[7];
+                    if(record.getQuotation().equals(quotationID))
+                        model.addRow(new Object[]{  record.getId(),
+                                                    record.getFurniture(), 
+                                                    record.getQuantity(),
+                                                    record.getTotal(),
+                                                    record.getCustomer(), 
+                                                    record.getStatus(), 
+                                                    record.getQuotation()});
+                }
+                btnCreate.setEnabled(true);
+            }else{
+                btnCreate.setEnabled(false);
+            }
             // Disable the tfCustomer field if the quotation number exists
             tfCustomer.setEnabled(false);
             // Disable the btnCustomerList and btnRegisterCustomer buttons
             btnCustomerList.setEnabled(false);
             btnRegisterCustomer.setEnabled(false);
-            model.setRowCount(0);
-            for (SalesOrder record: SalesOrder.salesOrders){
-                String[] row = new String[7];
-                if(record.getQuotation().equals(quotationID))
-                    model.addRow(new Object[]{  record.getId(),
-                                                record.getFurniture(), 
-                                                record.getQuantity(),
-                                                record.getTotal(),
-                                                record.getCustomer(), 
-                                                record.getStatus(), 
-                                                record.getQuotation()});
-            }
         } else {
-        // Enable the tfCustomer field if the quotation number doesn't exist
-        tfCustomer.setEnabled(true);
-        // Enable the btnCustomerList and btnRegisterCustomer buttons
-        btnCustomerList.setEnabled(true);
-        btnRegisterCustomer.setEnabled(true);
-         }
+            // Enable the tfCustomer field if the quotation number doesn't exist
+            tfCustomer.setEnabled(true);
+            // Enable the btnCustomerList and btnRegisterCustomer buttons
+            btnCustomerList.setEnabled(true);
+            btnRegisterCustomer.setEnabled(true);
+            btnCreate.setEnabled(true);
+
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -368,7 +372,7 @@ private boolean validateInput() {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addGap(0, 0, 0)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblQuotation)
                             .addComponent(lblcreate))
@@ -441,10 +445,9 @@ private boolean validateInput() {
     File.write("salesOrder", SalesOrder.salesOrders);
     parent.updateData();
     // Add the new sales order to the list
-    //  newSalesOrder.createSalesOrder(id, furniture, amount, total, "", customer, status);
-        JOptionPane.showMessageDialog(this, "Sales Order Created!");
-        model.addRow(new Object[]{record.getId(), record.getFurniture(), record.getQuantity(), 
-        record.getTotal(),record.getCustomer(), record.getStatus(), record.getQuotation()});
+    JOptionPane.showMessageDialog(this, "Sales Order Created!");
+    model.addRow(new Object[]{record.getId(), record.getFurniture(), record.getQuantity(), 
+    record.getTotal(),record.getCustomer(), record.getStatus(), record.getQuotation()});
         
         
     }//GEN-LAST:event_btnCreateActionPerformed
@@ -486,12 +489,14 @@ private boolean validateInput() {
     }
     private void btnFurnitureChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFurnitureChooseActionPerformed
         // TODO add your handling code here:
-        parent.changeTab("personalSalesOrder");
+        parent.changeTab("furnitureList");
     }//GEN-LAST:event_btnFurnitureChooseActionPerformed
 
     private void tfQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQuotationIDActionPerformed
         String quotationID = tfQuotationID.getText();
-         
+//        for (SalesOrder sales: SalesOrder.salesOrders){
+//            if(sales.getQuotation().equals(quotationID)){
+//        }
     }//GEN-LAST:event_tfQuotationIDActionPerformed
  
     // Variables declaration - do not modify//GEN-BEGIN:variables

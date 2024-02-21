@@ -135,33 +135,6 @@ public class SalesOrder {
     }
   
 
-    
-    public void createSalesOrder(String orderID, String furniture, int quantity, double total, String customer, String status, String generatedBy, String approvedBy) {
-        setId(orderID);
-        setFurniture(furniture);
-        setQuantity(quantity);
-        setTotal(total);
-        setCustomer(customer);
-        setStatus(status);  // Use the value passed as an argument
-        setGeneratedBy(generatedBy);  // Use the value passed as an argument
-        setApprovedBy(approvedBy);  // Use the value passed as an argument
-
-
-        salesOrders.add(this);
-        System.out.println("Sales Order created successfully!");
-
-        printSalesOrders();
-    }
-
-    
-    
-    public static void printSalesOrders() {
-        System.out.println("Current Sales Orders:");
-        for (SalesOrder order : salesOrders) {
-            System.out.println(order);
-        }
-        
-    }
     public String toString() {
     return "SalesOrder{" +
             "orderID='" + orderID + '\'' +
@@ -231,9 +204,17 @@ public class SalesOrder {
         populateList();
     }
 
+    public static boolean isMyQuotation(String quotationID, String userId){
+        for(SalesOrder order: SalesOrder.salesOrders){
+            if(quotationID.equals(order.getQuotation()) && order.getGeneratedBy().equals(userId))
+                return true;
+        }
+        return false;
+    }
+    
     public static void populateList() {
         salesOrders = File.read("salesOrder", SalesOrder.class);
     }
     
-
+    
 }

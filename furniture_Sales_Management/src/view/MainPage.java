@@ -104,11 +104,11 @@ public class MainPage extends javax.swing.JFrame {
                 salesOrders = SalesOrder.salesOrders;
                 customers = Customer.list;
                 invoices = Invoice.list;
-                jobMainbtn1.setText("Create Sales");
-                jobMainbtn2.setText("Create Quotation");
-                jobMainbtn3.setText("Modify");
-                jobMainbtn4.setText("Delete Quotation");
-                jobMainbtn5.setVisible(false);
+                jobMainbtn1.setText("Sales List");
+                jobMainbtn2.setText("Create Sales");
+                jobMainbtn3.setText("Create Quotation");
+                jobMainbtn4.setText("Modify");
+                jobMainbtn5.setText("Delete Quotation");
                 Tabs.remove(officerApproval);
                 Tabs.remove(generateReport);
                 officerApproval = null;
@@ -168,7 +168,6 @@ public class MainPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        officerApproval1 = new view.OfficerApproval();
         bgPanel =  new javax.swing.JPanel() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
@@ -317,8 +316,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 369, Short.MAX_VALUE)
                         .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(120, 120, 120)
-                        .addComponent(ProfileBtn)
-                        .addContainerGap())
+                        .addComponent(ProfileBtn))
                     .addGroup(bgPanelLayout.createSequentialGroup()
                         .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jobMainbtn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -328,7 +326,8 @@ public class MainPage extends javax.swing.JFrame {
                             .addComponent(jobMainbtn5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(LogoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
-                        .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         bgPanelLayout.setVerticalGroup(
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,9 +338,9 @@ public class MainPage extends javax.swing.JFrame {
                     .addComponent(welcometxt)
                     .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ProfileBtn))
+                .addGap(0, 0, 0)
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jobMainbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
                         .addComponent(jobMainbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,9 +351,9 @@ public class MainPage extends javax.swing.JFrame {
                         .addGap(50, 50, 50)
                         .addComponent(jobMainbtn5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(LogoutBtn)
-                        .addContainerGap())
-                    .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(LogoutBtn))
+                    .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -380,7 +379,7 @@ public class MainPage extends javax.swing.JFrame {
         switch(user.getRole()){
             case "admin"->{changeTab("peopleList");}
             case "officer"->{changeTab("officerApproval");}
-            case "sales person"->{changeTab("createSalesOrder");}
+            case "sales person"->{changeTab("personalSales");}
             default->{
             }
         }
@@ -405,7 +404,7 @@ public class MainPage extends javax.swing.JFrame {
         switch(user.getRole()){
             case "admin"->{changeTab("generateReport");}
             case "officer"->{changeTab("generateReport");}
-            case "sales person"->{changeTab("createQuotation");}
+            case "sales person"->{changeTab("createSalesOrder");}
             default->{}
         }
     }//GEN-LAST:event_jobMainbtn2ActionPerformed
@@ -414,7 +413,7 @@ public class MainPage extends javax.swing.JFrame {
         switch(user.getRole()){
             case "admin"->{changeTab("generateReport");}
             case "officer"->{changeTab("generateReport");}
-            case "sales person"->{changeTab("modifySalesOrder");}
+            case "sales person"->{changeTab("createQuotation");}
             default->{}
         }
     }//GEN-LAST:event_jobMainbtn3ActionPerformed
@@ -423,7 +422,7 @@ public class MainPage extends javax.swing.JFrame {
         switch(user.getRole()){
             case "admin"->{changeTab("generateReport");}
             case "officer"->{changeTab("generateReport");}
-            case "sales person"->{changeTab("deleteQuotation");}
+            case "sales person"->{changeTab("modifySalesOrder");}
             default->{}
         }
     }//GEN-LAST:event_jobMainbtn4ActionPerformed
@@ -500,7 +499,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private view.ModifySalesOrder modifySalesOrder;
     private view.OfficerApproval officerApproval;
-    private view.OfficerApproval officerApproval1;
     view.PersonList peopleList;
     private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;

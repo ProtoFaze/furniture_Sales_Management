@@ -5,7 +5,6 @@
 package view;
 
 import Classes.Admin;
-import Classes.File;
 import Classes.User;
 import Classes.Verify;
 import java.awt.Graphics2D;
@@ -53,7 +52,7 @@ public class ProfilePage extends javax.swing.JFrame {
         UserTxt.setText(user.getUserName());
         PassTxt.setText(user.getPass());
         workerSource=null;
-        DeleteBtn = null;
+        DeleteBtn.setVisible(false);DeleteBtn = null;
     }
     public ProfilePage(PersonList parent) {
         this.workerSource = parent;
@@ -78,7 +77,6 @@ public class ProfilePage extends javax.swing.JFrame {
         GenderTxt.setText(user.getGenderAsString());
         UserTxt.setText(user.getUserName());
         PassTxt.setText(user.getPass());
-        System.out.println(user);
     }
 
     /**

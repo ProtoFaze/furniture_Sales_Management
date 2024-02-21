@@ -59,11 +59,13 @@ public class PersonList extends javax.swing.JPanel {
             workers = null;
             selectedWorker = null;
             filter.setVisible(false);
+            title.setText("Customer List");
         }else{
             if(Officer.officers!=null && SalesPerson.salesPeople!=null){
                 workers = new ArrayList<>();
                 workers.addAll(Officer.officers);
                 workers.addAll(SalesPerson.salesPeople);
+                title.setText("Staff List");
             }
             selectedCustomer = null;
         }
@@ -250,7 +252,7 @@ public class PersonList extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(title)
                     .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
