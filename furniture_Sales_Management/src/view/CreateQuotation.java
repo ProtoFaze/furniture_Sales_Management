@@ -44,11 +44,11 @@ public class CreateQuotation extends javax.swing.JPanel {
     private void updateComboBox(){
         LoadData();
     }
-    void LoadData() {
+    public void LoadData() {
         List<String> idList = new ArrayList<>();
         for (SalesOrder salesOrder : SalesOrder.salesOrders) {
             String quotationID = salesOrder.getQuotation();
-            if (quotationID != null && salesOrder.getStatus().equals("Approved") &&  !idList.contains(quotationID)) {
+            if (quotationID != null && !idList.contains(quotationID)) {
                 idList.add(quotationID);
             }
         }
