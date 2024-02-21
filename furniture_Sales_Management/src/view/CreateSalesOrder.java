@@ -471,7 +471,7 @@ private boolean validateInput() {
 
     private void btnCustomerListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerListActionPerformed
         //change to Customerlist tab
-        parent.changeTab(5);
+        parent.changeTab("peopleList");
     }//GEN-LAST:event_btnCustomerListActionPerformed
 
     private void cbFurnitureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFurnitureActionPerformed
@@ -486,7 +486,7 @@ private boolean validateInput() {
     }
     private void btnFurnitureChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFurnitureChooseActionPerformed
         // TODO add your handling code here:
-        parent.changeTab(6);
+        parent.changeTab("personalSalesOrder");
     }//GEN-LAST:event_btnFurnitureChooseActionPerformed
 
     private void tfQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQuotationIDActionPerformed

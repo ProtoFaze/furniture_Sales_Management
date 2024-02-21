@@ -142,9 +142,9 @@ public class Register extends javax.swing.JFrame {
             if("Success".equals(res)){
                 JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
                 SalesOrder.populateList();
-                parent.changeTab(4);
+                parent.changeTab("");
                 parent.createSalesOrder.tfCustomer.setText(customer.getId());
-                parent.PeopleList.loadData();
+                parent.peopleList.loadData();
                 this.setVisible(false);
             }else{
                 JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
