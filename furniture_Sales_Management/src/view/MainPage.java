@@ -75,7 +75,20 @@ public class MainPage extends javax.swing.JFrame {
                 invoices = null;
                 customers = null;
                 salesOrders = null;
+                Tabs.remove(personalSales);personalSales = null;
+                Tabs.remove(createSalesOrder);createSalesOrder = null;
+                Tabs.remove(searchSalesOrder);searchSalesOrder = null;
+                Tabs.remove(modifySalesOrder);modifySalesOrder = null;
+                Tabs.remove(createQuotation);createQuotation = null;
+                Tabs.remove(deleteQuotation);deleteQuotation = null;
+                Tabs.remove(searchQuotation);searchQuotation = null;
+                Tabs.remove(furnitureList);furnitureList = null;
+                Tabs.remove(officerApproval);officerApproval = null;
                 jobMainbtn1.setText(Tabs.getTitleAt(1));
+                jobMainbtn2.setText(Tabs.getTitleAt(2));
+                jobMainbtn3.setVisible(false);
+                jobMainbtn4.setVisible(false);
+                jobMainbtn5.setVisible(false);
             }
             case "officer" -> {
                 invoices = Invoice.list;
@@ -127,7 +140,9 @@ public class MainPage extends javax.swing.JFrame {
             Invoice.populateList();
         }
         switch (user.getRole()){
-            case "admin": {}
+            case "admin": {
+                PeopleList.loadData();
+            }
             case "officer":{}
                 officerApproval.LoadData();
                 generateDocument.LoadData();
@@ -151,6 +166,7 @@ public class MainPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        officerApproval1 = new view.OfficerApproval();
         bgPanel =  new javax.swing.JPanel() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
@@ -171,7 +187,6 @@ public class MainPage extends javax.swing.JFrame {
         createSalesOrder = new view.CreateSalesOrder(this);
         searchSalesOrder = new view.SearchSalesOrder(this);
         modifySalesOrder = new view.ModifySalesOrder(this);
-        deleteSalesOrder = new view.DeleteSalesOrder(this);
         PeopleList = new view.PersonList(this);
         generateReport = new view.GenerateDocument(this);
         officerApproval = new view.OfficerApproval(this);
@@ -221,7 +236,6 @@ public class MainPage extends javax.swing.JFrame {
         Tabs.addTab("Create Sales", createSalesOrder);
         Tabs.addTab("Search Sales", searchSalesOrder);
         Tabs.addTab("Edit Sales", modifySalesOrder);
-        Tabs.addTab("Delete Sales", deleteSalesOrder);
         Tabs.addTab("Staff List", PeopleList);
         Tabs.addTab("Generate Report", generateReport);
         Tabs.addTab("Quotation List", officerApproval);
@@ -447,7 +461,6 @@ public class MainPage extends javax.swing.JFrame {
     view.CreateQuotation createQuotation;
     view.CreateSalesOrder createSalesOrder;
     private view.DeleteQuotation deleteQuotation;
-    private view.DeleteSalesOrder deleteSalesOrder;
     private view.FurnitureList furnitureList;
     private view.GenerateDocument generateDocument;
     private view.GenerateDocument generateReport;
@@ -460,6 +473,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private view.ModifySalesOrder modifySalesOrder;
     private view.OfficerApproval officerApproval;
+    private view.OfficerApproval officerApproval1;
     private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
     private view.SearchQuotation searchQuotation;

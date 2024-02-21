@@ -34,32 +34,32 @@ public class PersonalSales extends javax.swing.JPanel {
         showSales("Show all");
     }
     private void showSales(String filter) {
-    DefaultTableModel model = (DefaultTableModel) tblPersonalSales.getModel();
-    model.setRowCount(0); // Clear existing rows
+        DefaultTableModel model = (DefaultTableModel) tblPersonalSales.getModel();
+        model.setRowCount(0); // Clear existing rows
 
-    // Iterate through the salesOrders list and add rows for matching salesperson ID
-    for (SalesOrder order : SalesOrder.salesOrders) {
-        String orderSalesPersonId = order.getGeneratedBy();
-        String orderStatus = order.getStatus();
-        if (orderSalesPersonId != null && orderSalesPersonId.equals(salesPersonId) && 
-            (filter.equals("Show all") || orderStatus.equals(filter)))  
-            {
-            // Create a new array with the expected size for the table model
-            Object[] row = new Object[model.getColumnCount()];
+        // Iterate through the salesOrders list and add rows for matching salesperson ID
+        for (SalesOrder order : SalesOrder.salesOrders) {
+            String orderSalesPersonId = order.getGeneratedBy();
+            String orderStatus = order.getStatus();
+            if (orderSalesPersonId != null && orderSalesPersonId.equals(salesPersonId) && 
+                (filter.equals("Show all") || orderStatus.equals(filter)))  
+                {
+                // Create a new array with the expected size for the table model
+                Object[] row = new Object[model.getColumnCount()];
 
-            // Fill in the values from the SalesOrder object
-            row[0] = order.getId();
-            row[1] = order.getFurniture();
-            row[2] = order.getQuantity();
-            row[3] = order.getTotal();
-            row[4] = order.getCustomer();
-            row[5] = order.getStatus();
+                // Fill in the values from the SalesOrder object
+                row[0] = order.getId();
+                row[1] = order.getFurniture();
+                row[2] = order.getQuantity();
+                row[3] = order.getTotal();
+                row[4] = order.getCustomer();
+                row[5] = order.getStatus();
 
-            // Add the row to the table model
-            model.addRow(row);
+                // Add the row to the table model
+                model.addRow(row);
+            }
         }
     }
-}
 
 
     /**
