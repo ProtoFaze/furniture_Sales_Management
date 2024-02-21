@@ -34,8 +34,6 @@ public class PersonList extends javax.swing.JPanel {
     private ProfilePage subPage;
     private DefaultTableModel helper;
     private JButton btnInspect;
-    private static List<Officer> officers;
-    private static List<SalesPerson> salesPeople;
     private static List<User> workers;
     Customer selectedCustomer;
     
@@ -53,27 +51,23 @@ public class PersonList extends javax.swing.JPanel {
         initComponents();
         this.parent = parent;
         loadData();
-        populateTable();
         setupActions();
     }
     
-    private void loadData(){
+    public void loadData(){
         if (parent.user.getRole().equals("sales person")){
-            officers = null;
-            salesPeople = null;
             workers = null;
             selectedWorker = null;
             filter.setVisible(false);
         }else{
-            officers = Officer.officers;
-            salesPeople = SalesPerson.salesPeople;
-            if(officers!=null && salesPeople!=null){
+            if(Officer.officers!=null && SalesPerson.salesPeople!=null){
                 workers = new ArrayList<>();
-                workers.addAll(officers);
-                workers.addAll(salesPeople);
+                workers.addAll(Officer.officers);
+                workers.addAll(SalesPerson.salesPeople);
             }
             selectedCustomer = null;
         }
+        populateTable();
     }
 
     private void setupActions(){
@@ -86,7 +80,7 @@ public class PersonList extends javax.swing.JPanel {
             if (parent.user.getRole().equals("sales person")){
                 Customer.list.stream().filter(customer -> customer.getId().equals(id)).findFirst().ifPresent(customer ->selectedCustomer = customer);
                 parent.createSalesOrder.tfCustomer.setText(selectedCustomer.getId());
-                parent.changeTab(4);
+                parent.changeTab("createSalesOrder");
             }else{
                 workers.stream().filter(worker -> worker.getId().equals(id)).findFirst().ifPresent(worker -> selectedWorker = worker);
                 subPage = new ProfilePage(this);
@@ -94,7 +88,7 @@ public class PersonList extends javax.swing.JPanel {
             }
         });
     }
-    public void populateTable(){
+    private void populateTable(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -136,8 +130,8 @@ public class PersonList extends javax.swing.JPanel {
                         // Get the ID column (column 0), and return "false" if the ID does not meet the filter condition
                         String id = entry.getStringValue(0);
                         switch(filter){
-                            case"officers"->     {return officers.stream().anyMatch(officer -> officer.getId().equals(id));}
-                            case"sales people"-> {return salesPeople.stream().anyMatch(salesPerson -> salesPerson.getId().equals(id));}
+                            case"officers"->     {return Officer.officers.stream().anyMatch(officer -> officer.getId().equals(id));}
+                            case"sales people"-> {return SalesPerson.salesPeople.stream().anyMatch(salesPerson -> salesPerson.getId().equals(id));}
                             default->           {return true;}
                         }
                     }
@@ -146,7 +140,7 @@ public class PersonList extends javax.swing.JPanel {
             }
         });
     }
-    
+
     class ButtonRenderer extends JButton implements TableCellRenderer{
         public ButtonRenderer(){
             setOpaque(true);

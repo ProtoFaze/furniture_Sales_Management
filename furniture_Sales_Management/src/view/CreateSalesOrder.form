@@ -20,40 +20,57 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="lblStatus" max="32767" attributes="0"/>
-                          <Component id="lblCustomer" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblTotal" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblQuantity" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblFurnitureID" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblOrderID" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnBack" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="btnBack" min="-2" pref="91" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnCreate" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="lblcreate" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                              <Component id="lblStatus" min="-2" pref="94" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblQuotationID" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                              <Component id="lblFurnitureID" min="-2" pref="96" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cbFurniture" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnCreate" alignment="0" max="32767" attributes="0"/>
-                          <Component id="tfOrderID" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfTotal" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfQuantity" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="tfCustomer" pref="76" max="32767" attributes="0"/>
+                              <Component id="cbFurniture" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnFurnitureChoose" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="tfCustomer" pref="106" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="btnRegisterCustomer" min="-2" pref="61" max="-2" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="btnCustomerList" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="tfTotal" alignment="0" max="32767" attributes="0"/>
-                          <Component id="tfQuantity" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfQuotationID" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="lblcreate" min="-2" pref="329" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblCustomer" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
+                          <Component id="lblQuantity" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
+                          <Component id="lblTotal" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="505" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="507" max="32767" attributes="0"/>
                   <Component id="lblQuotation" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -62,30 +79,34 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblQuotation" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblcreate" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblOrderID" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="tfOrderID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblQuotation" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblcreate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="327" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="tfQuotationID" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblQuotationID" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="cbFurniture" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="btnFurnitureChoose" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblFurnitureID" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbFurniture" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblQuantity" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="tfQuantity" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="tfTotal" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -99,8 +120,8 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -108,7 +129,6 @@
                           <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jScrollPane1" pref="320" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
           </Group>
@@ -122,11 +142,6 @@
           <Font name="Helvetica Neue" size="24" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="CREATE SALES ORDER "/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblOrderID">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="ORDER ID"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFurnitureID">
@@ -144,12 +159,12 @@
         <Property name="text" type="java.lang.String" value="TOTAL"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfOrderID">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfOrderIDActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JTextField" name="tfTotal">
+      <Properties>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[240, 30]"/>
+        </Property>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfTotalActionPerformed"/>
       </Events>
@@ -157,6 +172,9 @@
     <Component class="javax.swing.JButton" name="btnCreate">
       <Properties>
         <Property name="text" type="java.lang.String" value="CREATE "/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[360, 30]"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreateActionPerformed"/>
@@ -180,33 +198,23 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cbFurniture">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbFurnitureActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="WAITING FOR APPROVAL"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSpinner" name="tfQuantity">
+      <Properties>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[240, 30]"/>
+        </Property>
+      </Properties>
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="tfQuantityStateChanged"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(new javax.swing.SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1))"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="btnBack">
       <Properties>
@@ -223,17 +231,23 @@
         <Component class="javax.swing.JTable" name="tblQuotation">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="0">
+              <Table columnCount="7" rowCount="0">
                 <Column editable="true" title="ORDER ID" type="java.lang.Object"/>
                 <Column editable="true" title="FURNITURE ID" type="java.lang.Object"/>
                 <Column editable="true" title="QUANTITY" type="java.lang.Object"/>
                 <Column editable="true" title="TOTAL" type="java.lang.Object"/>
                 <Column editable="true" title="CUSTOMER" type="java.lang.Object"/>
                 <Column editable="true" title="STATUS" type="java.lang.Object"/>
+                <Column editable="true" title="QUOTATION ID" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -279,7 +293,7 @@
           <Font name="Helvetica Neue" size="24" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="SALES ORDER QUOTATION"/>
+        <Property name="text" type="java.lang.String" value="SALES ORDER "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnRegisterCustomer">
@@ -297,6 +311,40 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCustomerListActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="cbFurniture">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbFurnitureActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnFurnitureChoose">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="choose"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFurnitureChooseActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblQuotationID">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="QUOTATION ID"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfQuotationID">
+      <Properties>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[240, 30]"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfQuotationIDActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

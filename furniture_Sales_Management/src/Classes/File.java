@@ -60,10 +60,7 @@ public class File {
             System.out.println("Failed to read File "+ex.toString());
             return null;
         } catch(NullPointerException ex) {
-            System.out.println("""
-                               Failed to read File because the array was null
-                               possible causes wrong fileName, wrong JsonKey name
-                               """+ex.toString());
+            System.out.println("Failed to read File "+fileName+" because the array was null\npossible causes wrong fileName, wrong JsonKey name\n"+ex.toString());
             return null;
         }
     }
@@ -87,7 +84,7 @@ public class File {
                 return null;
             }
         } catch (JsonSyntaxException e) {
-            System.out.println("Failed to read File"+e.toString());
+            System.out.println("Failed to read File "+e.toString());
             return null;
         }
     }

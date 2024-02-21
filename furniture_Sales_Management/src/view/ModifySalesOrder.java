@@ -11,7 +11,6 @@ import javax.swing.DefaultComboBoxModel;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,11 +20,11 @@ import javax.swing.table.DefaultTableModel;
 public class ModifySalesOrder extends javax.swing.JPanel {
     int quantity;
     double price;
+    double totalPrice = 0.0;
     
     MainPage parent;
-    private DefaultTableModel temp; 
     private SalesOrder selectedOrder;  // To store the details of the selected order
-
+    private String quotationID;
 
     /**
      * Creates new form ModifySalesOrder
@@ -34,69 +33,140 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         initComponents();
     }
     public ModifySalesOrder(MainPage parent){
-            initComponents();
-            this.parent = parent;
-            LoadData();
-            loadDataTable();
+        initComponents();
+        this.parent = parent;
+        LoadData();
+        loadSalesOrders(quotationID);
+        tfFurnitureID.setEnabled(false);
+        tfTotalPrice.setEnabled(false);
     }
-    
-    private void loadDataTable(){
-        populateTable();
-    }
-    public void populateTable() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                temp = (DefaultTableModel) tblQuotation1.getModel();
-                temp.setRowCount(0);
-                Object row[] = new Object[6];
-                for (SalesOrder sales : SalesOrder.salesOrders) {
-                    // Filter sales orders based on the logged-in salesperson's ID
-                    
-                        row[0] = sales.getId();
-                        row[1] = sales.getFurniture();
-                        row[2] = sales.getQuantity();
-                        row[3] = sales.getTotal();
-                        row[4] = sales.getCustomer();
-                        row[5] = sales.getStatus();
-                        temp.addRow(row);
-                    
+
+    void LoadData(){
+        List<String> idList = new ArrayList<>();
+            for (SalesOrder salesOrder: SalesOrder.salesOrders){
+                String quotationID = salesOrder.getQuotation();
+                if (quotationID != null && !idList.contains(quotationID)) {
+                    idList.add(quotationID);
                 }
             }
-        });
+        DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String [0]));
+        cbQuotationID.setModel(data);   
     }
-    private void LoadData(){
-    List<String> idList = new ArrayList<>();
-        for (Furniture furniture: Furniture.list){
-            idList.add(furniture.getId());
+    
+    private void loadSalesOrders(String quotationID) {
+        DefaultComboBoxModel<String> salesOrderModel = new DefaultComboBoxModel<>();
+
+        for (SalesOrder salesOrder : SalesOrder.salesOrders) {
+            if (salesOrder.getGeneratedBy().equals(parent.user.getId())&&
+                salesOrder.getQuotation().equals(quotationID) 
+                    && ("Pending".equalsIgnoreCase(salesOrder.getStatus()) ||
+                    "Approve".equalsIgnoreCase(salesOrder.getStatus()))
+                ) {
+                salesOrderModel.addElement(salesOrder.getId());
+            }
         }
-    DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String [0]));
-    tfFurnitureID.setModel(data);   
+
+        cbSalesOrderID.setModel(salesOrderModel);
+    }
+   
+    public void updateTable(String quotationID) {
+        // Update the table display to show only sales orders with "Approve" or "Pending" status
+        DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
+        model.setRowCount(0); // Clear existing data in the table
+
+        totalPrice = 0.0;
+        for (SalesOrder sales : SalesOrder.salesOrders) {
+            if (sales.getGeneratedBy().equals(parent.user.getId())&&
+                sales.getQuotation().equals(quotationID) && 
+                    ("Approve".equals(sales.getStatus()) || 
+                    "Pending".equals(sales.getStatus()))
+                ) {
+                // Retrieve the furniture object associated with the furniture ID
+                Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
+
+                if (matchingFurniture != null) {
+                    // Add details to the table, including the unit price
+                    Object[] rowData = {
+                        sales.getId(),
+                        sales.getFurniture(),
+                        sales.getQuantity(),
+                        matchingFurniture.getPrice(), // Display unit price
+                        sales.getTotal(),
+                        sales.getCustomer(),
+                        sales.getStatus()
+                    };
+                    model.addRow(rowData);
+                    // Update total price
+                    totalPrice += sales.getTotal();
+                }
+            }
+        }
+
+        // If no records found for the given quotation ID and status
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No records found for the given quotation ID and status", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+        }
+        tfTotalPrice.setText(String.valueOf(totalPrice));
     }
     
-    private void displayOrderDetails(String selectedOrderId) {
-    DefaultTableModel model = (DefaultTableModel) tblQuotation1.getModel();
-    model.setRowCount(0); // Clear existing data in the table
+    
+    private Furniture findFurnitureById(String furnitureId) {
+        // Iterate through the list of furniture objects
+        for (Furniture furniture : Furniture.list) {
+            // Check if the current furniture object's ID matches the specified ID
+            if (furniture.getId().equals(furnitureId)) {
+                // Return the matching furniture object
+                return furniture;
+            }
+        }
+        // Return null if no matching furniture is found
+        return null;
+    }
+    
+    private void updateSelectedOrder() {
+        if (selectedOrder != null) {
+            // Retrieve modified data
+            String furniture = tfFurnitureID.getText();
+            int quantity = (int) tfQuantity.getValue();
+            double total = Double.parseDouble(tfTotal.getText());
 
-    // Find the order with the selected order ID in the SalesOrder list
-    for (SalesOrder sales : SalesOrder.salesOrders) {
-        if (sales.getId().equals(selectedOrderId)) {
-            // Add details to the table
-            Object[] rowData = {sales.getId(), sales.getFurniture(), sales.getQuantity(),
-                    sales.getTotal(), sales.getCustomer(), sales.getStatus()};
-            model.addRow(rowData);
-
-            // Set the selectedOrder to the current order
-            selectedOrder = sales;
-            return;
+            // Update the selected order details
+            selectedOrder.setFurniture(furniture);
+            selectedOrder.setQuantity(quantity);
+            selectedOrder.setTotal(total);
+            selectedOrder.setStatus("Pending");
         }
     }
+    
+    private void calculateTotal(){
+        tfTotal.setText(Double.toString(price*quantity));
+    }
+     
+    private SalesOrder getSelectedSalesOrder(String selectedSalesOrderID) {
+        for (SalesOrder salesOrder : SalesOrder.salesOrders) {
+            if (salesOrder.getId().equals(selectedSalesOrderID)) {
+                return salesOrder;
+            }
+        }
+        return null;
+    }
 
-    // If order is not found
-    JOptionPane.showMessageDialog(this, "Order not found", "Not Found", JOptionPane.INFORMATION_MESSAGE);
-}
-    
-    
+    private void displaySalesOrderDetails(SalesOrder salesOrder) {
+        tfFurnitureID.setText(salesOrder.getFurniture());
+        tfQuantity.setValue(salesOrder.getQuantity());
+        tfTotal.setText(Double.toString(salesOrder.getTotal()));
+        Furniture matchingFurniture = findFurnitureById(salesOrder.getFurniture());
+        if (matchingFurniture != null) {
+            price = matchingFurniture.getPrice();
+        }
+        calculateTotal();
+    }
+
+    private void clearOrderDetails() {
+        tfFurnitureID.setText("");
+        tfQuantity.setValue(0);
+        tfTotal.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,41 +178,30 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        tfOrderID = new javax.swing.JTextField();
-        lblOrderID = new javax.swing.JLabel();
         lblFurnitureID = new javax.swing.JLabel();
         lblQuantity = new javax.swing.JLabel();
         tfTotal = new javax.swing.JTextField();
         lblTotal = new javax.swing.JLabel();
-        lblCustomerID = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tfCustomerID = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblQuotation1 = new javax.swing.JTable();
+        tblQuotation = new javax.swing.JTable();
         btnSaveChanges = new javax.swing.JButton();
-        tfFurnitureID = new javax.swing.JComboBox<>();
-        tfQuantity = new javax.swing.JSpinner();
+        tfQuantity = new javax.swing.JSpinner(new javax.swing.SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         btnBack = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        cbQuotationID = new javax.swing.JComboBox<>();
+        tfTotalPrice = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tfFurnitureID = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cbSalesOrderID = new javax.swing.JComboBox<>();
 
         setOpaque(false);
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("MODIFY SALES ORDER QUOTATION");
-
-        tfOrderID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfOrderIDActionPerformed(evt);
-            }
-        });
-        tfOrderID.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tfOrderIDKeyTyped(evt);
-            }
-        });
-
-        lblOrderID.setText("ORDER ID");
+        jLabel1.setText("VIEW/EDIT SALES ORDER QUOTATION");
 
         lblFurnitureID.setText("FURNITURE ID");
 
@@ -150,33 +209,24 @@ public class ModifySalesOrder extends javax.swing.JPanel {
 
         lblTotal.setText("TOTAL");
 
-        lblCustomerID.setText("CUSTOMER ID");
-
         lblStatus.setText("STATUS");
 
         jLabel8.setText("WAITING FOR APPROVAL");
 
-        tblQuotation1.setModel(new javax.swing.table.DefaultTableModel(
+        tblQuotation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ORDER ID", "FURNITURE ID", "QUANTITY", "TOTAL", "CUSTOMER", "STATUS"
+                "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID", "STATUS"
             }
         ));
-        jScrollPane1.setViewportView(tblQuotation1);
+        jScrollPane1.setViewportView(tblQuotation);
 
         btnSaveChanges.setText("SAVE CHANGES");
         btnSaveChanges.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveChangesActionPerformed(evt);
-            }
-        });
-
-        tfFurnitureID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        tfFurnitureID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfFurnitureIDActionPerformed(evt);
             }
         });
 
@@ -188,31 +238,69 @@ public class ModifySalesOrder extends javax.swing.JPanel {
 
         btnBack.setText("BACK");
 
+        jLabel2.setText("QUOTATION ID");
+
+        cbQuotationID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbQuotationID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbQuotationIDActionPerformed(evt);
+            }
+        });
+
+        tfTotalPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfTotalPriceActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("TOTAL PRICE");
+
+        tfFurnitureID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfFurnitureIDActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("ORDER ID");
+
+        cbSalesOrderID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSalesOrderID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSalesOrderIDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblOrderID)
                     .addComponent(lblFurnitureID)
                     .addComponent(lblQuantity)
-                    .addComponent(lblTotal)
-                    .addComponent(lblCustomerID)
                     .addComponent(lblStatus)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfTotal)
+                    .addComponent(lblTotal)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2))
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cbQuotationID, 0, 162, Short.MAX_VALUE)
+                    .addComponent(btnSaveChanges, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbSalesOrderID, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfFurnitureID)
                     .addComponent(tfQuantity)
-                    .addComponent(tfCustomerID)
-                    .addComponent(tfOrderID)
-                    .addComponent(tfFurnitureID, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSaveChanges, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfTotal)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,136 +310,170 @@ public class ModifySalesOrder extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tfOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
+                            .addComponent(jLabel4)
+                            .addComponent(cbSalesOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblFurnitureID)
-                            .addComponent(tfFurnitureID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
+                            .addComponent(tfFurnitureID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFurnitureID))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblQuantity)
                             .addComponent(tfQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTotal)
                             .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCustomerID)
-                            .addComponent(tfCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblStatus)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSaveChanges)
-                            .addComponent(btnBack))
-                        .addContainerGap())
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnSaveChanges)
+                                .addComponent(btnBack))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3))))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfQuantityStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tfQuantityStateChanged
-        // TODO add your handling code here:
-       quantity = (int)tfQuantity.getValue();
-       calculateTotal();
+         quantity = (int)tfQuantity.getValue();
+        // Ensure the quantity is not negative
+        if (quantity < 1) {
+        // If negative, set the quantity to 0
+        tfQuantity.setValue(1);
+    }
+        calculateTotal();                
     }//GEN-LAST:event_tfQuantityStateChanged
-
-    private void tfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfOrderIDActionPerformed
-        // TODO add your handling code here:
-        String enteredOrderId = tfOrderID.getText();
-        displayOrderDetails(enteredOrderId);
-        System.out.println("Entered Order ID: " + enteredOrderId);
-    }//GEN-LAST:event_tfOrderIDActionPerformed
-
-    private void tfOrderIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfOrderIDKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfOrderIDKeyTyped
-
-    private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
-        // TODO add your handling code here:
-        // Validate that an order is selected
-        if (selectedOrder == null) {
-        JOptionPane.showMessageDialog(this, "Please select an order to modify", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
+    private boolean validateInput() {
+    // Validate tfFurnitureID
+    String furnitureIDText = tfFurnitureID.getText().trim();
+    if (furnitureIDText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Furniture ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    //Validate Order ID
+    String orderID = cbSalesOrderID.getSelectedItem().toString();
+    if (orderID.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Order ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    // Validate tfQuantity
+    if (tfQuantity.getValue() == null) {
+        JOptionPane.showMessageDialog(this, "Quantity cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    int quantity = (int) tfQuantity.getValue();
+    if (quantity <= 0) {
+        JOptionPane.showMessageDialog(this, "Quantity must be a positive number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
     }
 
-    // Validate input
-    if (!validateInput()) {
-        JOptionPane.showMessageDialog(this, "Please enter valid data for quantity and total.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
+    // Validate tfTotal
+    String totalText = tfTotal.getText().trim();
+    if (totalText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Total cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return false;
     }
-
-    // Retrieve modified data
-    String furniture = (String) tfFurnitureID.getSelectedItem();
-    int amount = (int) tfQuantity.getValue();
-    double total = Double.parseDouble(tfTotal.getText());
-    String customer = tfCustomerID.getText();
-
-    // Update the selected order details
-    selectedOrder.setFurniture(furniture);
-    selectedOrder.setQuantity(amount);
-    selectedOrder.setTotal(total);
-    selectedOrder.setCustomer(customer);
-    selectedOrder.setStatus("Pending");
-    selectedOrder.setGeneratedBy(parent.user.getId()); // Set the generatedBy field
-    selectedOrder.setApprovedBy(""); // Leave the approvedBy field empty for now
-
-    // Save the changes to file
-    File.write("salesOrder", SalesOrder.salesOrders);
-
-    JOptionPane.showMessageDialog(this, "Changes saved successfully!");
-
-    // Reload the table to reflect the changes
-    displayOrderDetails(selectedOrder.getId());
+    return true;
+}
+    private void clearAllFields() {
+    tfFurnitureID.setText(" ");
+    tfQuantity.setValue(1);
+    tfTotal.setText("");
     
+}
+    private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
+        if (!validateInput()) {
+            JOptionPane.showMessageDialog(this, "Please enter all fields!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (selectedOrder == null) {
+            JOptionPane.showMessageDialog(this, "Please select a sales order to modify", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Check if the total price matches the calculated price
+        double calculatedPrice = price * quantity;
+        double enteredTotal = Double.parseDouble(tfTotal.getText());
+        if (calculatedPrice != enteredTotal) {
+         JOptionPane.showMessageDialog(this, "Total price does not match the calculated price. Please check your entries.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+        }
+
+        //update the selected order
+        updateSelectedOrder();
+        // Save the changes to file
+        File.write("salesOrder", SalesOrder.salesOrders);
+
+        JOptionPane.showMessageDialog(this, "Changes saved successfully!");
+
+        // Reload the table to reflect the changes
+        loadSalesOrders(quotationID);
+        updateTable(cbQuotationID.getSelectedItem().toString());
+        
+        //Clear Fields
+        clearAllFields();
     }//GEN-LAST:event_btnSaveChangesActionPerformed
+
+    private void tfTotalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTotalPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTotalPriceActionPerformed
+
+    private void cbQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbQuotationIDActionPerformed
+        // Retrieve the selected quotation ID from the combo box
+        String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
+        // Load sales orders corresponding to the selected quotation ID
+        loadSalesOrders(selectedQuotationID);
+        // Update the table display to show only sales orders for the selected quotation ID
+        updateTable(selectedQuotationID);
+    }//GEN-LAST:event_cbQuotationIDActionPerformed
+
+    private void cbSalesOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSalesOrderIDActionPerformed
+        String selectedSalesOrderID = cbSalesOrderID.getSelectedItem().toString();
+        selectedOrder = getSelectedSalesOrder(selectedSalesOrderID);
+
+        if (selectedOrder != null) {
+        // Display details of the selected sales order in the UI
+           displaySalesOrderDetails(selectedOrder);
+        } else {
+        // Clear the UI if no sales order is selected
+          clearOrderDetails();
+        }
+    }//GEN-LAST:event_cbSalesOrderIDActionPerformed
 
     private void tfFurnitureIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFurnitureIDActionPerformed
         // TODO add your handling code here:
-        String furniture = (String) tfFurnitureID.getSelectedItem();
-        for (Furniture record: Furniture.list){
-            if (record.getId().equals(furniture)){
-               price = record.getPrice();
-            }
-        }
-        calculateTotal();
     }//GEN-LAST:event_tfFurnitureIDActionPerformed
-    
-     private void calculateTotal(){
-     tfTotal.setText(Double.toString(price*quantity));
-    }
-     
-private boolean validateInput() {
-    try {
-        double total = Double.parseDouble(tfTotal.getText());
-        return true;
-    } catch (NumberFormatException e) {
-        return false;
-    }
-}      
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSaveChanges;
+    private javax.swing.JComboBox<String> cbQuotationID;
+    private javax.swing.JComboBox<String> cbSalesOrderID;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCustomerID;
     private javax.swing.JLabel lblFurnitureID;
-    private javax.swing.JLabel lblOrderID;
     private javax.swing.JLabel lblQuantity;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblTotal;
-    private javax.swing.JTable tblQuotation1;
-    private javax.swing.JTextField tfCustomerID;
-    private javax.swing.JComboBox<String> tfFurnitureID;
-    private javax.swing.JTextField tfOrderID;
+    private javax.swing.JTable tblQuotation;
+    private javax.swing.JTextField tfFurnitureID;
     private javax.swing.JSpinner tfQuantity;
     private javax.swing.JTextField tfTotal;
+    private javax.swing.JTextField tfTotalPrice;
     // End of variables declaration//GEN-END:variables
 }

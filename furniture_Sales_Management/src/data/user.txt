@@ -3,5 +3,6 @@
 {"userName":"fabian","passWord":"W3wewewe%","role":"officer","id":"2","fullName":"Fabiano Batha","emailAddress":"frbtha@mail.my","dob":"04/02/1995","gender":"M"},
 {"userName":"Gordon","passWord":"Abcd1@34","role":"officer","id":"3","fullName":"Gordon Ramsay","emailAddress":"Gramsay@mail.my","dob":"29/05/2022","gender":"M"},
 {"userName":"Romeo","passWord":"6%43NbVas","role":"sales person","id":"4","fullName":"Romeo Rodrigues","emailAddress":"RDrigg@mail.my","dob":"01/05/2004","gender":"M"},
-{"userName":"staff123","passWord":"aBcd1@34","role":"admin","id":"5","fullName":"John Doe","emailAddress":"jDoe@mail.my","dob":"19/05/2012","gender":"M"}
+{"userName":"staff123","passWord":"aBcd1@34","role":"admin","id":"5","fullName":"John Doe","emailAddress":"jDoe@mail.my","dob":"19/05/2012","gender":"M"},
+{"userName":"Aryssa","passWord":"Ary123123","role":"sales person","id":"6","fullName":"Ary Goh","emailAddress":"agml@gmail.com","dob":"15/02/2000","gender":"F"}
 ]}

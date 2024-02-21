@@ -9,12 +9,9 @@ import Classes.File;
 import Classes.Officer;
 import Classes.SalesPerson;
 import Classes.User;
+import Classes.Verify;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -112,12 +109,12 @@ public class Login extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(123, Short.MAX_VALUE)
+                .addContainerGap(125, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(UserLbl)
-                            .addComponent(PassLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(PassLbl))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(UserTxt)
@@ -134,9 +131,9 @@ public class Login extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap(68, Short.MAX_VALUE)
                 .addComponent(LoginLbl)
-                .addGap(41, 41, 41)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(UserLbl)
                     .addComponent(UserTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -144,12 +141,12 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PassTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PassLbl))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ExitBtn)
                     .addComponent(LoginBtn)
                     .addComponent(RegisterBtn))
-                .addGap(18, 18, 18))
+                .addGap(49, 49, 49))
         );
 
         pack();
@@ -169,7 +166,8 @@ public class Login extends javax.swing.JFrame {
         pass = String.valueOf(PassTxt.getPassword());
 
         //run validation
-        if(validUName == null && validPass == null){
+        String errorText = Verify.isValidUsername(usr)+Verify.isStrongPassword(pass);
+        if(errorText.isEmpty()){
             //login
             login(usr, pass);
             //Record not found 
@@ -196,7 +194,7 @@ public class Login extends javax.swing.JFrame {
             }
         } else {
             //assign error text
-            JOptionPane.showMessageDialog(null, validUName+validPass, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, errorText, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_LoginBtnActionPerformed
 
@@ -224,36 +222,6 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         });
-    }
-    
-    /**
-     *@deprecated 
-     * @param dateStr
-     * @return
-     */
-    public static LocalDate convertStringToLocalDate(String dateStr) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate localDate = LocalDate.parse(dateStr, formatter);
-        return localDate;
-    }
-    /**
-     *@deprecated 
-     * @param date
-     * @return
-     */
-    public static LocalDate DateToLocalDate(Date date) {
-        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return localDate;
-    }
-    /**
-     *@deprecated 
-     * @param localDate
-     * @return
-     */
-    public static String convertLocalDateToString(LocalDate localDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String dateStr = localDate.format(formatter);
-        return dateStr;
     }
 
     /**

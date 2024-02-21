@@ -7,7 +7,10 @@ package view;
 import Classes.Admin;
 import Classes.File;
 import Classes.User;
+import Classes.Verify;
+import java.awt.Graphics2D;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +25,6 @@ public class ProfilePage extends javax.swing.JFrame {
     private MainPage parent;
     private PersonList workerSource;
     User user;
-    private static List<User> users;
     private static List<Admin> admins;
     boolean edit;
     boolean isChanged = false;
@@ -31,8 +33,18 @@ public class ProfilePage extends javax.swing.JFrame {
         this.parent = parent;
         this.user = parent.user;
         this.admins = Admin.admins;
-        this.users = User.list;
-        
+        setContentPane(new javax.swing.JPanel(){
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                int width = getWidth();
+                int height = getHeight();
+                java.awt.GradientPaint gp = new java.awt.GradientPaint(0, 0, parent.colorPrimary, 0, height, parent.colorSecondary);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, width, height);
+            }
+        });
         initComponents();
         NameTxt.setText(user.getFullName());
         IdTxt.setText(user.getId());
@@ -40,14 +52,25 @@ public class ProfilePage extends javax.swing.JFrame {
         GenderTxt.setText(user.getGenderAsString());
         UserTxt.setText(user.getUserName());
         PassTxt.setText(user.getPass());
-        System.out.println(user);
+        workerSource=null;
+        DeleteBtn = null;
     }
     public ProfilePage(PersonList parent) {
         this.workerSource = parent;
         this.user = workerSource.selectedWorker;
         this.admins = Admin.admins;
-        this.users = User.list;
-        
+        setContentPane(new javax.swing.JPanel(){
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                int width = getWidth();
+                int height = getHeight();
+                java.awt.GradientPaint gp = new java.awt.GradientPaint(0, 0, workerSource.parent.colorPrimary, 0, height, workerSource.parent.colorSecondary);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, width, height);
+            }
+        });
         initComponents();
         NameTxt.setText(user.getFullName());
         IdTxt.setText(user.getId());
@@ -83,6 +106,7 @@ public class ProfilePage extends javax.swing.JFrame {
         PassTxt = new javax.swing.JPasswordField();
         EditBtn = new javax.swing.JButton();
         PassBtn = new javax.swing.JToggleButton();
+        DeleteBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -152,34 +176,47 @@ public class ProfilePage extends javax.swing.JFrame {
             }
         });
 
+        DeleteBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        DeleteBtn.setText("Delete");
+        DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(108, 108, 108)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(UserLbl)
                     .addComponent(NameLbl)
                     .addComponent(IdLbl)
                     .addComponent(GenderLbl)
                     .addComponent(PassLbl)
-                    .addComponent(EmailLbl))
+                    .addComponent(EmailLbl)
+                    .addComponent(UserLbl))
                 .addGap(94, 94, 94)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(IdTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ProfileLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(NameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(EmailTxt)
-                    .addComponent(GenderTxt)
-                    .addComponent(UserTxt)
-                    .addComponent(PassTxt))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PassBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BackBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-                    .addComponent(EditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(UserTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(IdTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ProfileLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(NameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(EmailTxt)
+                            .addComponent(GenderTxt)
+                            .addComponent(PassTxt))
+                        .addGap(18, 18, 18)
+                        .addComponent(PassBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(BackBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                            .addComponent(DeleteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
@@ -200,23 +237,25 @@ public class ProfilePage extends javax.swing.JFrame {
                     .addComponent(EmailLbl)
                     .addComponent(EmailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(GenderLbl)
-                    .addComponent(GenderTxt))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(GenderLbl)
+                        .addComponent(GenderTxt))
+                    .addComponent(DeleteBtn))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EditBtn)
                     .addComponent(UserLbl)
                     .addComponent(UserTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(PassLbl)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(PassTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(EditBtn))
-                    .addComponent(PassBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(BackBtn)
-                .addGap(16, 16, 16))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PassLbl)
+                            .addComponent(PassTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(PassBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BackBtn))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -228,7 +267,7 @@ public class ProfilePage extends javax.swing.JFrame {
             parent.setVisible(true);
         }else{
             workerSource.selectedWorker = user;
-            workerSource.populateTable();
+            workerSource.loadData();
             workerSource.setVisible(true);
         }
         this.setVisible(false);
@@ -247,7 +286,16 @@ public class ProfilePage extends javax.swing.JFrame {
                 Edit(true);
                 edit = true;
             } else {
-                saveChanges();
+                String errorText = 
+                        Verify.validateFullName(NameTxt.getText())+
+                        Verify.validateEmail(EmailTxt.getText())+
+                        Verify.validateEmail(UserTxt.getText())+
+                        Verify.validateEmail(String.valueOf(PassTxt.getPassword()));
+                if (errorText.isEmpty()){
+                    saveChanges();
+                }else{
+                    JOptionPane.showMessageDialog(this, errorText+"changes will not be saved", "Invalid change data", JOptionPane.ERROR_MESSAGE);
+                }
                 Edit(false);
                 edit = false;
             }
@@ -262,6 +310,15 @@ public class ProfilePage extends javax.swing.JFrame {
             PassTxt.setEchoChar('*');
         }
     }//GEN-LAST:event_PassBtnActionPerformed
+
+    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
+        User.list = User.list.stream()
+            .filter(record -> !record.equals(user))
+            .collect(Collectors.toList());
+        workerSource.parent.updateData();
+        workerSource.loadData();
+        this.setVisible(false);
+    }//GEN-LAST:event_DeleteBtnActionPerformed
     
     private void Edit(boolean flag){
         NameTxt.setEditable(flag);
@@ -280,17 +337,17 @@ public class ProfilePage extends javax.swing.JFrame {
     }
     
     private void saveChanges(){
-        for (User record:users){
+        for (User record:User.list){
             if(user.getId().equals(record.getId())){
                 record.setFullName(NameTxt.getText());
                 record.setMail(EmailTxt.getText());
                 record.setUserName(UserTxt.getText());
                 record.setPass(String.valueOf(PassTxt.getPassword()));
             }
-            File.write("user", users);
-            User.populateList();
         }
+        parent.updateData();
     }
+
    
     /**
      * @param args the command line arguments
@@ -329,6 +386,7 @@ public class ProfilePage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBtn;
+    private javax.swing.JButton DeleteBtn;
     private javax.swing.JButton EditBtn;
     private javax.swing.JLabel EmailLbl;
     private javax.swing.JTextField EmailTxt;
