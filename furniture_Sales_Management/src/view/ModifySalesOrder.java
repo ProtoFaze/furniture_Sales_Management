@@ -57,7 +57,11 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         DefaultComboBoxModel<String> salesOrderModel = new DefaultComboBoxModel<>();
 
         for (SalesOrder salesOrder : SalesOrder.salesOrders) {
-            if (salesOrder.getQuotation().equals(quotationID) && ("Pending".equalsIgnoreCase(salesOrder.getStatus()) || "Approve".equalsIgnoreCase(salesOrder.getStatus()))) {
+            if (salesOrder.getGeneratedBy().equals(parent.user.getId())&&
+                salesOrder.getQuotation().equals(quotationID) 
+                    && ("Pending".equalsIgnoreCase(salesOrder.getStatus()) ||
+                    "Approve".equalsIgnoreCase(salesOrder.getStatus()))
+                ) {
                 salesOrderModel.addElement(salesOrder.getId());
             }
         }
@@ -72,20 +76,24 @@ public class ModifySalesOrder extends javax.swing.JPanel {
 
         totalPrice = 0.0;
         for (SalesOrder sales : SalesOrder.salesOrders) {
-            if (sales.getQuotation().equals(quotationID) && ("Approve".equals(sales.getStatus()) || "Pending".equals(sales.getStatus()))) {
+            if (sales.getGeneratedBy().equals(parent.user.getId())&&
+                sales.getQuotation().equals(quotationID) && 
+                    ("Approve".equals(sales.getStatus()) || 
+                    "Pending".equals(sales.getStatus()))
+                ) {
                 // Retrieve the furniture object associated with the furniture ID
                 Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
 
                 if (matchingFurniture != null) {
                     // Add details to the table, including the unit price
                     Object[] rowData = {
-                            sales.getId(),
-                            sales.getFurniture(),
-                            sales.getQuantity(),
-                            matchingFurniture.getPrice(), // Display unit price
-                            sales.getTotal(),
-                            sales.getCustomer(),
-                            sales.getStatus()
+                        sales.getId(),
+                        sales.getFurniture(),
+                        sales.getQuantity(),
+                        matchingFurniture.getPrice(), // Display unit price
+                        sales.getTotal(),
+                        sales.getCustomer(),
+                        sales.getStatus()
                     };
                     model.addRow(rowData);
                     // Update total price
