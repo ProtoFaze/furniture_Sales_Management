@@ -28,10 +28,10 @@ public class DeleteQuotation extends javax.swing.JPanel {
     public DeleteQuotation(MainPage parent) {
         initComponents();
         this.parent = parent;
-        loadDataTable();
+        LoadData();
     }
     
-    private void loadDataTable(){
+    private void LoadData(){
         populateTable();
     }
     
@@ -157,21 +157,7 @@ private boolean validateInput(){
         }    
         deleteQuotation(tfQuotationID.getText());
     }//GEN-LAST:event_btnSaveChangesActionPerformed
-    private void displayQuotationDetails(String selectedQuotationID) {
-    DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
-    model.setRowCount(0); // Clear existing data in the table
-
-    // Find the order with the selected order ID in the SalesOrder list
-    for (SalesOrder sales : SalesOrder.salesOrders) {
-        if (sales.getId().equals(selectedQuotationID)) {
-            // Add details to the table
-            Object[] rowData = {sales.getId(), sales.getFurniture(), sales.getQuantity(),
-                    sales.getTotal(), sales.getCustomer(), sales.getStatus()};
-            model.addRow(rowData);
-            return;
-        }
-    }
-    }
+   
     
     private void deleteQuotation(String selectedQuotationID) {
         SalesOrder selectedOrder = null;
