@@ -150,10 +150,11 @@ public class MainPage extends javax.swing.JFrame {
                 generateReport.LoadData();
             }
             case "sales person"->{
+                personalSales.LoadData();
+                createSalesOrder.LoadData();
+                createQuotation.LoadData();
                 modifySalesOrder.LoadData();
-                createQuotation.LoadData();// Update the combo box with the latest quotation IDs 
-                createQuotation.updateTable(createQuotation.cbQuotationID.getSelectedItem().toString()); // Update the table with the details
-                deleteQuotation.populateTable();
+                deleteQuotation.LoadData();                
             }
         }
 

@@ -221,7 +221,15 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             new String [] {
                 "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID", "STATUS"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         quotationScrollPane.setViewportView(tblQuotation);
 
         btnSaveChanges.setText("SAVE CHANGES");

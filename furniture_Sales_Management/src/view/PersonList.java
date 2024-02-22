@@ -203,7 +203,7 @@ public class PersonList extends javax.swing.JPanel {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true
+                false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {

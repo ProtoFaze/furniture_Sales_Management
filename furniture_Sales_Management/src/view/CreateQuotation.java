@@ -52,12 +52,20 @@ public class CreateQuotation extends javax.swing.JPanel {
         }
         DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String[0]));
         cbQuotationID.setModel(data);
-        updateTable(cbQuotationID.getSelectedItem().toString());
+        String initialQuotation;
+        try {
+            initialQuotation = cbQuotationID.getSelectedItem().toString();
+            updateTable(initialQuotation);
+        }catch (java.lang.NullPointerException e){
+            updateTable("NA");
+        }
     }
     void updateTable(String quotationID) {
         DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
         model.setRowCount(0); // Clear existing data in the table
-
+        if(quotationID.equals("NA")){
+            return;
+        }
         grandTotal = 0.0;
         for (SalesOrder sales : SalesOrder.salesOrders) {
             if ("Approved".equalsIgnoreCase(sales.getStatus()) && sales.getQuotation().equals(quotationID)) {
@@ -123,7 +131,15 @@ public class CreateQuotation extends javax.swing.JPanel {
             new String [] {
                 "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblQuotation);
         if (tblQuotation.getColumnModel().getColumnCount() > 0) {
             tblQuotation.getColumnModel().getColumn(0).setResizable(false);
@@ -228,10 +244,10 @@ public class CreateQuotation extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void cbQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbQuotationIDActionPerformed
-    String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
-    tfQuotationID.setText(selectedQuotationID);
-    btnCreate.setEnabled(true);
-    updateTable(selectedQuotationID);
+        String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
+        tfQuotationID.setText(selectedQuotationID);
+        btnCreate.setEnabled(true);
+        updateTable(selectedQuotationID);
     
     }//GEN-LAST:event_cbQuotationIDActionPerformed
 

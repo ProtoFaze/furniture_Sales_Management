@@ -116,7 +116,7 @@ public class SalesOrder {
         this.quantity = quantity;
         this.total = total;
         this.generatedBy = generatedBy;
-        this.approvedBy = " ";
+        this.approvedBy = "";
         this.customer = customer;
         this.status = "Pending";
         this.quotationID = quotationID;
@@ -197,9 +197,9 @@ public class SalesOrder {
         }
     }
 
-    public void deleteSalesOrder(String orderId) {
-        salesOrders.removeIf(order -> order.getId().equals(orderId));
-        System.out.println("Sales Order with ID " + orderId + " deleted successfully!");
+    public static void deleteWholeQuotation(String quotationID) {
+        salesOrders.removeIf(order -> (order.getQuotation().equals(quotationID)));
+        System.out.println("Sales Orders with ID " + quotationID + " deleted successfully!");
         File.write("salesOrder", salesOrders);
         populateList();
     }

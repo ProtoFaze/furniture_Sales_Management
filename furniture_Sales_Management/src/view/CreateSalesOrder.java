@@ -56,7 +56,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         });
     }
     
-    private void LoadData(){
+    void LoadData(){
         List<String> idList = new ArrayList<>();
         for (Furniture furniture: Furniture.list){
             idList.add(furniture.getId());
@@ -277,7 +277,15 @@ public class CreateSalesOrder extends javax.swing.JPanel {
             new String [] {
                 "ORDER ID", "FURNITURE ID", "QUANTITY", "TOTAL", "CUSTOMER", "STATUS", "QUOTATION ID"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblQuotation);
 
         lblQuotation.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
@@ -372,7 +380,6 @@ public class CreateSalesOrder extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblQuotation)
                             .addComponent(lblcreate))
