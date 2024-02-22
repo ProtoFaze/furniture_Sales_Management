@@ -64,6 +64,45 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         model = (DefaultTableModel) tblQuotation.getModel();
        
     }
+    void handleQuotationIDChange() {
+        String quotationID = tfQuotationID.getText();
+        // Check if the quotation number exists in the text file
+        if (quotationExists(quotationID)) {
+            if(SalesOrder.isMyQuotation(quotationID,parent.user.getId())){
+                String customerID = getCustomerID(quotationID);
+                // Display the customer ID
+                tfCustomer.setText(customerID);
+                model.setRowCount(0);
+                for (SalesOrder record: SalesOrder.salesOrders){
+                    String[] row = new String[7];
+                    if(record.getQuotation().equals(quotationID))
+                        model.addRow(new Object[]{  record.getId(),
+                                                    record.getFurniture(), 
+                                                    record.getQuantity(),
+                                                    record.getTotal(),
+                                                    record.getCustomer(), 
+                                                    record.getStatus(), 
+                                                    record.getQuotation()});
+                }
+                btnCreate.setEnabled(true);
+            }else{
+                btnCreate.setEnabled(false);
+            }
+            // Disable the tfCustomer field if the quotation number exists
+            tfCustomer.setEnabled(false);
+            // Disable the btnCustomerList and btnRegisterCustomer buttons
+            btnCustomerList.setEnabled(false);
+            btnRegisterCustomer.setEnabled(false);
+        } else {
+            // Enable the tfCustomer field if the quotation number doesn't exist
+            tfCustomer.setEnabled(true);
+            // Enable the btnCustomerList and btnRegisterCustomer buttons
+            btnCustomerList.setEnabled(true);
+            btnRegisterCustomer.setEnabled(true);
+            btnCreate.setEnabled(true);
+
+        }
+    }
     private boolean quotationExists(String quotationID) {
         // Iterate through the list of sales orders
         for (SalesOrder order : SalesOrder.salesOrders) {
@@ -152,46 +191,6 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         // Return an empty string or handle the case when the quotation ID is not found
         return "";
     }
-    private void handleQuotationIDChange() {
-        String quotationID = tfQuotationID.getText();
-        // Check if the quotation number exists in the text file
-        if (quotationExists(quotationID)) {
-            if(SalesOrder.isMyQuotation(quotationID,parent.user.getId())){
-                String customerID = getCustomerID(quotationID);
-                // Display the customer ID
-                tfCustomer.setText(customerID);
-                model.setRowCount(0);
-                for (SalesOrder record: SalesOrder.salesOrders){
-                    String[] row = new String[7];
-                    if(record.getQuotation().equals(quotationID))
-                        model.addRow(new Object[]{  record.getId(),
-                                                    record.getFurniture(), 
-                                                    record.getQuantity(),
-                                                    record.getTotal(),
-                                                    record.getCustomer(), 
-                                                    record.getStatus(), 
-                                                    record.getQuotation()});
-                }
-                btnCreate.setEnabled(true);
-            }else{
-                btnCreate.setEnabled(false);
-            }
-            // Disable the tfCustomer field if the quotation number exists
-            tfCustomer.setEnabled(false);
-            // Disable the btnCustomerList and btnRegisterCustomer buttons
-            btnCustomerList.setEnabled(false);
-            btnRegisterCustomer.setEnabled(false);
-        } else {
-            // Enable the tfCustomer field if the quotation number doesn't exist
-            tfCustomer.setEnabled(true);
-            // Enable the btnCustomerList and btnRegisterCustomer buttons
-            btnCustomerList.setEnabled(true);
-            btnRegisterCustomer.setEnabled(true);
-            btnCreate.setEnabled(true);
-
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -212,7 +211,6 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         tfCustomer = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         tfQuantity = new javax.swing.JSpinner(new javax.swing.SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-        btnBack = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblQuotation = new javax.swing.JTable();
         lblQuotation = new javax.swing.JLabel();
@@ -241,7 +239,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
             }
         });
 
-        btnCreate.setText("CREATE ");
+        btnCreate.setText("ADD ORDER");
         btnCreate.setMaximumSize(new java.awt.Dimension(360, 30));
         btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,8 +265,6 @@ public class CreateSalesOrder extends javax.swing.JPanel {
                 tfQuantityStateChanged(evt);
             }
         });
-
-        btnBack.setText("BACK");
 
         tblQuotation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -335,8 +331,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(103, 103, 103)
                         .addComponent(btnCreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(lblcreate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -414,9 +409,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addComponent(lblStatus))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBack))))
+                        .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -507,7 +500,6 @@ public class CreateSalesOrder extends javax.swing.JPanel {
     }//GEN-LAST:event_tfQuotationIDActionPerformed
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnCustomerList;
     private javax.swing.JButton btnFurnitureChoose;
