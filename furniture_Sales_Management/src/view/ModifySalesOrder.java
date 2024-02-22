@@ -189,7 +189,6 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         tblQuotation = new javax.swing.JTable();
         btnSaveChanges = new javax.swing.JButton();
         tfQuantity = new javax.swing.JSpinner(new javax.swing.SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-        btnBack = new javax.swing.JButton();
         lblQuotationID = new javax.swing.JLabel();
         cbQuotationID = new javax.swing.JComboBox<>();
         tfTotalPrice = new javax.swing.JTextField();
@@ -245,8 +244,6 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             }
         });
 
-        btnBack.setText("BACK");
-
         lblQuotationID.setText("QUOTATION ID");
 
         cbQuotationID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -290,7 +287,6 @@ public class ModifySalesOrder extends javax.swing.JPanel {
                     .addComponent(lblQuantity)
                     .addComponent(lblStatus)
                     .addComponent(lblTotal)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSalesOrderID)
                     .addComponent(lblQuotationID))
                 .addGap(38, 38, 38)
@@ -346,9 +342,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
                         .addComponent(quotationScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnSaveChanges)
-                                .addComponent(btnBack))
+                            .addComponent(btnSaveChanges)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblGrandTotal))))))
@@ -464,7 +458,6 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     }//GEN-LAST:event_tfFurnitureIDActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSaveChanges;
     private javax.swing.JComboBox<String> cbQuotationID;
     private javax.swing.JComboBox<String> cbSalesOrderID;

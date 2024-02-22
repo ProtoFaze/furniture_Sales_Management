@@ -26,7 +26,6 @@
                   <Component id="lblQuantity" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="lblStatus" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="lblTotal" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnBack" min="-2" pref="88" max="-2" attributes="0"/>
                   <Component id="lblSalesOrderID" min="-2" max="-2" attributes="0"/>
                   <Component id="lblQuotationID" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -95,10 +94,7 @@
                       <Component id="quotationScrollPane" pref="261" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="btnSaveChanges" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="btnSaveChanges" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="tfTotalPrice" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblGrandTotal" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -228,11 +224,6 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(new javax.swing.SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1))"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnBack">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="BACK"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblQuotationID">
       <Properties>
