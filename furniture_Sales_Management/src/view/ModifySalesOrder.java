@@ -18,11 +18,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Aryssa
  */
 public class ModifySalesOrder extends javax.swing.JPanel {
+    MainPage parent;
     int quantity;
     double price;
     double totalPrice = 0.0;
-    
-    MainPage parent;
     private SalesOrder selectedOrder;  // To store the details of the selected order
     private String quotationID;
 

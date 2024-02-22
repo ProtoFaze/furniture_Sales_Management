@@ -21,8 +21,8 @@ import javax.swing.table.TableCellRenderer;
  * @author Aryssa
  */
 public class FurnitureList extends javax.swing.JPanel {
-    public static List<Furniture> list;
     MainPage parent;
+    public static List<Furniture> list;
     private DefaultTableModel temp; 
     private JButton btnInspect;
     Furniture selectedFurniture;
