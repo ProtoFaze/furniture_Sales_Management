@@ -105,7 +105,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
 
         // If no records found for the given quotation ID and status
         if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No records found for the given quotation ID and status", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No records found for the given quotation ID", "Not Found", JOptionPane.INFORMATION_MESSAGE);
         }
         tfTotalPrice.setText(String.valueOf(totalPrice));
     }
