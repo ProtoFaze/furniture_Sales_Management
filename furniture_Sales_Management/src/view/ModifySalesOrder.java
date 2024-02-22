@@ -79,7 +79,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         for (SalesOrder sales : SalesOrder.salesOrders) {
             if (sales.getGeneratedBy().equals(parent.user.getId())&&
                 sales.getQuotation().equals(quotationID) && 
-                    ("Approve".equals(sales.getStatus()) || 
+                    ("Approved".equals(sales.getStatus()) || 
                     "Pending".equals(sales.getStatus()))
                 ) {
                 // Retrieve the furniture object associated with the furniture ID
