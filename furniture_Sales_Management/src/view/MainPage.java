@@ -67,7 +67,6 @@ public class MainPage extends javax.swing.JFrame {
         initComponents();
         rolelbl.setText(roleLblText);
         loadData();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     private void loadData(){
