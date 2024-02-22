@@ -39,7 +39,7 @@ public class CreateQuotation extends javax.swing.JPanel {
     private void updateComboBox(){
         LoadData();
     }
-    public void LoadData() {
+    void LoadData() {
         List<String> idList = new ArrayList<>();
         for (SalesOrder salesOrder : SalesOrder.salesOrders) {
             String quotationID = salesOrder.getQuotation();
@@ -147,11 +147,6 @@ public class CreateQuotation extends javax.swing.JPanel {
         }
 
         tfTotalPrice.setEnabled(false);
-        tfTotalPrice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfTotalPriceActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("TOTAL PRICE");
 
@@ -250,10 +245,6 @@ public class CreateQuotation extends javax.swing.JPanel {
         updateTable(selectedQuotationID);
     
     }//GEN-LAST:event_cbQuotationIDActionPerformed
-
-    private void tfTotalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTotalPriceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfTotalPriceActionPerformed
 
     private void tfQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQuotationIDActionPerformed
         // TODO add your handling code here:
