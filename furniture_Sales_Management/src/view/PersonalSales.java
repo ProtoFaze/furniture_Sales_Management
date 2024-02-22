@@ -29,7 +29,7 @@ public class PersonalSales extends javax.swing.JPanel {
         filterStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Pending", "Approved", "Rejected" }));
         LoadData();
     }
-    public void LoadData(){
+    void LoadData(){
         showSales("Show all");
     }
     private void showSales(String filter) {
