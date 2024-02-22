@@ -80,7 +80,7 @@ public class PersonList extends javax.swing.JPanel {
             if (parent.user.getRole().equals("sales person")){
                 Customer.list.stream().filter(customer -> customer.getId().equals(id)).findFirst().ifPresent(customer ->selectedCustomer = customer);
                 parent.createSalesOrder.tfCustomer.setText(selectedCustomer.getId());
-                parent.changeTab(4);
+                parent.changeTab("createSalesOrder");
             }else{
                 workers.stream().filter(worker -> worker.getId().equals(id)).findFirst().ifPresent(worker -> selectedWorker = worker);
                 subPage = new ProfilePage(this);

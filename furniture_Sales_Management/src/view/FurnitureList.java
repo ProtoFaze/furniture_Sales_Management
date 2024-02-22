@@ -70,7 +70,7 @@ public class FurnitureList extends javax.swing.JPanel {
             Furniture.list.stream().filter(furniture -> furniture.getId().equals(id)).findFirst().ifPresent(furniture -> {
             selectedFurniture = furniture; 
             parent.createSalesOrder.cbFurniture.setText(selectedFurniture.getId()); 
-            parent.changeTab(1); // Redirect to another tab
+            parent.changeTab("createSalesOrder"); // Redirect to another tab
 });
         });
     }

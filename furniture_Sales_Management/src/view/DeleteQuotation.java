@@ -44,6 +44,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
                 Object row[] = new Object[7];
                 for (SalesOrder sales : SalesOrder.salesOrders) {
                     // Filter sales orders based on the logged-in salesperson's ID
+                    if(sales.getGeneratedBy().equals(parent.user.getId())){
                         row[0] = sales.getQuotation();
                         row[1] = sales.getId();
                         row[2] = sales.getFurniture();
@@ -52,6 +53,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
                         row[5] = sales.getCustomer();
                         row[6] = sales.getStatus();
                         temp.addRow(row);
+                    }
                     
                 }
             }
@@ -72,6 +74,8 @@ public class DeleteQuotation extends javax.swing.JPanel {
         tfQuotationID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnSaveChanges = new javax.swing.JButton();
+
+        setOpaque(false);
 
         tblQuotation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

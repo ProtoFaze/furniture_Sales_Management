@@ -6,9 +6,11 @@ import Classes.File;
 import Classes.Invoice;
 import Classes.SalesOrder;
 import Classes.User;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -65,6 +67,7 @@ public class MainPage extends javax.swing.JFrame {
         initComponents();
         rolelbl.setText(roleLblText);
         loadData();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     private void loadData(){
@@ -77,37 +80,35 @@ public class MainPage extends javax.swing.JFrame {
                 salesOrders = null;
                 Tabs.remove(personalSales);personalSales = null;
                 Tabs.remove(createSalesOrder);createSalesOrder = null;
-                Tabs.remove(searchSalesOrder);searchSalesOrder = null;
                 Tabs.remove(modifySalesOrder);modifySalesOrder = null;
                 Tabs.remove(createQuotation);createQuotation = null;
                 Tabs.remove(deleteQuotation);deleteQuotation = null;
-                Tabs.remove(searchQuotation);searchQuotation = null;
                 Tabs.remove(furnitureList);furnitureList = null;
                 Tabs.remove(officerApproval);officerApproval = null;
-                jobMainbtn1.setText(Tabs.getTitleAt(1));
-                jobMainbtn2.setText(Tabs.getTitleAt(2));
+                jobMainbtn1.setText("Staff List");
+                jobMainbtn2.setText("Generate Report");
                 jobMainbtn3.setVisible(false);
                 jobMainbtn4.setVisible(false);
                 jobMainbtn5.setVisible(false);
             }
             case "officer" -> {
                 invoices = Invoice.list;
-                jobMainbtn1.setText(Tabs.getTitleAt(1));
-                jobMainbtn2.setText(Tabs.getTitleAt(2));
-                jobMainbtn3.setText(Tabs.getTitleAt(3));
-                jobMainbtn4.setText(Tabs.getTitleAt(4));
-                jobMainbtn5.setText(Tabs.getTitleAt(5));
+                jobMainbtn1.setText("Pending Sales");
+                jobMainbtn2.setText("Generate Documents");
+                jobMainbtn3.setVisible(false);
+                jobMainbtn4.setVisible(false);
+                jobMainbtn5.setVisible(false);
+                changeTab("officerApproval");
             }
             case "sales person" -> {
                 salesOrders = SalesOrder.salesOrders;
                 customers = Customer.list;
                 invoices = Invoice.list;
-                Tabs.setTitleAt(5, "Customer List");
-                jobMainbtn1.setText(Tabs.getTitleAt(1));
-                jobMainbtn2.setText(Tabs.getTitleAt(2));
-                jobMainbtn3.setText(Tabs.getTitleAt(3));
-                jobMainbtn4.setText(Tabs.getTitleAt(4));
-                jobMainbtn5.setText(Tabs.getTitleAt(5));
+                jobMainbtn1.setText("Create Sales");
+                jobMainbtn2.setText("Create Quotation");
+                jobMainbtn3.setText("Modify");
+                jobMainbtn4.setText("Delete Quotation");
+                jobMainbtn5.setVisible(false);
                 Tabs.remove(officerApproval);
                 Tabs.remove(generateReport);
                 officerApproval = null;
@@ -125,8 +126,9 @@ public class MainPage extends javax.swing.JFrame {
         
     }
     
-    public void changeTab(int index){
-        Tabs.setSelectedIndex(index);
+    public void changeTab(String ComponentName){
+        CardLayout cardLayout = (CardLayout) Tabs.getLayout();
+        cardLayout.show(Tabs, ComponentName);
     }
     public void updateData(){
         File.write("user", User.list);
@@ -140,17 +142,17 @@ public class MainPage extends javax.swing.JFrame {
             Invoice.populateList();
         }
         switch (user.getRole()){
-            case "admin": {
-                PeopleList.loadData();
+            case "admin"-> {
+                peopleList.loadData();
             }
-            case "officer":{}
+            case "officer"->{
                 officerApproval.LoadData();
-                generateDocument.LoadData();
-            case "sales person":{
+                generateReport.LoadData();
+            }
+            case "sales person"->{
                 modifySalesOrder.LoadData();
                 createQuotation.LoadData();// Update the combo box with the latest quotation IDs 
                 createQuotation.updateTable(createQuotation.cbQuotationID.getSelectedItem().toString()); // Update the table with the details
-                searchQuotation.populateTable();
                 deleteQuotation.populateTable();
             }
         }
@@ -181,27 +183,24 @@ public class MainPage extends javax.swing.JFrame {
         };
         rolelbl = new javax.swing.JLabel();
         welcometxt = new javax.swing.JLabel();
-        jobMainbtn1 = new javax.swing.JButton();
-        Tabs = new javax.swing.JTabbedPane();
-        personalSales = new view.PersonalSales(this);
-        createSalesOrder = new view.CreateSalesOrder(this);
-        searchSalesOrder = new view.SearchSalesOrder(this);
-        modifySalesOrder = new view.ModifySalesOrder(this);
-        PeopleList = new view.PersonList(this);
-        generateReport = new view.GenerateDocument(this);
-        officerApproval = new view.OfficerApproval(this);
-        furnitureList = new view.FurnitureList(this);
-        createQuotation = new view.CreateQuotation(this);
-        searchQuotation = new view.SearchQuotation(this);
-        deleteQuotation = new view.DeleteQuotation(this);
-        generateDocument = new view.GenerateDocument(this);
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
+        jobMainbtn1 = new javax.swing.JButton();
         jobMainbtn2 = new javax.swing.JButton();
         jobMainbtn3 = new javax.swing.JButton();
         jobMainbtn4 = new javax.swing.JButton();
         jobMainbtn5 = new javax.swing.JButton();
+        Tabs = new javax.swing.JPanel();
+        personalSales = new view.PersonalSales(this);
+        createSalesOrder = new view.CreateSalesOrder(this);
+        modifySalesOrder = new view.ModifySalesOrder(this);
+        peopleList = new view.PersonList(this);
+        generateReport = new view.GenerateDocument(this);
+        officerApproval = new view.OfficerApproval(this);
+        furnitureList = new view.FurnitureList(this);
+        createQuotation = new view.CreateQuotation(this);
+        deleteQuotation = new view.DeleteQuotation(this);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -221,29 +220,6 @@ public class MainPage extends javax.swing.JFrame {
 
         welcometxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         welcometxt.setText("Welcome, ");
-
-        jobMainbtn1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jobMainbtn1.setText("func1");
-        jobMainbtn1.setPreferredSize(new java.awt.Dimension(120, 30));
-        jobMainbtn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jobMainbtn1ActionPerformed(evt);
-            }
-        });
-
-        Tabs.setBackground(new java.awt.Color(186, 255, 175));
-        Tabs.addTab("Sales List", personalSales);
-        Tabs.addTab("Create Sales", createSalesOrder);
-        Tabs.addTab("Search Sales", searchSalesOrder);
-        Tabs.addTab("Edit Sales", modifySalesOrder);
-        Tabs.addTab("Staff List", PeopleList);
-        Tabs.addTab("Generate Report", generateReport);
-        Tabs.addTab("Quotation List", officerApproval);
-        Tabs.addTab("Furniture List", furnitureList);
-        Tabs.addTab("Create Quotation", createQuotation);
-        Tabs.addTab("Search Quotation", searchQuotation);
-        Tabs.addTab("Delete Quotation", deleteQuotation);
-        Tabs.addTab("Generate Document", generateDocument);
 
         ProfileBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ProfileBtn.setText("View Profile");
@@ -267,6 +243,15 @@ public class MainPage extends javax.swing.JFrame {
         lblTitle.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblTitleMouseClicked(evt);
+            }
+        });
+
+        jobMainbtn1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jobMainbtn1.setText("func1");
+        jobMainbtn1.setPreferredSize(new java.awt.Dimension(120, 30));
+        jobMainbtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jobMainbtn1ActionPerformed(evt);
             }
         });
 
@@ -306,6 +291,18 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
 
+        Tabs.setOpaque(false);
+        Tabs.setLayout(new java.awt.CardLayout());
+        Tabs.add(personalSales, "personalSales");
+        Tabs.add(createSalesOrder, "createSalesOrder");
+        Tabs.add(modifySalesOrder, "modifySalesOrder");
+        Tabs.add(peopleList, "peopleList");
+        Tabs.add(generateReport, "generateReport");
+        Tabs.add(officerApproval, "officerApproval");
+        Tabs.add(furnitureList, "furnitureList");
+        Tabs.add(createQuotation, "createQuotation");
+        Tabs.add(deleteQuotation, "deleteQuotation");
+
         javax.swing.GroupLayout bgPanelLayout = new javax.swing.GroupLayout(bgPanel);
         bgPanel.setLayout(bgPanelLayout);
         bgPanelLayout.setHorizontalGroup(
@@ -320,7 +317,8 @@ public class MainPage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 369, Short.MAX_VALUE)
                         .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(120, 120, 120)
-                        .addComponent(ProfileBtn))
+                        .addComponent(ProfileBtn)
+                        .addContainerGap())
                     .addGroup(bgPanelLayout.createSequentialGroup()
                         .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jobMainbtn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -330,8 +328,7 @@ public class MainPage extends javax.swing.JFrame {
                             .addComponent(jobMainbtn5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(LogoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
-                        .addComponent(Tabs)))
-                .addContainerGap())
+                        .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         bgPanelLayout.setVerticalGroup(
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,9 +339,9 @@ public class MainPage extends javax.swing.JFrame {
                     .addComponent(welcometxt)
                     .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ProfileBtn))
-                .addGap(16, 16, 16)
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jobMainbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
                         .addComponent(jobMainbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -354,10 +351,10 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(jobMainbtn4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
                         .addComponent(jobMainbtn5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                        .addComponent(LogoutBtn))
-                    .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(LogoutBtn)
+                        .addContainerGap())
+                    .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -379,7 +376,14 @@ public class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jobMainbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn1ActionPerformed
-        changeTab(1);
+        System.out.println(user.getRole());
+        switch(user.getRole()){
+            case "admin"->{changeTab("peopleList");}
+            case "officer"->{changeTab("officerApproval");}
+            case "sales person"->{changeTab("createSalesOrder");}
+            default->{
+            }
+        }
     }//GEN-LAST:event_jobMainbtn1ActionPerformed
 
     private void LogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtnActionPerformed
@@ -398,23 +402,48 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_ProfileBtnActionPerformed
 
     private void jobMainbtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn2ActionPerformed
-        changeTab(2);
+        switch(user.getRole()){
+            case "admin"->{changeTab("generateReport");}
+            case "officer"->{changeTab("generateReport");}
+            case "sales person"->{changeTab("createQuotation");}
+            default->{}
+        }
     }//GEN-LAST:event_jobMainbtn2ActionPerformed
 
     private void jobMainbtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn3ActionPerformed
-        changeTab(3);
+        switch(user.getRole()){
+            case "admin"->{changeTab("generateReport");}
+            case "officer"->{changeTab("generateReport");}
+            case "sales person"->{changeTab("modifySalesOrder");}
+            default->{}
+        }
     }//GEN-LAST:event_jobMainbtn3ActionPerformed
 
     private void jobMainbtn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn4ActionPerformed
-        changeTab(4);
+        switch(user.getRole()){
+            case "admin"->{changeTab("generateReport");}
+            case "officer"->{changeTab("generateReport");}
+            case "sales person"->{changeTab("deleteQuotation");}
+            default->{}
+        }
     }//GEN-LAST:event_jobMainbtn4ActionPerformed
 
     private void jobMainbtn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jobMainbtn5ActionPerformed
-        changeTab(5);
+        switch(user.getRole()){
+            case "admin"->{changeTab("generateReport");}
+            case "officer"->{changeTab("generateReport");}
+            case "sales person"->{changeTab("deleteQuotation");}
+            default->{}
+        }
     }//GEN-LAST:event_jobMainbtn5ActionPerformed
 
     private void lblTitleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTitleMouseClicked
-        changeTab(0);
+        switch(user.getRole()){
+            case "admin"->{changeTab("peopleList");}
+            case "officer"->{changeTab("officerApproval");}
+            case "sales person"->{changeTab("personalSales");}
+            default->{}
+        }
     }//GEN-LAST:event_lblTitleMouseClicked
 
     /**
@@ -454,15 +483,13 @@ public class MainPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogoutBtn;
-    view.PersonList PeopleList;
     private javax.swing.JButton ProfileBtn;
-    private javax.swing.JTabbedPane Tabs;
+    private javax.swing.JPanel Tabs;
     private javax.swing.JPanel bgPanel;
     view.CreateQuotation createQuotation;
     view.CreateSalesOrder createSalesOrder;
     private view.DeleteQuotation deleteQuotation;
     private view.FurnitureList furnitureList;
-    private view.GenerateDocument generateDocument;
     private view.GenerateDocument generateReport;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jobMainbtn1;
@@ -474,10 +501,9 @@ public class MainPage extends javax.swing.JFrame {
     private view.ModifySalesOrder modifySalesOrder;
     private view.OfficerApproval officerApproval;
     private view.OfficerApproval officerApproval1;
+    view.PersonList peopleList;
     private view.PersonalSales personalSales;
     private javax.swing.JLabel rolelbl;
-    private view.SearchQuotation searchQuotation;
-    private view.SearchSalesOrder searchSalesOrder;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
 }
