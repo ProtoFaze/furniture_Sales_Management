@@ -134,69 +134,6 @@ public class SalesOrder {
         this.quotationID = quotationID;
     }
   
-
-    public String toString() {
-    return "SalesOrder{" +
-            "orderID='" + orderID + '\'' +
-            ", furniture='" + furniture + '\'' +
-            ", quantity=" + quantity +
-            ", total=" + total +
-            ", customer='" + customer + '\'' +
-            ", status='" + status + '\'' +
-            ", generatedBy='" + generatedBy + '\'' +
-            ", approvedBy='" + approvedBy + '\'' +
-            '}';
-}
-    public void modifySalesOrder(String orderId, String newFurniture, int newQuantity, double newTotal,
-            String newGeneratedBy, String newApprovedBy, String newCustomer, String newStatus) {
-        for (SalesOrder order : salesOrders) {
-            if (order.getId().equals(orderId)) {
-                order.setFurniture(newFurniture);
-                order.setQuantity(newQuantity);
-                order.setTotal(newTotal);           
-                order.setCustomer(newCustomer);
-                order.setStatus("Pending");
-                order.setGeneratedBy(newGeneratedBy);
-                order.setApprovedBy(newApprovedBy);
-
-                System.out.println("Sales Order with ID " + orderId + " modified successfully!");
-                return;
-            }
-        }
-        System.out.println("Sales Order with ID " + orderId + " not found!!");
-    }
-
-    //return list of salesorder with matching criteria
-    public static List<SalesOrder> searchOrders(String searchString, String byAttribute) {
-        List<SalesOrder> returnRecord = new ArrayList<>();
-        for(SalesOrder sales:salesOrders){
-            String recordValue;
-            switch(byAttribute.toLowerCase()){
-                case "orderid" -> recordValue = sales.getId();
-                case "furniture" -> recordValue = sales.getFurniture();
-                case "quantity" -> recordValue = String.valueOf(sales.getQuantity());
-                case "total" -> recordValue = String.valueOf(sales.getTotal());
-                case "customer" -> recordValue = sales.getCustomer();
-                case "status" -> recordValue = sales.getStatus();
-                case "generatedby" -> recordValue = sales.getGeneratedBy();
-                case "approvedby" -> recordValue = sales.getApprovedBy();
-                case "quotationid" -> recordValue = sales.getQuotation();
-                default -> {
-                    System.out.println("Invalid search attribute");
-                    return null;
-                }
-            }
-            if (recordValue.equals(searchString))
-                returnRecord.add(sales);
-        }
-        if(returnRecord.isEmpty()){
-            System.out.println("Sales Order with "+byAttribute+" " + searchString + " not found!!");
-            return null;
-        }else{
-            return returnRecord;
-        }
-    }
-
     public static void deleteWholeQuotation(String quotationID) {
         salesOrders.removeIf(order -> (order.getQuotation().equals(quotationID)));
         System.out.println("Sales Orders with ID " + quotationID + " deleted successfully!");
