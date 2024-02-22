@@ -28,7 +28,6 @@ public class OfficerApproval extends javax.swing.JPanel {
         initComponents();
         model = (DefaultTableModel) QuotationList.getModel();
         LoadData();
-         
     }
 
     private void showQuotations(String filter) {
@@ -85,6 +84,8 @@ public class OfficerApproval extends javax.swing.JPanel {
         ApproveBtn = new javax.swing.JButton();
         RejectBtn = new javax.swing.JButton();
         RefreshBtn = new javax.swing.JButton();
+        SearchTxt = new javax.swing.JTextField();
+        SearchBtn = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -138,6 +139,17 @@ public class OfficerApproval extends javax.swing.JPanel {
             }
         });
 
+        SearchTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+
+        SearchBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        SearchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/search.png"))); // NOI18N
+        SearchBtn.setText(" Search");
+        SearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,7 +158,10 @@ public class OfficerApproval extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(SearchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SearchBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(RefreshBtn)
                         .addGap(18, 18, 18)
                         .addComponent(RejectBtn)
@@ -170,7 +185,9 @@ public class OfficerApproval extends javax.swing.JPanel {
                     .addComponent(FilterCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ApproveBtn)
                     .addComponent(RejectBtn)
-                    .addComponent(RefreshBtn))
+                    .addComponent(RefreshBtn)
+                    .addComponent(SearchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SearchBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -194,6 +211,31 @@ public class OfficerApproval extends javax.swing.JPanel {
         // TODO add your handling code here:
         updateStatus("Approved");
     }//GEN-LAST:event_ApproveBtnActionPerformed
+
+    private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
+        // TODO add your handling code here:
+        model.setRowCount(0);
+        String text = SearchTxt.getText();
+        if (!text.equals("")) {
+            for (SalesOrder order : SalesOrder.salesOrders) {
+                String orderId = order.getId();
+                if (orderId != null && orderId.equals(text)) {
+                    Object[] row = new Object[model.getColumnCount()];
+                    // Fill in the values from the SalesOrder object
+                    row[0] = order.getId();
+                    row[1] = order.getFurniture();
+                    row[2] = order.getQuantity();
+                    row[3] = order.getTotal();
+                    row[4] = order.getStatus();
+                    row[5] = order.getQuotation();
+
+                    model.addRow(row);
+                }
+            }
+        } else {
+            LoadData();
+        }
+    }//GEN-LAST:event_SearchBtnActionPerformed
     
     private void updateStatus(String Status){
         if (QuotationList.getSelectedRow() < 0) {
@@ -222,6 +264,8 @@ public class OfficerApproval extends javax.swing.JPanel {
     private javax.swing.JTable QuotationList;
     private javax.swing.JButton RefreshBtn;
     private javax.swing.JButton RejectBtn;
+    private javax.swing.JButton SearchBtn;
+    private javax.swing.JTextField SearchTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

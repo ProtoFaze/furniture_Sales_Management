@@ -2,6 +2,6 @@
 {"id":"1","generationDate":"03/04/2024","grandTotal":0.0,"payment":false,"production":false,"delivery":false},
 {"id":"2","generationDate":"03/04/2024","grandTotal":0.0,"payment":false,"production":false,"delivery":false},
 {"id":"3","generationDate":"03/04/2024","grandTotal":0.0,"payment":false,"production":false,"delivery":false},
-{"id":"4","generationDate":"13/02/2024","grandTotal":345.0,"payment":false,"production":false,"delivery":false},
-{"id":"6","generationDate":"13/02/2024","grandTotal":745.0,"payment":false,"production":false,"delivery":false}
+{"id":"4","generationDate":"13/02/2024","grandTotal":345.0,"payment":false,"production":true,"delivery":false},
+{"id":"6","generationDate":"13/02/2024","grandTotal":745.0,"payment":false,"production":true,"delivery":false}
 ]}
