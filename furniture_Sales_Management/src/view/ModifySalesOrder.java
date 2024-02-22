@@ -61,7 +61,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             if (salesOrder.getGeneratedBy().equals(parent.user.getId())&&
                 salesOrder.getQuotation().equals(quotationID) 
                     && ("Pending".equalsIgnoreCase(salesOrder.getStatus()) ||
-                    "Approve".equalsIgnoreCase(salesOrder.getStatus()))
+                    "Approved".equalsIgnoreCase(salesOrder.getStatus()))
                 ) {
                 salesOrderModel.addElement(salesOrder.getId());
             }
