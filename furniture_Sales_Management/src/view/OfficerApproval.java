@@ -100,7 +100,15 @@ public class OfficerApproval extends javax.swing.JPanel {
             new String [] {
                 "OrderID", "FurnitureID", "Quantity", "Total Price", "Status", "QuotationID"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(QuotationList);
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N

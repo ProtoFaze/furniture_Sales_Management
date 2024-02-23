@@ -96,36 +96,47 @@ public class Register extends javax.swing.JFrame {
         validPass = passWord.equals(String.valueOf(txtPasswordRetype.getPassword())) ? Verify.isStrongPassword(passWord) : "password and retyped password is different";
         String errors = validName+validEmail+validDate+validGender+validUName+validRole+validPass;
         if((errors.isEmpty())){
-            String otp = sendEmail();
-            String userInput = JOptionPane.showInputDialog(rootPane, "Please provide the OTP sent to your email");
-            if(otp.equals(userInput)){
-                User applicant;
-                switch (role.toLowerCase()) {
-                    case "admin" ->{
-                            applicant = new Admin(userName, fullName, emailAddress, gndr, dob, passWord);
+            Boolean userExist = false;
+            for(User user:User.list){
+                if(user.getMail().equals(emailAddress)){
+                    userExist = true;
+                    break;
+                }
+            }
+            if(!userExist){
+                String otp = sendEmail();
+                String userInput = JOptionPane.showInputDialog(rootPane, "Please provide the OTP sent to your email");
+                if(otp.equals(userInput)){
+                    User applicant;
+                    switch (role.toLowerCase()) {
+                        case "admin" ->{
+                                applicant = new Admin(userName, fullName, emailAddress, gndr, dob, passWord);
+                            }
+                        case "officer" ->{
+                                applicant = new Officer(userName, fullName, emailAddress, gndr, dob, passWord);
+                            }
+                        case "sales person" ->{
+                                applicant = new SalesPerson(userName, fullName, emailAddress, gndr, dob, passWord);
+                            }
+                        default -> {
+                            applicant = null;
                         }
-                    case "officer" ->{
-                            applicant = new Officer(userName, fullName, emailAddress, gndr, dob, passWord);
-                        }
-                    case "sales person" ->{
-                            applicant = new SalesPerson(userName, fullName, emailAddress, gndr, dob, passWord);
-                        }
-                    default -> {
-                        applicant = null;
                     }
+                    users.add(applicant);
+                    String res=File.write("user", users);
+                    if("Success".equals(res)){
+                        JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.PLAIN_MESSAGE);
+                    }else{          
+                        JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
+                    }
+                    MainPage page  = new MainPage(applicant);
+                    page.setVisible(true);
+                    this.setVisible(false);
+                }else{
+                    JOptionPane.showMessageDialog(null,"It seems that the one time password you gave us is wrong, please try again with a different email, preferrably gmail.","OTP mismatch",JOptionPane.ERROR_MESSAGE);
                 }
-                users.add(applicant);
-                String res=File.write("user", users);
-                if("Success".equals(res)){
-                    JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.PLAIN_MESSAGE);
-                }else{          
-                    JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
-                }
-                MainPage page  = new MainPage(applicant);
-                page.setVisible(true);
-                this.setVisible(false);
             }else{
-                JOptionPane.showMessageDialog(null,"It seems that the one time password you gave us is wrong, please try again with a different email, preferrably gmail.","OTP mismatch",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"User already exist","Existing Information",JOptionPane.ERROR_MESSAGE);
             }
         }else{
             JOptionPane.showMessageDialog(null,errors,"Invalid Information",JOptionPane.ERROR_MESSAGE);
@@ -136,18 +147,29 @@ public class Register extends javax.swing.JFrame {
         validPhysicalAddress = Verify.validateAddress(physicalAddress);//customer specific validation
         String error = validName+validEmail+validDate+validGender+validPhysicalAddress;
         if(error.isEmpty()){
-            Customer customer=new Customer(fullName, emailAddress, dob, gndr, physicalAddress);
-            Customer.list.add(customer);
-            String res=File.write("customer", Customer.list);
-            if("Success".equals(res)){
-                JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
-                SalesOrder.populateList();
-                parent.changeTab("");
-                parent.createSalesOrder.tfCustomer.setText(customer.getId());
-                parent.peopleList.loadData();
-                this.setVisible(false);
+            Boolean customerExist = false;
+            for(Customer customer:Customer.list){
+                if(customer.getMail().equals(emailAddress)){
+                    customerExist = true;
+                    break;
+                }
+            }
+            if(!customerExist){
+                Customer customer=new Customer(fullName, emailAddress, dob, gndr, physicalAddress);
+                Customer.list.add(customer);
+                String res=File.write("customer", Customer.list);
+                if("Success".equals(res)){
+                    JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
+                    SalesOrder.populateList();
+                    parent.changeTab("");
+                    parent.createSalesOrder.tfCustomer.setText(customer.getId());
+                    parent.peopleList.loadData();
+                    this.setVisible(false);
+                }else{
+                    JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
+                }
             }else{
-                JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Customer already exist","Existing Information",JOptionPane.ERROR_MESSAGE);
             }
         }else{
             JOptionPane.showMessageDialog(null,error,"Invalid Information",JOptionPane.ERROR_MESSAGE);
@@ -247,7 +269,11 @@ public class Register extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Rockwell", 0, 10)); // NOI18N
+        setMinimumSize(new java.awt.Dimension(798, 430));
+        setResizable(false);
+        setSize(new java.awt.Dimension(798, 430));
 
+        pageTitle.setBackground(new java.awt.Color(255, 255, 255));
         pageTitle.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         pageTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pageTitle.setText("Staff Registration");
@@ -255,6 +281,7 @@ public class Register extends javax.swing.JFrame {
 
         name.setOpaque(false);
 
+        lblName.setBackground(new java.awt.Color(255, 255, 255));
         lblName.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblName.setLabelFor(txtUsername);
         lblName.setText("Name:");
@@ -279,8 +306,8 @@ public class Register extends javax.swing.JFrame {
             nameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nameLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -295,6 +322,7 @@ public class Register extends javax.swing.JFrame {
 
         email.setOpaque(false);
 
+        lblEmail.setBackground(new java.awt.Color(255, 255, 255));
         lblEmail.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblEmail.setText("Email:");
 
@@ -318,8 +346,8 @@ public class Register extends javax.swing.JFrame {
             emailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, emailLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblEmail)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -334,6 +362,7 @@ public class Register extends javax.swing.JFrame {
 
         date.setOpaque(false);
 
+        lblDOB.setBackground(new java.awt.Color(255, 255, 255));
         lblDOB.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblDOB.setText("DOB:");
 
@@ -346,8 +375,8 @@ public class Register extends javax.swing.JFrame {
             dateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dateLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblDOB)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -362,13 +391,16 @@ public class Register extends javax.swing.JFrame {
 
         gender.setOpaque(false);
 
+        lblGender.setBackground(new java.awt.Color(255, 255, 255));
         lblGender.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblGender.setText("Gender:");
 
+        radMale.setBackground(new java.awt.Color(255, 255, 255));
         grpGender.add(radMale);
         radMale.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radMale.setText("Male");
 
+        radFemale.setBackground(new java.awt.Color(255, 255, 255));
         grpGender.add(radFemale);
         radFemale.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radFemale.setText("Female");
@@ -379,10 +411,10 @@ public class Register extends javax.swing.JFrame {
             genderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, genderLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblGender, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblGender)
+                .addGap(85, 85, 85)
                 .addComponent(radMale, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addComponent(radFemale, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -399,6 +431,7 @@ public class Register extends javax.swing.JFrame {
 
         username.setOpaque(false);
 
+        lblUsername.setBackground(new java.awt.Color(255, 255, 255));
         lblUsername.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblUsername.setLabelFor(txtUsername);
         lblUsername.setText("Username:");
@@ -422,8 +455,8 @@ public class Register extends javax.swing.JFrame {
             usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, usernameLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblUsername)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -438,17 +471,21 @@ public class Register extends javax.swing.JFrame {
 
         Role.setOpaque(false);
 
+        lblRole.setBackground(new java.awt.Color(255, 255, 255));
         lblRole.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblRole.setText("Role :");
 
+        radAdmin.setBackground(new java.awt.Color(255, 255, 255));
         grpRole.add(radAdmin);
         radAdmin.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radAdmin.setText("Admin");
 
+        radSalesPerson.setBackground(new java.awt.Color(255, 255, 255));
         grpRole.add(radSalesPerson);
         radSalesPerson.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radSalesPerson.setText("Sales Person");
 
+        radOfficer.setBackground(new java.awt.Color(255, 255, 255));
         grpRole.add(radOfficer);
         radOfficer.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radOfficer.setText("Officer");
@@ -459,13 +496,13 @@ public class Register extends javax.swing.JFrame {
             RoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RoleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblRole, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblRole)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(radAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(radOfficer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radSalesPerson)
+                .addComponent(radSalesPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         RoleLayout.setVerticalGroup(
@@ -482,6 +519,7 @@ public class Register extends javax.swing.JFrame {
 
         password.setOpaque(false);
 
+        lblPassword.setBackground(new java.awt.Color(255, 255, 255));
         lblPassword.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblPassword.setText("Password:");
 
@@ -494,8 +532,8 @@ public class Register extends javax.swing.JFrame {
             passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passwordLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblPassword)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -508,6 +546,7 @@ public class Register extends javax.swing.JFrame {
 
         retypePassword.setOpaque(false);
 
+        lblPasswordRetype.setBackground(new java.awt.Color(255, 255, 255));
         lblPasswordRetype.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblPasswordRetype.setText("Retype Password:");
 
@@ -521,7 +560,7 @@ public class Register extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, retypePasswordLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblPasswordRetype)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(txtPasswordRetype, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -533,6 +572,7 @@ public class Register extends javax.swing.JFrame {
 
         address.setOpaque(false);
 
+        lblAddress.setBackground(new java.awt.Color(255, 255, 255));
         lblAddress.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblAddress.setText("Address");
 
@@ -557,8 +597,8 @@ public class Register extends javax.swing.JFrame {
             addressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addressLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblAddress)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -641,52 +681,57 @@ public class Register extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(divider)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(pageTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(310, 310, 310)
+                .addComponent(pageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(divider, javax.swing.GroupLayout.PREFERRED_SIZE, 798, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(address, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(username, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Role, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(retypePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(gender, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(retypePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(213, 213, 213)
+                .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(40, 40, 40)
                 .addComponent(pageTitle)
-                .addGap(12, 12, 12)
+                .addGap(2, 2, 2)
                 .addComponent(divider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(email, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(retypePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 

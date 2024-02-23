@@ -18,11 +18,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Aryssa
  */
 public class ModifySalesOrder extends javax.swing.JPanel {
+    MainPage parent;
     int quantity;
     double price;
     double totalPrice = 0.0;
-    
-    MainPage parent;
     private SalesOrder selectedOrder;  // To store the details of the selected order
     private String quotationID;
 
@@ -44,9 +43,11 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     void LoadData(){
         List<String> idList = new ArrayList<>();
             for (SalesOrder salesOrder: SalesOrder.salesOrders){
-                String quotationID = salesOrder.getQuotation();
-                if (quotationID != null && !idList.contains(quotationID)) {
-                    idList.add(quotationID);
+                quotationID = salesOrder.getQuotation();
+                if(SalesOrder.isMyQuotation(quotationID, parent.user.getId())){
+                    if (quotationID != null && !idList.contains(quotationID)) {
+                        idList.add(quotationID);
+                    }
                 }
             }
         DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String [0]));
@@ -60,7 +61,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             if (salesOrder.getGeneratedBy().equals(parent.user.getId())&&
                 salesOrder.getQuotation().equals(quotationID) 
                     && ("Pending".equalsIgnoreCase(salesOrder.getStatus()) ||
-                    "Approve".equalsIgnoreCase(salesOrder.getStatus()))
+                    "Approved".equalsIgnoreCase(salesOrder.getStatus()))
                 ) {
                 salesOrderModel.addElement(salesOrder.getId());
             }
@@ -78,7 +79,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         for (SalesOrder sales : SalesOrder.salesOrders) {
             if (sales.getGeneratedBy().equals(parent.user.getId())&&
                 sales.getQuotation().equals(quotationID) && 
-                    ("Approve".equals(sales.getStatus()) || 
+                    ("Approved".equals(sales.getStatus()) || 
                     "Pending".equals(sales.getStatus()))
                 ) {
                 // Retrieve the furniture object associated with the furniture ID
@@ -104,7 +105,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
 
         // If no records found for the given quotation ID and status
         if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No records found for the given quotation ID and status", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No records found for the given quotation ID", "Not Found", JOptionPane.INFORMATION_MESSAGE);
         }
         tfTotalPrice.setText(String.valueOf(totalPrice));
     }
@@ -177,31 +178,30 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         lblFurnitureID = new javax.swing.JLabel();
         lblQuantity = new javax.swing.JLabel();
         tfTotal = new javax.swing.JTextField();
         lblTotal = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        tfStatus = new javax.swing.JLabel();
+        quotationScrollPane = new javax.swing.JScrollPane();
         tblQuotation = new javax.swing.JTable();
         btnSaveChanges = new javax.swing.JButton();
         tfQuantity = new javax.swing.JSpinner(new javax.swing.SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-        btnBack = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblQuotationID = new javax.swing.JLabel();
         cbQuotationID = new javax.swing.JComboBox<>();
         tfTotalPrice = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        lblGrandTotal = new javax.swing.JLabel();
         tfFurnitureID = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lblSalesOrderID = new javax.swing.JLabel();
         cbSalesOrderID = new javax.swing.JComboBox<>();
 
         setOpaque(false);
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("VIEW/EDIT SALES ORDER QUOTATION");
+        lblTitle.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("VIEW/EDIT SALES ORDER QUOTATION");
 
         lblFurnitureID.setText("FURNITURE ID");
 
@@ -211,7 +211,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
 
         lblStatus.setText("STATUS");
 
-        jLabel8.setText("WAITING FOR APPROVAL");
+        tfStatus.setText("WAITING FOR APPROVAL");
 
         tblQuotation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -220,8 +220,16 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             new String [] {
                 "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID", "STATUS"
             }
-        ));
-        jScrollPane1.setViewportView(tblQuotation);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        quotationScrollPane.setViewportView(tblQuotation);
 
         btnSaveChanges.setText("SAVE CHANGES");
         btnSaveChanges.addActionListener(new java.awt.event.ActionListener() {
@@ -236,9 +244,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             }
         });
 
-        btnBack.setText("BACK");
-
-        jLabel2.setText("QUOTATION ID");
+        lblQuotationID.setText("QUOTATION ID");
 
         cbQuotationID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbQuotationID.addActionListener(new java.awt.event.ActionListener() {
@@ -253,7 +259,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setText("TOTAL PRICE");
+        lblGrandTotal.setText("TOTAL PRICE");
 
         tfFurnitureID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,7 +267,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setText("ORDER ID");
+        lblSalesOrderID.setText("ORDER ID");
 
         cbSalesOrderID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbSalesOrderID.addActionListener(new java.awt.event.ActionListener() {
@@ -274,16 +280,15 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFurnitureID)
                     .addComponent(lblQuantity)
                     .addComponent(lblStatus)
                     .addComponent(lblTotal)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel2))
+                    .addComponent(lblSalesOrderID)
+                    .addComponent(lblQuotationID))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cbQuotationID, 0, 162, Short.MAX_VALUE)
@@ -292,12 +297,12 @@ public class ModifySalesOrder extends javax.swing.JPanel {
                     .addComponent(tfFurnitureID)
                     .addComponent(tfQuantity)
                     .addComponent(tfTotal)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tfStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                    .addComponent(quotationScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(lblGrandTotal)
                         .addGap(18, 18, 18)
                         .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
@@ -305,17 +310,17 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
+                .addGap(0, 0, 0)
+                .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
+                            .addComponent(lblQuotationID)
                             .addComponent(cbQuotationID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
+                            .addComponent(lblSalesOrderID)
                             .addComponent(cbSalesOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -332,17 +337,15 @@ public class ModifySalesOrder extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblStatus)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tfStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(quotationScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnSaveChanges)
-                                .addComponent(btnBack))
+                            .addComponent(btnSaveChanges)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(tfTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3))))))
+                                .addComponent(lblGrandTotal))))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -388,11 +391,10 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     return true;
 }
     private void clearAllFields() {
-    tfFurnitureID.setText(" ");
-    tfQuantity.setValue(1);
-    tfTotal.setText("");
-    
-}
+        tfFurnitureID.setText(" ");
+        tfQuantity.setValue(1);
+        tfTotal.setText("");
+    }
     private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
         if (!validateInput()) {
             JOptionPane.showMessageDialog(this, "Please enter all fields!", "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -456,23 +458,22 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     }//GEN-LAST:event_tfFurnitureIDActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSaveChanges;
     private javax.swing.JComboBox<String> cbQuotationID;
     private javax.swing.JComboBox<String> cbSalesOrderID;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFurnitureID;
+    private javax.swing.JLabel lblGrandTotal;
     private javax.swing.JLabel lblQuantity;
+    private javax.swing.JLabel lblQuotationID;
+    private javax.swing.JLabel lblSalesOrderID;
     private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblTotal;
+    private javax.swing.JScrollPane quotationScrollPane;
     private javax.swing.JTable tblQuotation;
     private javax.swing.JTextField tfFurnitureID;
     private javax.swing.JSpinner tfQuantity;
+    private javax.swing.JLabel tfStatus;
     private javax.swing.JTextField tfTotal;
     private javax.swing.JTextField tfTotalPrice;
     // End of variables declaration//GEN-END:variables
