@@ -63,22 +63,44 @@ public class Login extends javax.swing.JFrame {
         RegisterBtn = new javax.swing.JButton();
         LoginBtn = new javax.swing.JButton();
         ExitBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(630, 360));
+        setPreferredSize(new java.awt.Dimension(630, 360));
+        setResizable(false);
+        setSize(new java.awt.Dimension(630, 360));
+        getContentPane().setLayout(null);
 
+        LoginLbl.setBackground(new java.awt.Color(255, 255, 255));
         LoginLbl.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         LoginLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LoginLbl.setText("Login");
+        LoginLbl.setOpaque(true);
+        getContentPane().add(LoginLbl);
+        LoginLbl.setBounds(170, 60, 281, 31);
 
+        UserLbl.setBackground(new java.awt.Color(255, 255, 255));
         UserLbl.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         UserLbl.setText("Username:");
+        UserLbl.setOpaque(true);
+        getContentPane().add(UserLbl);
+        UserLbl.setBounds(140, 140, 80, 19);
 
         UserTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        getContentPane().add(UserTxt);
+        UserTxt.setBounds(240, 140, 214, 29);
 
+        PassLbl.setBackground(new java.awt.Color(255, 255, 255));
         PassLbl.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         PassLbl.setText("Password:");
+        PassLbl.setOpaque(true);
+        getContentPane().add(PassLbl);
+        PassLbl.setBounds(150, 180, 70, 19);
 
         PassTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        getContentPane().add(PassTxt);
+        PassTxt.setBounds(240, 180, 214, 29);
 
         RegisterBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         RegisterBtn.setText("Register");
@@ -87,6 +109,8 @@ public class Login extends javax.swing.JFrame {
                 RegisterBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(RegisterBtn);
+        RegisterBtn.setBounds(180, 270, 90, 30);
 
         LoginBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         LoginBtn.setText("Login");
@@ -95,6 +119,8 @@ public class Login extends javax.swing.JFrame {
                 LoginBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(LoginBtn);
+        LoginBtn.setBounds(280, 270, 76, 30);
 
         ExitBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ExitBtn.setText("Exit");
@@ -103,51 +129,13 @@ public class Login extends javax.swing.JFrame {
                 ExitBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(ExitBtn);
+        ExitBtn.setBounds(370, 270, 76, 30);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(125, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(UserLbl)
-                            .addComponent(PassLbl))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(UserTxt)
-                            .addComponent(PassTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(RegisterBtn)
-                        .addGap(18, 18, 18)
-                        .addComponent(LoginBtn)
-                        .addGap(18, 18, 18)
-                        .addComponent(ExitBtn))
-                    .addComponent(LoginLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(201, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
-                .addComponent(LoginLbl)
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(UserLbl)
-                    .addComponent(UserTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PassTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PassLbl))
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ExitBtn)
-                    .addComponent(LoginBtn)
-                    .addComponent(RegisterBtn))
-                .addGap(49, 49, 49))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/background.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 610, 360);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -268,5 +256,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton RegisterBtn;
     private javax.swing.JLabel UserLbl;
     private javax.swing.JTextField UserTxt;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

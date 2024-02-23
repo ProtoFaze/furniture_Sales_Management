@@ -65,7 +65,6 @@ public class MainPage extends javax.swing.JFrame {
             }
         }
         initComponents();
-        rolelbl.setText(roleLblText);
         loadData();
     }
 
@@ -180,7 +179,6 @@ public class MainPage extends javax.swing.JFrame {
                 g2d.fillRect(0, 0, width, height);
             }
         };
-        rolelbl = new javax.swing.JLabel();
         welcometxt = new javax.swing.JLabel();
         ProfileBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
@@ -213,9 +211,6 @@ public class MainPage extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        rolelbl.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        rolelbl.setText("none detected");
 
         welcometxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         welcometxt.setText("Welcome, ");
@@ -313,9 +308,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(lblTitle)
                         .addGap(89, 89, 89)
                         .addComponent(welcometxt)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 369, Short.MAX_VALUE)
-                        .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(120, 120, 120)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ProfileBtn)
                         .addContainerGap())
                     .addGroup(bgPanelLayout.createSequentialGroup()
@@ -327,7 +320,7 @@ public class MainPage extends javax.swing.JFrame {
                             .addComponent(jobMainbtn5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(LogoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
-                        .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE))))
         );
         bgPanelLayout.setVerticalGroup(
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,7 +329,6 @@ public class MainPage extends javax.swing.JFrame {
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTitle)
                     .addComponent(welcometxt)
-                    .addComponent(rolelbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ProfileBtn))
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgPanelLayout.createSequentialGroup()
@@ -502,7 +494,6 @@ public class MainPage extends javax.swing.JFrame {
     private view.OfficerApproval officerApproval1;
     view.PersonList peopleList;
     private view.PersonalSales personalSales;
-    private javax.swing.JLabel rolelbl;
     private javax.swing.JLabel welcometxt;
     // End of variables declaration//GEN-END:variables
 }

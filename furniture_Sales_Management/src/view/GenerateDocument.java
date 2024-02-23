@@ -131,6 +131,11 @@ public class GenerateDocument extends javax.swing.JPanel {
 
         ReportBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ReportBtn.setText("Generate Report");
+        ReportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReportBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -218,6 +223,12 @@ public class GenerateDocument extends javax.swing.JPanel {
     private void RefreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshBtnActionPerformed
         LoadData();
     }//GEN-LAST:event_RefreshBtnActionPerformed
+
+    private void ReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportBtnActionPerformed
+        // TODO add your handling code here:
+        GenerateReport page = new GenerateReport(user);
+        page.setVisible(true);
+    }//GEN-LAST:event_ReportBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
