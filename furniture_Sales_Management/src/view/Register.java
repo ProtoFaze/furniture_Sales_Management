@@ -148,8 +148,8 @@ public class Register extends javax.swing.JFrame {
         String error = validName+validEmail+validDate+validGender+validPhysicalAddress;
         if(error.isEmpty()){
             Boolean customerExist = false;
-            for(User user:User.list){
-                if(user.getMail().equals(emailAddress)){
+            for(Customer customer:Customer.list){
+                if(customer.getMail().equals(emailAddress)){
                     customerExist = true;
                     break;
                 }
