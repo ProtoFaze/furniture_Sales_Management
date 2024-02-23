@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package view;
-import Classes.File;
+import Classes.FileAccess;
 import Classes.Furniture;
 import Classes.SalesOrder;
 import java.util.ArrayList;
@@ -441,7 +441,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         
     SalesOrder record = new SalesOrder(furniture, amount, total, parent.user.getId(), customer, quotationID);
     SalesOrder.salesOrders.add(record);
-    File.write("salesOrder", SalesOrder.salesOrders);
+    FileAccess.write("salesOrder", SalesOrder.salesOrders);
     parent.updateData();
     // Add the new sales order to the list
     JOptionPane.showMessageDialog(this, "Sales Order Created!");

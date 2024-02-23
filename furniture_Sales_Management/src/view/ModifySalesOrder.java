@@ -4,7 +4,7 @@
  */
 package view;
 
-import Classes.File;
+import Classes.FileAccess;
 import Classes.Furniture;
 import Classes.SalesOrder;
 import javax.swing.DefaultComboBoxModel;
@@ -417,7 +417,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         //update the selected order
         updateSelectedOrder();
         // Save the changes to file
-        File.write("salesOrder", SalesOrder.salesOrders);
+        FileAccess.write("salesOrder", SalesOrder.salesOrders);
 
         JOptionPane.showMessageDialog(this, "Changes saved successfully!");
 

@@ -5,7 +5,7 @@
 package view;
 
 import Classes.Admin;
-import Classes.File;
+import Classes.FileAccess;
 import Classes.Officer;
 import Classes.SalesPerson;
 import Classes.User;
@@ -38,7 +38,7 @@ public class Login extends javax.swing.JFrame {
         helper = new Gson();
         
 
-        this.lastUser = File.read("lastUser");
+        this.lastUser = FileAccess.read("lastUser");
         lastUser = lastUser.get("lastUser").getAsJsonObject();
         if(lastUser != null){
             UserTxt.setText(lastUser.get("userName").getAsString());
@@ -173,7 +173,7 @@ public class Login extends javax.swing.JFrame {
                    !pass.equals(lastUser.get("passWord").getAsString())){
                    lastUser.addProperty("passWord", pass);
                    lastUser.addProperty("userName", usr);
-                   File.write("lastUser", lastUser);
+                   FileAccess.write("lastUser", lastUser);
                    System.out.print("Updated latest login credentials");
                 }
                 MainPage window = new MainPage(currentUser);

@@ -137,7 +137,7 @@ public class SalesOrder {
     // Delete the quotation chose
     public static void deleteWholeQuotation(String quotationID) {
         salesOrders.removeIf(order -> (order.getQuotation().equals(quotationID)));
-        File.write("salesOrder", salesOrders);
+        FileAccess.write("salesOrder", salesOrders);
         populateList();
     }
     
@@ -152,7 +152,7 @@ public class SalesOrder {
     
     //Read data from file
     public static void populateList() {
-        salesOrders = File.read("salesOrder", SalesOrder.class);
+        salesOrders = FileAccess.read("salesOrder", SalesOrder.class);
     }
     
     
