@@ -234,7 +234,7 @@ public class GeneratePDF extends javax.swing.JFrame {
                         .addComponent(DateLbl)
                         .addGap(18, 18, 18)
                         .addComponent(DateTxt)
-                        .addContainerGap())))
+                        .addGap(23, 23, 23))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InvoicePanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(InvoicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -66,8 +66,8 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(630, 360));
-        setPreferredSize(new java.awt.Dimension(630, 360));
+        setMinimumSize(new java.awt.Dimension(630, 340));
+        setPreferredSize(new java.awt.Dimension(630, 340));
         setResizable(false);
         setSize(new java.awt.Dimension(630, 360));
         getContentPane().setLayout(null);
@@ -135,7 +135,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/background.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 610, 360);
+        jLabel1.setBounds(0, 0, 620, 360);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

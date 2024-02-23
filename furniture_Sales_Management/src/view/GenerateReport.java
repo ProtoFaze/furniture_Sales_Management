@@ -220,7 +220,7 @@ public class GenerateReport extends javax.swing.JFrame {
                         .addComponent(DateLbl)
                         .addGap(18, 18, 18)
                         .addComponent(DateTxt)
-                        .addContainerGap())
+                        .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InvoicePanelLayout.createSequentialGroup()
                         .addComponent(InvoiceLbl)
                         .addGap(148, 148, 148))))

@@ -266,25 +266,18 @@ public class Register extends javax.swing.JFrame {
         btnRedirect = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Rockwell", 0, 10)); // NOI18N
         setMinimumSize(new java.awt.Dimension(798, 430));
         setResizable(false);
         setSize(new java.awt.Dimension(798, 430));
-        getContentPane().setLayout(null);
 
         pageTitle.setBackground(new java.awt.Color(255, 255, 255));
         pageTitle.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         pageTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pageTitle.setText("Staff Registration");
         pageTitle.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        pageTitle.setOpaque(true);
-        getContentPane().add(pageTitle);
-        pageTitle.setBounds(310, 40, 200, 31);
-        getContentPane().add(divider);
-        divider.setBounds(0, 73, 798, 3);
 
         name.setOpaque(false);
 
@@ -292,7 +285,6 @@ public class Register extends javax.swing.JFrame {
         lblName.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblName.setLabelFor(txtUsername);
         lblName.setText("Name:");
-        lblName.setOpaque(true);
 
         txtName.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtName.setForeground(new java.awt.Color(204, 204, 204));
@@ -315,7 +307,7 @@ public class Register extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nameLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -328,15 +320,11 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        getContentPane().add(name);
-        name.setBounds(0, 94, 384, 30);
-
         email.setOpaque(false);
 
         lblEmail.setBackground(new java.awt.Color(255, 255, 255));
         lblEmail.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblEmail.setText("Email:");
-        lblEmail.setOpaque(true);
 
         txtEmail.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(204, 204, 204));
@@ -372,15 +360,11 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        getContentPane().add(email);
-        email.setBounds(394, 94, 404, 30);
-
         date.setOpaque(false);
 
         lblDOB.setBackground(new java.awt.Color(255, 255, 255));
         lblDOB.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblDOB.setText("DOB:");
-        lblDOB.setOpaque(true);
 
         txtDate.setOpaque(false);
         txtDate.setPreferredSize(new java.awt.Dimension(80, 26));
@@ -392,7 +376,7 @@ public class Register extends javax.swing.JFrame {
             .addGroup(dateLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblDOB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -405,27 +389,21 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        getContentPane().add(date);
-        date.setBounds(0, 142, 384, 30);
-
         gender.setOpaque(false);
 
         lblGender.setBackground(new java.awt.Color(255, 255, 255));
         lblGender.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblGender.setText("Gender:");
-        lblGender.setOpaque(true);
 
         radMale.setBackground(new java.awt.Color(255, 255, 255));
         grpGender.add(radMale);
         radMale.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radMale.setText("Male");
-        radMale.setOpaque(true);
 
         radFemale.setBackground(new java.awt.Color(255, 255, 255));
         grpGender.add(radFemale);
         radFemale.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radFemale.setText("Female");
-        radFemale.setOpaque(true);
 
         javax.swing.GroupLayout genderLayout = new javax.swing.GroupLayout(gender);
         gender.setLayout(genderLayout);
@@ -451,16 +429,12 @@ public class Register extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(gender);
-        gender.setBounds(394, 142, 404, 30);
-
         username.setOpaque(false);
 
         lblUsername.setBackground(new java.awt.Color(255, 255, 255));
         lblUsername.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblUsername.setLabelFor(txtUsername);
         lblUsername.setText("Username:");
-        lblUsername.setOpaque(true);
 
         txtUsername.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(204, 204, 204));
@@ -482,7 +456,7 @@ public class Register extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, usernameLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblUsername)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -495,33 +469,26 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        getContentPane().add(username);
-        username.setBounds(0, 190, 380, 30);
-
         Role.setOpaque(false);
 
         lblRole.setBackground(new java.awt.Color(255, 255, 255));
         lblRole.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblRole.setText("Role :");
-        lblRole.setOpaque(true);
 
         radAdmin.setBackground(new java.awt.Color(255, 255, 255));
         grpRole.add(radAdmin);
         radAdmin.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radAdmin.setText("Admin");
-        radAdmin.setOpaque(true);
 
         radSalesPerson.setBackground(new java.awt.Color(255, 255, 255));
         grpRole.add(radSalesPerson);
         radSalesPerson.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radSalesPerson.setText("Sales Person");
-        radSalesPerson.setOpaque(true);
 
         radOfficer.setBackground(new java.awt.Color(255, 255, 255));
         grpRole.add(radOfficer);
         radOfficer.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         radOfficer.setText("Officer");
-        radOfficer.setOpaque(true);
 
         javax.swing.GroupLayout RoleLayout = new javax.swing.GroupLayout(Role);
         Role.setLayout(RoleLayout);
@@ -530,12 +497,13 @@ public class Register extends javax.swing.JFrame {
             .addGroup(RoleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblRole)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(radAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(radOfficer)
-                .addGap(18, 18, 18)
-                .addComponent(radSalesPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radSalesPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         RoleLayout.setVerticalGroup(
             RoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -549,15 +517,11 @@ public class Register extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(Role);
-        Role.setBounds(394, 190, 376, 30);
-
         password.setOpaque(false);
 
         lblPassword.setBackground(new java.awt.Color(255, 255, 255));
         lblPassword.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblPassword.setText("Password:");
-        lblPassword.setOpaque(true);
 
         txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtPassword.setPreferredSize(new java.awt.Dimension(80, 26));
@@ -569,7 +533,7 @@ public class Register extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passwordLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblPassword)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -580,15 +544,11 @@ public class Register extends javax.swing.JFrame {
                 .addComponent(lblPassword))
         );
 
-        getContentPane().add(password);
-        password.setBounds(0, 238, 384, 30);
-
         retypePassword.setOpaque(false);
 
         lblPasswordRetype.setBackground(new java.awt.Color(255, 255, 255));
         lblPasswordRetype.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblPasswordRetype.setText("Retype Password:");
-        lblPasswordRetype.setOpaque(true);
 
         txtPasswordRetype.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtPasswordRetype.setPreferredSize(new java.awt.Dimension(80, 26));
@@ -600,7 +560,7 @@ public class Register extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, retypePasswordLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblPasswordRetype)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(txtPasswordRetype, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -610,15 +570,11 @@ public class Register extends javax.swing.JFrame {
             .addComponent(lblPasswordRetype, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        getContentPane().add(retypePassword);
-        retypePassword.setBounds(394, 238, 404, 30);
-
         address.setOpaque(false);
 
         lblAddress.setBackground(new java.awt.Color(255, 255, 255));
         lblAddress.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblAddress.setText("Address");
-        lblAddress.setOpaque(true);
 
         txtAddress.setColumns(20);
         txtAddress.setForeground(new java.awt.Color(204, 204, 204));
@@ -642,7 +598,7 @@ public class Register extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addressLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblAddress)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -654,9 +610,6 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        getContentPane().add(address);
-        address.setBounds(0, 286, 372, 96);
 
         buttons.setOpaque(false);
 
@@ -724,13 +677,63 @@ public class Register extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        getContentPane().add(buttons);
-        buttons.setBounds(213, 400, 371, 30);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/background.jpg"))); // NOI18N
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 0, 800, 430);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(310, 310, 310)
+                .addComponent(pageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(divider, javax.swing.GroupLayout.PREFERRED_SIZE, 798, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(retypePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(213, 213, 213)
+                .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(pageTitle)
+                .addGap(2, 2, 2)
+                .addComponent(divider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(retypePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -898,7 +901,6 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JPanel gender;
     private javax.swing.ButtonGroup grpGender;
     private javax.swing.ButtonGroup grpRole;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblDOB;
