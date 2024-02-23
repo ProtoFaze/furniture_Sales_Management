@@ -29,9 +29,13 @@ public class PersonalSales extends javax.swing.JPanel {
         filterStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Show all", "Pending", "Approved", "Rejected" }));
         LoadData();
     }
+    
+    // Displays all sales orders 
     void LoadData(){
         showSales("Show all");
     }
+    
+    // Populate table
     private void showSales(String filter) {
         DefaultTableModel model = (DefaultTableModel) tblPersonalSales.getModel();
         model.setRowCount(0); // Clear existing rows
@@ -146,7 +150,7 @@ public class PersonalSales extends javax.swing.JPanel {
     private void filterStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterStatusActionPerformed
         String selectedStatus = String.valueOf(filterStatus.getSelectedItem());
         
-        showSales(selectedStatus);
+        showSales(selectedStatus); //filter sales orders with selected status
     }//GEN-LAST:event_filterStatusActionPerformed
  
 

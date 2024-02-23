@@ -31,6 +31,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
         LoadData();
     }
     
+    // Populates table of sales orders based on logged-in salesperson's ID
     void LoadData(){
         populateTable();
     }
