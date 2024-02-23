@@ -61,7 +61,7 @@ public class GenerateReport extends javax.swing.JFrame {
             String orderApproved = order.getApprovedBy();
             if (orderApproved != null 
                     && orderApproved.equals(user.getId()) 
-                    && order.getStatus().equals("Approved")) {
+                    && order.getStatus().equals("Work Done")) {
                 Object[] row = new Object[model.getColumnCount()];
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();

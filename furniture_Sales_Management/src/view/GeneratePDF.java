@@ -30,15 +30,17 @@ import javax.swing.table.DefaultTableModel;
 public class GeneratePDF extends javax.swing.JFrame {
     private User user;
     private String ID;
+    MainPage parent;
     private DefaultTableModel model;
     private int Total;
     /**
      * Creates new form PDFTest
      */
-    public GeneratePDF(User user, String ID) {
+    public GeneratePDF(String ID, MainPage parent) {
         initComponents();
         model = (DefaultTableModel) QuotationList.getModel();
-        this.user = user;
+        this.parent = parent;
+        user = parent.user;
         this.ID = ID;
         LoadData();
     }
@@ -352,8 +354,20 @@ public class GeneratePDF extends javax.swing.JFrame {
     private void ProductionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductionBtnActionPerformed
         // TODO add your handling code here:
         openDefaultMailClient();
-        
+        for (int row = 0; row < model.getRowCount(); row++) {
+            String id = (String) model.getValueAt(row, 0); 
+            saveChanges(id, "Work Done");
+        }
     }//GEN-LAST:event_ProductionBtnActionPerformed
+
+    private void saveChanges(String ID, String Status){
+        for (SalesOrder record:SalesOrder.salesOrders){
+            if(ID.equals(record.getId())){
+                record.setStatus(Status);
+            }
+        }
+        parent.updateData();
+    }
     
     private static void openDefaultMailClient() {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.MAIL)) {

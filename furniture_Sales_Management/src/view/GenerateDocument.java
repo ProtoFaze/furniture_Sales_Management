@@ -38,6 +38,7 @@ public class GenerateDocument extends javax.swing.JPanel {
     public GenerateDocument(MainPage parent) {
         initComponents();
         this.parent = parent;
+        System.out.println(parent.toString());
         model = (DefaultTableModel) DocumentList.getModel();
         LoadData();
     }
@@ -187,7 +188,7 @@ public class GenerateDocument extends javax.swing.JPanel {
             for (int i = 0; i < model.getColumnCount(); i++) {
                 data[i] = model.getValueAt(selectedRow, i);
             }
-            GeneratePDF page = new GeneratePDF(user, data[4].toString());
+            GeneratePDF page = new GeneratePDF(data[4].toString(), parent);
             page.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Select a row to Generate PDF!","Error",JOptionPane.ERROR_MESSAGE);
