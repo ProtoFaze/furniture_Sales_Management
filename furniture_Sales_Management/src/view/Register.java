@@ -96,36 +96,47 @@ public class Register extends javax.swing.JFrame {
         validPass = passWord.equals(String.valueOf(txtPasswordRetype.getPassword())) ? Verify.isStrongPassword(passWord) : "password and retyped password is different";
         String errors = validName+validEmail+validDate+validGender+validUName+validRole+validPass;
         if((errors.isEmpty())){
-            String otp = sendEmail();
-            String userInput = JOptionPane.showInputDialog(rootPane, "Please provide the OTP sent to your email");
-            if(otp.equals(userInput)){
-                User applicant;
-                switch (role.toLowerCase()) {
-                    case "admin" ->{
-                            applicant = new Admin(userName, fullName, emailAddress, gndr, dob, passWord);
+            Boolean userExist = false;
+            for(User user:User.list){
+                if(user.getMail().equals(emailAddress)){
+                    userExist = true;
+                    break;
+                }
+            }
+            if(!userExist){
+                String otp = sendEmail();
+                String userInput = JOptionPane.showInputDialog(rootPane, "Please provide the OTP sent to your email");
+                if(otp.equals(userInput)){
+                    User applicant;
+                    switch (role.toLowerCase()) {
+                        case "admin" ->{
+                                applicant = new Admin(userName, fullName, emailAddress, gndr, dob, passWord);
+                            }
+                        case "officer" ->{
+                                applicant = new Officer(userName, fullName, emailAddress, gndr, dob, passWord);
+                            }
+                        case "sales person" ->{
+                                applicant = new SalesPerson(userName, fullName, emailAddress, gndr, dob, passWord);
+                            }
+                        default -> {
+                            applicant = null;
                         }
-                    case "officer" ->{
-                            applicant = new Officer(userName, fullName, emailAddress, gndr, dob, passWord);
-                        }
-                    case "sales person" ->{
-                            applicant = new SalesPerson(userName, fullName, emailAddress, gndr, dob, passWord);
-                        }
-                    default -> {
-                        applicant = null;
                     }
+                    users.add(applicant);
+                    String res=File.write("user", users);
+                    if("Success".equals(res)){
+                        JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.PLAIN_MESSAGE);
+                    }else{          
+                        JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
+                    }
+                    MainPage page  = new MainPage(applicant);
+                    page.setVisible(true);
+                    this.setVisible(false);
+                }else{
+                    JOptionPane.showMessageDialog(null,"It seems that the one time password you gave us is wrong, please try again with a different email, preferrably gmail.","OTP mismatch",JOptionPane.ERROR_MESSAGE);
                 }
-                users.add(applicant);
-                String res=File.write("user", users);
-                if("Success".equals(res)){
-                    JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.PLAIN_MESSAGE);
-                }else{          
-                    JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
-                }
-                MainPage page  = new MainPage(applicant);
-                page.setVisible(true);
-                this.setVisible(false);
             }else{
-                JOptionPane.showMessageDialog(null,"It seems that the one time password you gave us is wrong, please try again with a different email, preferrably gmail.","OTP mismatch",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"User already exist","Existing Information",JOptionPane.ERROR_MESSAGE);
             }
         }else{
             JOptionPane.showMessageDialog(null,errors,"Invalid Information",JOptionPane.ERROR_MESSAGE);
@@ -136,18 +147,29 @@ public class Register extends javax.swing.JFrame {
         validPhysicalAddress = Verify.validateAddress(physicalAddress);//customer specific validation
         String error = validName+validEmail+validDate+validGender+validPhysicalAddress;
         if(error.isEmpty()){
-            Customer customer=new Customer(fullName, emailAddress, dob, gndr, physicalAddress);
-            Customer.list.add(customer);
-            String res=File.write("customer", Customer.list);
-            if("Success".equals(res)){
-                JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
-                SalesOrder.populateList();
-                parent.changeTab("");
-                parent.createSalesOrder.tfCustomer.setText(customer.getId());
-                parent.peopleList.loadData();
-                this.setVisible(false);
+            Boolean customerExist = false;
+            for(User user:User.list){
+                if(user.getMail().equals(emailAddress)){
+                    customerExist = true;
+                    break;
+                }
+            }
+            if(!customerExist){
+                Customer customer=new Customer(fullName, emailAddress, dob, gndr, physicalAddress);
+                Customer.list.add(customer);
+                String res=File.write("customer", Customer.list);
+                if("Success".equals(res)){
+                    JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
+                    SalesOrder.populateList();
+                    parent.changeTab("");
+                    parent.createSalesOrder.tfCustomer.setText(customer.getId());
+                    parent.peopleList.loadData();
+                    this.setVisible(false);
+                }else{
+                    JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
+                }
             }else{
-                JOptionPane.showMessageDialog(null, res,"Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Customer already exist","Existing Information",JOptionPane.ERROR_MESSAGE);
             }
         }else{
             JOptionPane.showMessageDialog(null,error,"Invalid Information",JOptionPane.ERROR_MESSAGE);
