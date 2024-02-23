@@ -40,6 +40,7 @@ public class FurnitureList extends javax.swing.JPanel {
         setupActions();
     }
     
+    //
      void loadData(){
         selectedFurniture = null;
     }
