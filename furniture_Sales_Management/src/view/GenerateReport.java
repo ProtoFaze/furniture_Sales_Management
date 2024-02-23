@@ -58,16 +58,14 @@ public class GenerateReport extends javax.swing.JFrame {
         NameTxt.setText(user.getUserName());
         DateTxt.setText(Verify.LocalDateToString(LocalDate.now()));
         for (SalesOrder order : SalesOrder.salesOrders) {
-            String orderApproved = order.getApprovedBy();
-            if (orderApproved != null 
-                    && orderApproved.equals(user.getId()) 
-                    && order.getStatus().equals("Work Done")) {
+            if (shouldInclude(user.getRole(),  user.getId(), order)) {
                 Object[] row = new Object[model.getColumnCount()];
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();
                 row[1] = order.getQuotation();
                 row[2] = order.getQuantity();
                 row[3] = order.getTotal();
+                row[4] = order.getApprovedBy();
                 Total += order.getTotal();
                 
                 model.addRow(row);
@@ -75,7 +73,14 @@ public class GenerateReport extends javax.swing.JFrame {
         }
         TotalTxt.setText("RM " + Integer.toString(Total));
     }
-    
+    private boolean shouldInclude(String role, String userId, SalesOrder order){
+        String orderApproved = order.getApprovedBy();
+        switch(role){
+            case "admin"->{return (order.getStatus().equals("Work Done"));}
+            case "officer"->{return (orderApproved != null && orderApproved.equals(userId) && order.getStatus().equals("Work Done"));}
+            default->{return false;}
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,31 +116,26 @@ public class GenerateReport extends javax.swing.JFrame {
         InvoicePanel.setForeground(new java.awt.Color(255, 255, 255));
 
         InvoiceLbl.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
-        InvoiceLbl.setForeground(new java.awt.Color(0, 0, 0));
         InvoiceLbl.setText("Work Done Report");
 
-        QuotationList.setBackground(new java.awt.Color(255, 255, 255));
         QuotationList.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        QuotationList.setForeground(new java.awt.Color(0, 0, 0));
         QuotationList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "OrderID", "QuotationID", "Quantity", "Total"
+                "OrderID", "QuotationID", "Quantity", "Total", "ApprovedBy"
             }
         ));
         jScrollPane1.setViewportView(QuotationList);
 
         DateLbl.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        DateLbl.setForeground(new java.awt.Color(0, 0, 0));
         DateLbl.setText("Date:");
 
         DateTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        DateTxt.setForeground(new java.awt.Color(0, 0, 0));
         DateTxt.setText("--DATE--");
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N

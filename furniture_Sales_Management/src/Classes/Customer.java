@@ -39,6 +39,6 @@ public class Customer extends Person{
     }
     
     public static void populateList(){
-        list = File.read("customer", Customer.class);
+        list = FileAccess.read("customer", Customer.class);
     }
 }

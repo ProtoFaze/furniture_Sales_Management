@@ -4,7 +4,7 @@
  */
 package view;
 
-import Classes.File;
+import Classes.FileAccess;
 import Classes.SalesOrder;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -31,6 +31,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
         LoadData();
     }
     
+    // Populates table of sales orders based on logged-in salesperson's ID
     void LoadData(){
         populateTable();
     }
@@ -59,6 +60,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
             }
         });
     }
+    
     private boolean validateInput(){
         // Validate QuotationID text field
         String quotationIDText = tfQuotationID.getText().trim();
@@ -68,6 +70,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
         }
             return true;
     }
+    
     private void deleteQuotation(String selectedQuotationID) {
         Boolean isDeleted = false;
         if(SalesOrder.isMyQuotation(selectedQuotationID, parent.user.getId())){

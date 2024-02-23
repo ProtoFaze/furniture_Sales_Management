@@ -14,6 +14,7 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -21,6 +22,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,7 +32,7 @@ import javax.swing.table.DefaultTableModel;
 public class GeneratePDF extends javax.swing.JFrame {
     private User user;
     private String ID;
-    MainPage parent;
+    private MainPage parent;
     private DefaultTableModel model;
     private int Total;
     /**
@@ -43,7 +45,12 @@ public class GeneratePDF extends javax.swing.JFrame {
         user = parent.user;
         this.ID = ID;
         LoadData();
+        if (user.getRole().equals("admin")) {
+            ProductionBtn.setVisible(false);
+        }
     }
+    
+    
     
     public void LoadData(){
         model.setRowCount(0);
@@ -70,10 +77,8 @@ public class GeneratePDF extends javax.swing.JFrame {
     }
     
     private String selectFilePath() {
+        JFileChooser chooser = new JFileChooser(); 
         String path = "";
-        
-        JFileChooser chooser = new JFileChooser();
-        
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int x = chooser.showSaveDialog(null);
         if (x == JFileChooser.APPROVE_OPTION) {
@@ -89,6 +94,7 @@ public class GeneratePDF extends javax.swing.JFrame {
             Graphics2D graphics = capture.createGraphics();
             InvoicePanel.paint(graphics);
             Document document = new Document();
+            System.out.println(filePath);
             PdfWriter.getInstance(document, new FileOutputStream(filePath));
             document.open();
             Image image = Image.getInstance(capture, null);
@@ -98,7 +104,7 @@ public class GeneratePDF extends javax.swing.JFrame {
         } catch (IOException | com.itextpdf.text.DocumentException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error saving to PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        } 
     }
     
     /**

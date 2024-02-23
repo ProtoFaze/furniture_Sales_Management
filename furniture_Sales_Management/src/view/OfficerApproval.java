@@ -29,14 +29,15 @@ public class OfficerApproval extends javax.swing.JPanel {
         model = (DefaultTableModel) QuotationList.getModel();
         LoadData();
     }
-
+    
+    // Filter before populate
     private void showQuotations(String filter) {
         model.setRowCount(0); // Clear existing rows
 
         // Iterate through the salesOrders list and add rows for matching salesperson ID
         for (SalesOrder order : SalesOrder.salesOrders) {
             String orderStatus = order.getStatus();
-            if (orderStatus != null && filter.equals("Show all")) {
+            if (orderStatus != null && filter.equals("Show all") && !order.getStatus().equals("Work Done")) {
                 Object[] row = new Object[model.getColumnCount()];
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();
@@ -64,6 +65,7 @@ public class OfficerApproval extends javax.swing.JPanel {
         }
     }
     
+    // Populate table
     public void LoadData() {
         showQuotations("Show all");
     }
@@ -224,10 +226,11 @@ public class OfficerApproval extends javax.swing.JPanel {
         // TODO add your handling code here:
         model.setRowCount(0);
         String text = SearchTxt.getText();
+        boolean flag = false;
         if (!text.equals("")) {
             for (SalesOrder order : SalesOrder.salesOrders) {
                 String orderId = order.getId();
-                if (orderId != null && orderId.equals(text)) {
+                if (orderId != null && orderId.equals(text) && !order.getStatus().equals("Work Done")) {
                     Object[] row = new Object[model.getColumnCount()];
                     // Fill in the values from the SalesOrder object
                     row[0] = order.getId();
@@ -238,7 +241,10 @@ public class OfficerApproval extends javax.swing.JPanel {
                     row[5] = order.getQuotation();
 
                     model.addRow(row);
+                    flag = true;
                 }
+            } if (!flag) {
+                JOptionPane.showMessageDialog(null, "Data not found!","Error",JOptionPane.ERROR_MESSAGE);
             }
         } else {
             LoadData();

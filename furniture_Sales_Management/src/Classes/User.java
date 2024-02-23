@@ -57,10 +57,10 @@ public abstract class User extends Person {
     *Updates user file, list and subLists in subfunctions
     */
     public static void populateList() {
-        List<User> fetchData = File.readUsers(); // read user file, doesn't detect if it's new or old
+        List<User> fetchData = FileAccess.readUsers(); // read user file, doesn't detect if it's new or old
         if (list!=null && !list.equals(fetchData) && !list.containsAll(fetchData)) {
             // user file is outdated
-            File.write("user", list);
+            FileAccess.write("user", list);
         }else{
             list = fetchData;
         }

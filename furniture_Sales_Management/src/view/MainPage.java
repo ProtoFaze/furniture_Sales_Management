@@ -2,7 +2,7 @@ package view;
 
 import Classes.Admin;
 import Classes.Customer;
-import Classes.File;
+import Classes.FileAccess;
 import Classes.Invoice;
 import Classes.SalesOrder;
 import Classes.User;
@@ -129,14 +129,14 @@ public class MainPage extends javax.swing.JFrame {
         cardLayout.show(Tabs, ComponentName);
     }
     public void updateData(){
-        File.write("user", User.list);
+        FileAccess.write("user", User.list);
         User.populateList();
         if(!user.getRole().equals("admin")){
-            File.write("customer",Customer.list);
+            FileAccess.write("customer",Customer.list);
             Customer.populateList();
-            File.write("salesOrder", SalesOrder.salesOrders);
+            FileAccess.write("salesOrder", SalesOrder.salesOrders);
             SalesOrder.populateList();
-            File.write("invoice", Invoice.list);
+            FileAccess.write("invoice", Invoice.list);
             Invoice.populateList();
         }
         switch (user.getRole()){

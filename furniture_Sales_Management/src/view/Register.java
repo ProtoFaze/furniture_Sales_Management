@@ -8,7 +8,7 @@ import java.awt.Color;
 import Classes.User;
 import Classes.Admin;
 import Classes.Customer;
-import Classes.File;
+import Classes.FileAccess;
 import Classes.Officer;
 import Classes.SalesOrder;
 import Classes.SalesPerson;
@@ -123,7 +123,7 @@ public class Register extends javax.swing.JFrame {
                         }
                     }
                     users.add(applicant);
-                    String res=File.write("user", users);
+                    String res=FileAccess.write("user", users);
                     if("Success".equals(res)){
                         JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.PLAIN_MESSAGE);
                     }else{          
@@ -157,7 +157,7 @@ public class Register extends javax.swing.JFrame {
             if(!customerExist){
                 Customer customer=new Customer(fullName, emailAddress, dob, gndr, physicalAddress);
                 Customer.list.add(customer);
-                String res=File.write("customer", Customer.list);
+                String res=FileAccess.write("customer", Customer.list);
                 if("Success".equals(res)){
                     JOptionPane.showMessageDialog(null,"Registration completed.","Success",JOptionPane.INFORMATION_MESSAGE);
                     SalesOrder.populateList();

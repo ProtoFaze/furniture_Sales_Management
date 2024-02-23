@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package view;
-import Classes.File;
+import Classes.FileAccess;
 import Classes.Furniture;
 import Classes.SalesOrder;
 import java.util.ArrayList;
@@ -21,12 +21,10 @@ public class CreateSalesOrder extends javax.swing.JPanel {
     DefaultTableModel model;
     int quantity;
     double price;
-    
     MainPage parent;
     /**
      * Creates new form CreateSalesOrder1
      */
-    //private SalesOrder salesOrder;
     
     public CreateSalesOrder() {
         initComponents();
@@ -55,7 +53,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
             }
         });
     }
-    
+    //Load furniture data
     void LoadData(){
         List<String> idList = new ArrayList<>();
         for (Furniture furniture: Furniture.list){
@@ -64,6 +62,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         model = (DefaultTableModel) tblQuotation.getModel();
        
     }
+    
     void handleQuotationIDChange() {
         String quotationID = tfQuotationID.getText();
         // Check if the quotation number exists in the text file
@@ -158,7 +157,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         return true; 
     }
   
-
+    // Calculate the total price of the furniture
     private void calculateTotal(){
        // Get the selected furniture ID
        String furnitureID = cbFurniture.getText();
@@ -442,7 +441,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
         
     SalesOrder record = new SalesOrder(furniture, amount, total, parent.user.getId(), customer, quotationID);
     SalesOrder.salesOrders.add(record);
-    File.write("salesOrder", SalesOrder.salesOrders);
+    FileAccess.write("salesOrder", SalesOrder.salesOrders);
     parent.updateData();
     // Add the new sales order to the list
     JOptionPane.showMessageDialog(this, "Sales Order Created!");
@@ -478,7 +477,7 @@ public class CreateSalesOrder extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCustomerListActionPerformed
 
     private void cbFurnitureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFurnitureActionPerformed
-        // TODO add your handling code here:
+
         String furniture = cbFurniture.getText();
         for (Furniture record: Furniture.list){
             if (record.getId().equals(furniture)){
@@ -494,9 +493,6 @@ public class CreateSalesOrder extends javax.swing.JPanel {
 
     private void tfQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQuotationIDActionPerformed
         String quotationID = tfQuotationID.getText();
-//        for (SalesOrder sales: SalesOrder.salesOrders){
-//            if(sales.getQuotation().equals(quotationID)){
-//        }
     }//GEN-LAST:event_tfQuotationIDActionPerformed
  
     // Variables declaration - do not modify//GEN-BEGIN:variables

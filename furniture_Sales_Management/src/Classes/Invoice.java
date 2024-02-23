@@ -103,7 +103,7 @@ public class Invoice {
     }
     
     public static void populateList(){
-        list = File.read("invoice",Invoice.class);
+        list = FileAccess.read("invoice",Invoice.class);
     }
     
 }

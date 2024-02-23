@@ -40,25 +40,21 @@ public class FurnitureList extends javax.swing.JPanel {
         setupActions();
     }
     
-     void loadData(){
-        selectedFurniture = null;
-    }
-    
     public void populateTable(){
-         temp = (DefaultTableModel) tblFurniture.getModel();
-            temp.setRowCount(0); // Clear existing rows
+        temp = (DefaultTableModel) tblFurniture.getModel();
+        temp.setRowCount(0); // Clear existing rows
 
-            Object row[] = new Object[4]; 
+        Object row[] = new Object[4]; 
 
-            for (Furniture furniture : Furniture.list) {
-                // Assuming Furniture.list is a static list containing furniture objects
-                row[0] = furniture.getId();
-                row[1] = furniture.getName();
-                row[2] = furniture.getCategory();
-                row[3] = furniture.getPrice();
+        for (Furniture furniture : Furniture.list) {
+            // Assuming Furniture.list is a static list containing furniture objects
+            row[0] = furniture.getId();
+            row[1] = furniture.getName();
+            row[2] = furniture.getCategory();
+            row[3] = furniture.getPrice();
 
-                temp.addRow(row);
-    }
+            temp.addRow(row);
+        }
     }
      private void setupActions(){
         btnInspect = new JButton();
@@ -71,10 +67,11 @@ public class FurnitureList extends javax.swing.JPanel {
             selectedFurniture = furniture; 
             parent.createSalesOrder.cbFurniture.setText(selectedFurniture.getId()); 
             parent.changeTab("createSalesOrder"); // Redirect to another tab
-});
+            });
         });
     }
-     class ButtonRenderer extends JButton implements TableCellRenderer{
+     
+    class ButtonRenderer extends JButton implements TableCellRenderer{
         public ButtonRenderer(){
             setOpaque(true);
         }
@@ -86,6 +83,7 @@ public class FurnitureList extends javax.swing.JPanel {
         }
 
     }
+    
     class ButtonEditor extends DefaultCellEditor{
         private String label;
         

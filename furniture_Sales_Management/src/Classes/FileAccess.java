@@ -25,7 +25,7 @@ import java.util.List;
  * This class focuses on file access using google's Gson library for handling reading & writing JSON to and from a text file.
  * @author damonng
  */
-public class File {
+public class FileAccess {
     private static final String PROJECTDIRECTORY = System.getProperty("user.dir"), REPORTPATH = "./src/report/", DATAPATH = "./src/data/", EXT = ".txt";
     //private static final Gson HELPER = new Gson();
     //<editor-fold defaultstate="collapsed" desc="read operations">
@@ -93,7 +93,7 @@ public class File {
         Gson gson = new Gson();
 
         // store json in memory 
-        JsonArray userJson = File.readArray("user");
+        JsonArray userJson = FileAccess.readArray("user");
         
         // store admins into list then return when done
         for (JsonElement element: userJson){

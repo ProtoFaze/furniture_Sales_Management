@@ -118,6 +118,6 @@ public class Furniture {
         this.width = width;
     }
     public static void populateList(){
-       list = File.read("furniture", Furniture.class);
+       list = FileAccess.read("furniture", Furniture.class);
     }
 }
