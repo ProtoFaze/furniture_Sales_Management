@@ -38,7 +38,12 @@ public class GenerateDocument extends javax.swing.JPanel {
         this.parent = parent;
         System.out.println(parent.toString());
         model = (DefaultTableModel) DocumentList.getModel();
+        if(parent.user.getRole().equals("admin")){
+            GenerateBtn.setVisible(false);
+            GenerateBtn.setEnabled(false);
+        }
         LoadData();
+
     }
     
     // Load data into the table
