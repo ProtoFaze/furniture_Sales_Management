@@ -137,7 +137,6 @@ public class SalesOrder {
     // Delete the quotation chose
     public static void deleteWholeQuotation(String quotationID) {
         salesOrders.removeIf(order -> (order.getQuotation().equals(quotationID)));
-        System.out.println("Sales Orders with ID " + quotationID + " deleted successfully!");
         File.write("salesOrder", salesOrders);
         populateList();
     }
