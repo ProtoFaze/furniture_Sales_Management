@@ -53,7 +53,10 @@ public class PersonList extends javax.swing.JPanel {
         loadData();
         setupActions();
     }
-    
+
+    /**
+     *load all data related dependencies
+     */
     public void loadData(){
         if (parent.user.getRole().equals("sales person")){
             workers = null;
@@ -71,7 +74,7 @@ public class PersonList extends javax.swing.JPanel {
         }
         populateTable();
     }
-
+    //put an action button in each column
     private void setupActions(){
         btnInspect = new JButton();
         tblPeople.getColumn("Action").setCellRenderer( new ButtonRenderer());
@@ -90,7 +93,7 @@ public class PersonList extends javax.swing.JPanel {
             }
         });
     }
-    
+    //initial populate table
     private void populateTable(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -119,7 +122,10 @@ public class PersonList extends javax.swing.JPanel {
             }
         });
     }
-    
+    /**
+     *populate table for adding additional filter
+     * @param filter
+     */
     public void populateTable(String filter){
         SwingUtilities.invokeLater(new Runnable() {
             @Override

@@ -31,6 +31,7 @@ public class ModifySalesOrder extends javax.swing.JPanel {
     public ModifySalesOrder() {
         initComponents();
     }
+    
     public ModifySalesOrder(MainPage parent){
         initComponents();
         this.parent = parent;
@@ -39,7 +40,8 @@ public class ModifySalesOrder extends javax.swing.JPanel {
         tfFurnitureID.setEnabled(false);
         tfTotalPrice.setEnabled(false);
     }
-
+    
+    // Load sales order data
     void LoadData(){
         List<String> idList = new ArrayList<>();
             for (SalesOrder salesOrder: SalesOrder.salesOrders){

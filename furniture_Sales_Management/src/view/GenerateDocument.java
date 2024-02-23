@@ -69,6 +69,14 @@ public class GenerateDocument extends javax.swing.JPanel {
             }
         }
     }
+    private boolean shouldInclude(String role, String userId, SalesOrder order){
+        String orderApproved = order.getApprovedBy();
+        switch(role){
+            case "admin"->{return (order.getStatus().equals("Approved"));}
+            case "officer"->{return (orderApproved != null && orderApproved.equals(userId) && order.getStatus().equals("Approved"));}
+            default->{return false;}
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
