@@ -207,6 +207,7 @@ public class GenerateDocument extends javax.swing.JPanel {
         // TODO add your handling code here:
         model.setRowCount(0);
         String text = SearchTxt.getText();
+        boolean flag = false;
         if (!text.equals("")) { 
             for (SalesOrder order : SalesOrder.salesOrders) {
                 String orderId = order.getId();
@@ -224,7 +225,10 @@ public class GenerateDocument extends javax.swing.JPanel {
                     row[8] = order.getQuotation();
 
                     model.addRow(row);
+                    flag = true;
                 }
+            } if (!flag) {
+                JOptionPane.showMessageDialog(null, "Data not found!","Error",JOptionPane.ERROR_MESSAGE);
             }
         } else {
             LoadData();

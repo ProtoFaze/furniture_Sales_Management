@@ -60,6 +60,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
             }
         });
     }
+    
     private boolean validateInput(){
         // Validate QuotationID text field
         String quotationIDText = tfQuotationID.getText().trim();
@@ -69,6 +70,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
         }
             return true;
     }
+    
     private void deleteQuotation(String selectedQuotationID) {
         Boolean isDeleted = false;
         if(SalesOrder.isMyQuotation(selectedQuotationID, parent.user.getId())){

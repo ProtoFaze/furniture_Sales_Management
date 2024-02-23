@@ -43,6 +43,9 @@ public class GeneratePDF extends javax.swing.JFrame {
         user = parent.user;
         this.ID = ID;
         LoadData();
+        if (user.getRole().equals("admin")) {
+            ProductionBtn.setVisible(false);
+        }
     }
     
     

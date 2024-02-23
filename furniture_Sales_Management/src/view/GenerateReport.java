@@ -65,6 +65,7 @@ public class GenerateReport extends javax.swing.JFrame {
                 row[1] = order.getQuotation();
                 row[2] = order.getQuantity();
                 row[3] = order.getTotal();
+                row[4] = order.getApprovedBy();
                 Total += order.getTotal();
                 
                 model.addRow(row);
@@ -115,31 +116,26 @@ public class GenerateReport extends javax.swing.JFrame {
         InvoicePanel.setForeground(new java.awt.Color(255, 255, 255));
 
         InvoiceLbl.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
-        InvoiceLbl.setForeground(new java.awt.Color(0, 0, 0));
         InvoiceLbl.setText("Work Done Report");
 
-        QuotationList.setBackground(new java.awt.Color(255, 255, 255));
         QuotationList.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        QuotationList.setForeground(new java.awt.Color(0, 0, 0));
         QuotationList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "OrderID", "QuotationID", "Quantity", "Total"
+                "OrderID", "QuotationID", "Quantity", "Total", "ApprovedBy"
             }
         ));
         jScrollPane1.setViewportView(QuotationList);
 
         DateLbl.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        DateLbl.setForeground(new java.awt.Color(0, 0, 0));
         DateLbl.setText("Date:");
 
         DateTxt.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        DateTxt.setForeground(new java.awt.Color(0, 0, 0));
         DateTxt.setText("--DATE--");
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
