@@ -90,6 +90,7 @@ public class PersonList extends javax.swing.JPanel {
             }
         });
     }
+    
     private void populateTable(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -118,6 +119,7 @@ public class PersonList extends javax.swing.JPanel {
             }
         });
     }
+    
     public void populateTable(String filter){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -155,6 +157,7 @@ public class PersonList extends javax.swing.JPanel {
         }
 
     }
+    
     class ButtonEditor extends DefaultCellEditor{
         private String label;
         

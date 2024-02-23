@@ -43,12 +43,16 @@ public class GenerateDocument extends javax.swing.JPanel {
         LoadData();
     }
     
+    // Load data into the table
     public void LoadData(){
         user = parent.user;
+        // Reset table content
         model.setRowCount(0);
         for (SalesOrder order : SalesOrder.salesOrders) {
             String orderApproved = order.getApprovedBy();
-            if (orderApproved != null && orderApproved.equals(user.getId()) && order.getStatus().equals("Approved")) {
+            if (orderApproved != null 
+                    && orderApproved.equals(user.getId()) 
+                    && order.getStatus().equals("Approved")) {
                 Object[] row = new Object[model.getColumnCount()];
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();
@@ -203,15 +207,21 @@ public class GenerateDocument extends javax.swing.JPanel {
         if (!text.equals("")) {
             for (SalesOrder order : SalesOrder.salesOrders) {
                 String orderId = order.getId();
-                if (orderId != null && orderId.equals(text)) {
+                if (orderId != null 
+                        && orderId.equals(text)
+                        && order.getApprovedBy().equals(user.getId())
+                        && order.getStatus().equals("Approved")) {
                     Object[] row = new Object[model.getColumnCount()];
                     // Fill in the values from the SalesOrder object
                     row[0] = order.getId();
                     row[1] = order.getFurniture();
                     row[2] = order.getQuantity();
                     row[3] = order.getTotal();
-                    row[4] = order.getStatus();
-                    row[5] = order.getQuotation();
+                    row[4] = order.getCustomer();
+                    row[5] = order.getStatus();
+                    row[6] = order.getGeneratedBy();
+                    row[7] = order.getApprovedBy();
+                    row[8] = order.getQuotation();
 
                     model.addRow(row);
                 }

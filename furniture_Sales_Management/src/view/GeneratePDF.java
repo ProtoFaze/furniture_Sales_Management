@@ -45,6 +45,8 @@ public class GeneratePDF extends javax.swing.JFrame {
         LoadData();
     }
     
+    
+    
     public void LoadData(){
         model.setRowCount(0);
         NameTxt.setText(user.getUserName());
