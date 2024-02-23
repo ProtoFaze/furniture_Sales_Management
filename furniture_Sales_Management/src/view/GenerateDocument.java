@@ -20,14 +20,12 @@ public class GenerateDocument extends javax.swing.JPanel {
     private DefaultTableModel model;
     private MainPage parent;
     private User user;
-    private String ID;
     private enum DocType{
         productionInvoice,
         salesQuotation,
         workDoneReport, 
         closedSalesReport,
     }
-    private List<Object> data = new ArrayList<>();
     /**
      * Creates new form generateReport
      */
@@ -209,13 +207,10 @@ public class GenerateDocument extends javax.swing.JPanel {
         // TODO add your handling code here:
         model.setRowCount(0);
         String text = SearchTxt.getText();
-        if (!text.equals("")) {
+        if (!text.equals("")) { 
             for (SalesOrder order : SalesOrder.salesOrders) {
                 String orderId = order.getId();
-                if (orderId != null 
-                        && orderId.equals(text)
-                        && order.getApprovedBy().equals(user.getId())
-                        && order.getStatus().equals("Approved")) {
+                if (shouldInclude(user.getRole(), user.getId(), order) && orderId.equals(text)) {
                     Object[] row = new Object[model.getColumnCount()];
                     // Fill in the values from the SalesOrder object
                     row[0] = order.getId();

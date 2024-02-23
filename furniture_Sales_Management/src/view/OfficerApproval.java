@@ -29,7 +29,8 @@ public class OfficerApproval extends javax.swing.JPanel {
         model = (DefaultTableModel) QuotationList.getModel();
         LoadData();
     }
-
+    
+    // Filter before populate
     private void showQuotations(String filter) {
         model.setRowCount(0); // Clear existing rows
 
@@ -64,6 +65,7 @@ public class OfficerApproval extends javax.swing.JPanel {
         }
     }
     
+    // Populate table
     public void LoadData() {
         showQuotations("Show all");
     }
