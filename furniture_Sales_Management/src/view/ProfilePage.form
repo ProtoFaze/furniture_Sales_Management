@@ -34,31 +34,24 @@
                   <Component id="UserLbl" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="UserTxt" min="-2" pref="160" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="EditBtn" min="-2" pref="79" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="IdTxt" alignment="0" max="32767" attributes="0"/>
-                          <Component id="ProfileLbl" alignment="0" max="32767" attributes="0"/>
-                          <Component id="NameTxt" alignment="0" pref="160" max="32767" attributes="0"/>
-                          <Component id="EmailTxt" alignment="0" max="32767" attributes="0"/>
-                          <Component id="GenderTxt" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="PassTxt" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="PassBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="47" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="BackBtn" max="32767" attributes="0"/>
-                          <Component id="DeleteBtn" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="UserTxt" max="32767" attributes="0"/>
+                  <Component id="IdTxt" alignment="0" max="32767" attributes="0"/>
+                  <Component id="ProfileLbl" alignment="0" max="32767" attributes="0"/>
+                  <Component id="NameTxt" alignment="0" pref="160" max="32767" attributes="0"/>
+                  <Component id="EmailTxt" alignment="0" max="32767" attributes="0"/>
+                  <Component id="GenderTxt" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="PassTxt" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="PassBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="DeleteBtn" min="-2" max="-2" attributes="0"/>
+                  <Component id="BackBtn" min="-2" pref="81" max="-2" attributes="0"/>
+                  <Component id="EditBtn" min="-2" pref="81" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -99,8 +92,10 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="EditBtn" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="UserLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="UserTxt" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="UserLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="UserTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">

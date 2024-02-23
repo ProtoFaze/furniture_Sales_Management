@@ -47,8 +47,7 @@ public class GenerateDocument extends javax.swing.JPanel {
         user = parent.user;
         model.setRowCount(0);
         for (SalesOrder order : SalesOrder.salesOrders) {
-            String orderApproved = order.getApprovedBy();
-            if (orderApproved != null && orderApproved.equals(user.getId()) && order.getStatus().equals("Approved")) {
+            if (shouldInclude(user.getRole(),user.getId(),order)) {
                 Object[] row = new Object[model.getColumnCount()];
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();
@@ -63,6 +62,14 @@ public class GenerateDocument extends javax.swing.JPanel {
 
                 model.addRow(row);
             }
+        }
+    }
+    private boolean shouldInclude(String role, String userId, SalesOrder order){
+        String orderApproved = order.getApprovedBy();
+        switch(role){
+            case "admin"->{return (order.getStatus().equals("Approved"));}
+            case "officer"->{return (orderApproved != null && orderApproved.equals(userId) && order.getStatus().equals("Approved"));}
+            default->{return false;}
         }
     }
     /**

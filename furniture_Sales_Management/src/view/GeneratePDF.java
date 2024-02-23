@@ -51,10 +51,7 @@ public class GeneratePDF extends javax.swing.JFrame {
         DateTxt.setText(Verify.LocalDateToString(LocalDate.now()));
         for (SalesOrder order : SalesOrder.salesOrders) {
             String orderApproved = order.getApprovedBy();
-            if (orderApproved != null 
-                    && orderApproved.equals(user.getId()) 
-                    && order.getStatus().equals("Approved") 
-                    && order.getCustomer().equals(ID)) {
+            if (shouldInclude(user.getRole(),user.getId(),order)) {
                 Object[] row = new Object[model.getColumnCount()];
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();
@@ -68,7 +65,14 @@ public class GeneratePDF extends javax.swing.JFrame {
         }
         TotalTxt.setText("RM " + Integer.toString(Total));
     }
-    
+    private boolean shouldInclude(String role, String userId, SalesOrder order){
+        String orderApproved = order.getApprovedBy();
+        switch(role){
+            case "admin"->{return (order.getStatus().equals("Approved")&& order.getCustomer().equals(ID));}
+            case "officer"->{return (orderApproved != null && orderApproved.equals(userId) && order.getStatus().equals("Approved")&& order.getCustomer().equals(ID));}
+            default->{return false;}
+        }
+    }
     private String selectFilePath() {
         String path = "";
         

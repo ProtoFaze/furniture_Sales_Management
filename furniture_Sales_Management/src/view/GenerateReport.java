@@ -58,10 +58,7 @@ public class GenerateReport extends javax.swing.JFrame {
         NameTxt.setText(user.getUserName());
         DateTxt.setText(Verify.LocalDateToString(LocalDate.now()));
         for (SalesOrder order : SalesOrder.salesOrders) {
-            String orderApproved = order.getApprovedBy();
-            if (orderApproved != null 
-                    && orderApproved.equals(user.getId()) 
-                    && order.getStatus().equals("Work Done")) {
+            if (shouldInclude(user.getRole(),  user.getId(), order)) {
                 Object[] row = new Object[model.getColumnCount()];
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();
@@ -75,7 +72,14 @@ public class GenerateReport extends javax.swing.JFrame {
         }
         TotalTxt.setText("RM " + Integer.toString(Total));
     }
-    
+    private boolean shouldInclude(String role, String userId, SalesOrder order){
+        String orderApproved = order.getApprovedBy();
+        switch(role){
+            case "admin"->{return (order.getStatus().equals("Work Done"));}
+            case "officer"->{return (orderApproved != null && orderApproved.equals(userId) && order.getStatus().equals("Work Done"));}
+            default->{return false;}
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
