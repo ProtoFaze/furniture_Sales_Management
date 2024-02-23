@@ -32,7 +32,7 @@ import javax.swing.table.DefaultTableModel;
 public class GeneratePDF extends javax.swing.JFrame {
     private User user;
     private String ID;
-    MainPage parent;
+    private MainPage parent;
     private DefaultTableModel model;
     private int Total;
     /**
