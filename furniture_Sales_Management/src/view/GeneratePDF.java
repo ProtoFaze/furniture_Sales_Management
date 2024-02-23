@@ -77,8 +77,8 @@ public class GeneratePDF extends javax.swing.JFrame {
     }
     
     private String selectFilePath() {
-        String path = "";
         JFileChooser chooser = new JFileChooser(); 
+        String path = "";
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int x = chooser.showSaveDialog(null);
         if (x == JFileChooser.APPROVE_OPTION) {
@@ -94,6 +94,7 @@ public class GeneratePDF extends javax.swing.JFrame {
             Graphics2D graphics = capture.createGraphics();
             InvoicePanel.paint(graphics);
             Document document = new Document();
+            System.out.println(filePath);
             PdfWriter.getInstance(document, new FileOutputStream(filePath));
             document.open();
             Image image = Image.getInstance(capture, null);
@@ -103,7 +104,7 @@ public class GeneratePDF extends javax.swing.JFrame {
         } catch (IOException | com.itextpdf.text.DocumentException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error saving to PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        } 
     }
     
     /**
