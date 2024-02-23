@@ -28,14 +28,14 @@ public class DeleteQuotation extends javax.swing.JPanel {
     public DeleteQuotation(MainPage parent) {
         initComponents();
         this.parent = parent;
-        loadDataTable();
+        LoadData();
     }
     
-    private void loadDataTable(){
+    void LoadData(){
         populateTable();
     }
     
-    public void populateTable(){
+    void populateTable(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -44,7 +44,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
                 Object row[] = new Object[7];
                 for (SalesOrder sales : SalesOrder.salesOrders) {
                     // Filter sales orders based on the logged-in salesperson's ID
-                    if(sales.getGeneratedBy().equals(parent.user.getId())){
+                    if(SalesOrder.isMyQuotation(sales.getQuotation(), parent.user.getId())){
                         row[0] = sales.getQuotation();
                         row[1] = sales.getId();
                         row[2] = sales.getFurniture();
@@ -58,6 +58,32 @@ public class DeleteQuotation extends javax.swing.JPanel {
                 }
             }
         });
+    }
+    private boolean validateInput(){
+        // Validate QuotationID text field
+        String quotationIDText = tfQuotationID.getText().trim();
+        if (quotationIDText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Quotation ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+            return true;
+    }
+    private void deleteQuotation(String selectedQuotationID) {
+        Boolean isDeleted = false;
+        if(SalesOrder.isMyQuotation(selectedQuotationID, parent.user.getId())){
+            SalesOrder.deleteWholeQuotation(selectedQuotationID);
+            isDeleted = true;
+        }
+        // If the order is found, remove it from the list
+        if (isDeleted) {
+            //Display table again after delete
+            parent.updateData();
+            // Display a message indicating that the order is deleted
+            JOptionPane.showMessageDialog(this, "Quotation deleted successfully!");
+        } else {
+            // If the order is not found, display an error message
+            JOptionPane.showMessageDialog(this, "Quotation not found", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -87,7 +113,15 @@ public class DeleteQuotation extends javax.swing.JPanel {
             new String [] {
                 "QUOTATION ID", "ORDER ID", "FURNITURE ID", "QUANTITY", "TOTAL", "CUSTOMER ID", "STATUS"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblQuotation);
         if (tblQuotation.getColumnModel().getColumnCount() > 0) {
             tblQuotation.getColumnModel().getColumn(0).setResizable(false);
@@ -96,12 +130,6 @@ public class DeleteQuotation extends javax.swing.JPanel {
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("DELETE QUOTATION");
-
-        tfQuotationID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfQuotationIDActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("QUOTATION ID");
 
@@ -128,7 +156,7 @@ public class DeleteQuotation extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(0, 0, 0)
                 .addComponent(lblTitle)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -140,68 +168,14 @@ public class DeleteQuotation extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQuotationIDActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_tfQuotationIDActionPerformed
-private boolean validateInput(){
-    // Validate QuotationID text field
-    String quotationIDText = tfQuotationID.getText().trim();
-    if (quotationIDText.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Quotation ID cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
-        return true;
-}
     private void btnSaveChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveChangesActionPerformed
-        // TODO add your handling code here:
-    if (!validateInput()) {
+        if (!validateInput()) {
             JOptionPane.showMessageDialog(this, "Please enter a Quotation ID!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
-        }    
-        deleteQuotation(tfQuotationID.getText());
+        }else{
+            deleteQuotation(tfQuotationID.getText());
+        }
     }//GEN-LAST:event_btnSaveChangesActionPerformed
-    private void displayQuotationDetails(String selectedQuotationID) {
-    DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
-    model.setRowCount(0); // Clear existing data in the table
-
-    // Find the order with the selected order ID in the SalesOrder list
-    for (SalesOrder sales : SalesOrder.salesOrders) {
-        if (sales.getId().equals(selectedQuotationID)) {
-            // Add details to the table
-            Object[] rowData = {sales.getId(), sales.getFurniture(), sales.getQuantity(),
-                    sales.getTotal(), sales.getCustomer(), sales.getStatus()};
-            model.addRow(rowData);
-            return;
-        }
-    }
-    }
-    
-    private void deleteQuotation(String selectedQuotationID) {
-        SalesOrder selectedOrder = null;
-        for (SalesOrder sales : SalesOrder.salesOrders) {
-            if (sales.getQuotation().equals(selectedQuotationID)) {
-                selectedOrder = sales;
-                break;
-            }
-        }
-
-        // If the order is found, remove it from the list
-        if (selectedOrder != null) {
-            SalesOrder.salesOrders.remove(selectedOrder);
-
-            // Save the updated data to the file
-            File.write("salesOrder", SalesOrder.salesOrders);
-
-            //Display table again after delete
-            parent.updateData();
-            // Display a message indicating that the order is deleted
-            JOptionPane.showMessageDialog(this, "Quotation deleted successfully!");
-        } else {
-            // If the order is not found, display an error message
-            JOptionPane.showMessageDialog(this, "Quotation not found", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSaveChanges;

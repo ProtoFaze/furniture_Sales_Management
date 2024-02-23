@@ -21,8 +21,8 @@ import javax.swing.table.TableCellRenderer;
  * @author Aryssa
  */
 public class FurnitureList extends javax.swing.JPanel {
-    public static List<Furniture> list;
     MainPage parent;
+    public static List<Furniture> list;
     private DefaultTableModel temp; 
     private JButton btnInspect;
     Furniture selectedFurniture;
@@ -40,7 +40,7 @@ public class FurnitureList extends javax.swing.JPanel {
         setupActions();
     }
     
-    private void loadData(){
+     void loadData(){
         selectedFurniture = null;
     }
     
@@ -131,7 +131,15 @@ public class FurnitureList extends javax.swing.JPanel {
             new String [] {
                 "ID", "Name", "Category", "Price", "Action"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblFurniture);
 
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
@@ -152,7 +160,7 @@ public class FurnitureList extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(0, 0, 0)
                 .addComponent(lblTitle)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))

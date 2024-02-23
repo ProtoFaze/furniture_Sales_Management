@@ -4,18 +4,13 @@
  */
 package view;
 
-import Classes.File;
 import Classes.Furniture;
 import Classes.Invoice;
 import Classes.SalesOrder;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -48,18 +43,29 @@ public class CreateQuotation extends javax.swing.JPanel {
         List<String> idList = new ArrayList<>();
         for (SalesOrder salesOrder : SalesOrder.salesOrders) {
             String quotationID = salesOrder.getQuotation();
-            if (quotationID != null && salesOrder.getStatus().equals("Approved") &&  !idList.contains(quotationID)) {
+            if (quotationID != null&&
+            SalesOrder.isMyQuotation(quotationID, parent.user.getId())&&
+            salesOrder.getStatus().equals("Approved")&&
+            !idList.contains(quotationID)) {
                 idList.add(quotationID);
             }
         }
         DefaultComboBoxModel data = new DefaultComboBoxModel<>(idList.toArray(new String[0]));
         cbQuotationID.setModel(data);
-//        updateTable();
+        String initialQuotation;
+        try {
+            initialQuotation = cbQuotationID.getSelectedItem().toString();
+            updateTable(initialQuotation);
+        }catch (java.lang.NullPointerException e){
+            updateTable("NA");
+        }
     }
     void updateTable(String quotationID) {
         DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
         model.setRowCount(0); // Clear existing data in the table
-
+        if(quotationID.equals("NA")){
+            return;
+        }
         grandTotal = 0.0;
         for (SalesOrder sales : SalesOrder.salesOrders) {
             if ("Approved".equalsIgnoreCase(sales.getStatus()) && sales.getQuotation().equals(quotationID)) {
@@ -125,7 +131,15 @@ public class CreateQuotation extends javax.swing.JPanel {
             new String [] {
                 "ORDER ID", "FURNITURE ID", "QUANTITY", "UNIT PRICE", "TOTAL COST", "CUSTOMER ID"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblQuotation);
         if (tblQuotation.getColumnModel().getColumnCount() > 0) {
             tblQuotation.getColumnModel().getColumn(0).setResizable(false);
@@ -133,11 +147,6 @@ public class CreateQuotation extends javax.swing.JPanel {
         }
 
         tfTotalPrice.setEnabled(false);
-        tfTotalPrice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfTotalPriceActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("TOTAL PRICE");
 
@@ -186,7 +195,7 @@ public class CreateQuotation extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(0, 0, 0)
                 .addComponent(lblTitle)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -204,8 +213,7 @@ public class CreateQuotation extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-           // TODO add your handling code here:
-    String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
+        String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
 
         // Check if the selectedQuotationID is not empty
         if (!selectedQuotationID.isEmpty()) {
@@ -221,6 +229,8 @@ public class CreateQuotation extends javax.swing.JPanel {
                 Invoice.list.add(new Invoice(selectedQuotationID, grandTotal));
                 parent.updateData();
                 JOptionPane.showMessageDialog(this, "Quotation Created!");
+            }else{
+                JOptionPane.showMessageDialog(this, "Quotation already exist!");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please select a Quotation ID", "Error", JOptionPane.ERROR_MESSAGE);
@@ -229,16 +239,12 @@ public class CreateQuotation extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void cbQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbQuotationIDActionPerformed
-    String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
-    tfQuotationID.setText(selectedQuotationID);
-    btnCreate.setEnabled(true);
-    updateTable(selectedQuotationID);
+        String selectedQuotationID = cbQuotationID.getSelectedItem().toString();
+        tfQuotationID.setText(selectedQuotationID);
+        btnCreate.setEnabled(true);
+        updateTable(selectedQuotationID);
     
     }//GEN-LAST:event_cbQuotationIDActionPerformed
-
-    private void tfTotalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTotalPriceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfTotalPriceActionPerformed
 
     private void tfQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQuotationIDActionPerformed
         // TODO add your handling code here:
