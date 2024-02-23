@@ -57,6 +57,7 @@ public class ProfilePage extends javax.swing.JFrame {
     public ProfilePage(PersonList parent) {
         this.workerSource = parent;
         this.user = workerSource.selectedWorker;
+        this.parent = parent.parent;
         this.admins = Admin.admins;
         setContentPane(new javax.swing.JPanel(){
             @Override
@@ -283,8 +284,8 @@ public class ProfilePage extends javax.swing.JFrame {
                 String errorText = 
                         Verify.validateFullName(NameTxt.getText())+
                         Verify.validateEmail(EmailTxt.getText())+
-                        Verify.validateEmail(UserTxt.getText())+
-                        Verify.validateEmail(String.valueOf(PassTxt.getPassword()));
+                        Verify.isValidUsername(UserTxt.getText())+
+                        Verify.isStrongPassword(String.valueOf(PassTxt.getPassword()));
                 if (errorText.isEmpty()){
                     saveChanges();
                 }else{
