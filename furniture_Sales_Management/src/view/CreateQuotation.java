@@ -35,10 +35,8 @@ public class CreateQuotation extends javax.swing.JPanel {
         tfQuotationID.setEnabled(false);
         LoadData();
     }
-// Update the combo box model
-    private void updateComboBox(){
-        LoadData();
-    }
+    
+    // Load sales order data 
     void LoadData() {
         List<String> idList = new ArrayList<>();
         for (SalesOrder salesOrder : SalesOrder.salesOrders) {
@@ -60,6 +58,8 @@ public class CreateQuotation extends javax.swing.JPanel {
             updateTable("NA");
         }
     }
+    
+    // Update quotation table
     void updateTable(String quotationID) {
         DefaultTableModel model = (DefaultTableModel) tblQuotation.getModel();
         model.setRowCount(0); // Clear existing data in the table
@@ -68,6 +68,7 @@ public class CreateQuotation extends javax.swing.JPanel {
         }
         grandTotal = 0.0;
         for (SalesOrder sales : SalesOrder.salesOrders) {
+            // Check if the sales order has "Approved" status
             if ("Approved".equalsIgnoreCase(sales.getStatus()) && sales.getQuotation().equals(quotationID)) {
                 // Retrieve the furniture object associated with the furniture ID
                 Furniture matchingFurniture = findFurnitureById(sales.getFurniture());
@@ -83,7 +84,7 @@ public class CreateQuotation extends javax.swing.JPanel {
                             sales.getCustomer(),
                     };
                     model.addRow(rowData);
-                    //Update total price
+                    // Update total price
                     grandTotal += sales.getTotal();
                 }                
             }
@@ -224,7 +225,7 @@ public class CreateQuotation extends javax.swing.JPanel {
                     break;
                 }
             }
-            
+            //Check if the quotation ID exist
             if (!invoiceExist){
                 Invoice.list.add(new Invoice(selectedQuotationID, grandTotal));
                 parent.updateData();
@@ -250,18 +251,19 @@ public class CreateQuotation extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfQuotationIDActionPerformed
 
-private Furniture findFurnitureById(String furnitureId) {
-    // Iterate through the list of furniture objects
-    for (Furniture furniture : Furniture.list) {
-        // Check if the current furniture object's ID matches the specified ID
-        if (furniture.getId().equals(furnitureId)) {
-            // Return the matching furniture object
-            return furniture;
-        }
+    
+    private Furniture findFurnitureById(String furnitureId) {
+      // Iterate through the list of furniture objects
+     for (Furniture furniture : Furniture.list) {
+            // Check if the current furniture object's ID matches the specified ID
+            if (furniture.getId().equals(furnitureId)) {
+              // Return the matching furniture object
+              return furniture;
+          }
+      }
+     // Return null if no matching furniture is found
+      return null;
     }
-    // Return null if no matching furniture is found
-    return null;
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
