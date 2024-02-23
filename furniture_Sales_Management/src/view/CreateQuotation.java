@@ -244,7 +244,6 @@ public class CreateQuotation extends javax.swing.JPanel {
         tfQuotationID.setText(selectedQuotationID);
         btnCreate.setEnabled(true);
         updateTable(selectedQuotationID);
-    
     }//GEN-LAST:event_cbQuotationIDActionPerformed
 
     private void tfQuotationIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQuotationIDActionPerformed

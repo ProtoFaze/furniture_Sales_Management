@@ -63,7 +63,7 @@ public class PersonList extends javax.swing.JPanel {
             selectedWorker = null;
             filter.setVisible(false);
             title.setText("Customer List");
-        }else{
+        } else {
             if(Officer.officers!=null && SalesPerson.salesPeople!=null){
                 workers = new ArrayList<>();
                 workers.addAll(Officer.officers);

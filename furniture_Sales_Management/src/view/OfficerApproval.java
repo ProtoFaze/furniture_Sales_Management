@@ -36,7 +36,7 @@ public class OfficerApproval extends javax.swing.JPanel {
         // Iterate through the salesOrders list and add rows for matching salesperson ID
         for (SalesOrder order : SalesOrder.salesOrders) {
             String orderStatus = order.getStatus();
-            if (orderStatus != null && filter.equals("Show all")) {
+            if (orderStatus != null && filter.equals("Show all") && !order.getStatus().equals("Work Done")) {
                 Object[] row = new Object[model.getColumnCount()];
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();

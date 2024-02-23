@@ -49,10 +49,7 @@ public class GenerateDocument extends javax.swing.JPanel {
         // Reset table content
         model.setRowCount(0);
         for (SalesOrder order : SalesOrder.salesOrders) {
-            String orderApproved = order.getApprovedBy();
-            if (orderApproved != null 
-                    && orderApproved.equals(user.getId()) 
-                    && order.getStatus().equals("Approved")) {
+            if (shouldInclude(user.getRole(), user.getId(), order)) {
                 Object[] row = new Object[model.getColumnCount()];
                 // Fill in the values from the SalesOrder object
                 row[0] = order.getId();
